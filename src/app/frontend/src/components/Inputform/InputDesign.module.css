@@ -1,0 +1,170 @@
+.loginPage {
+  backdrop-filter: blur(2px);
+  background-color: #c4c4c4;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  min-height: 900px;
+  display: flex;
+  position: relative;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.loginContainer {
+  backdrop-filter: blur(28.95px);
+  background-color: #ffffff4d;
+  border-radius: 50px;
+  flex-direction: column;
+  align-items: center;
+  width: 956px;
+  padding: 60px;
+  display: flex;
+  position: relative;
+}
+
+@media (width<=991px) {
+  .loginContainer {
+    width: 80%;
+    padding: 40px;
+  }
+}
+
+@media (width<=640px) {
+  .loginContainer {
+    border-radius: 30px;
+    width: 90%;
+    padding: 30px;
+  }
+}
+
+.loginTitle {
+  color: #1c1c1c;
+  margin-bottom: 40px;
+  font-family: Baloo, cursive;
+  font-size: 120px;
+}
+
+@media (width<=991px) {
+  .loginTitle {
+    font-size: 80px;
+  }
+}
+
+@media (width<=640px) {
+  .loginTitle {
+    font-size: 50px;
+  }
+}
+
+.homeIconWrapper {
+  width: 62px;
+  height: 62px;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+}
+
+@media (width<=640px) {
+  .homeIconWrapper {
+    top: 30px;
+    left: 30px;
+  }
+}
+
+.homeIconInner {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.homeIconBg {
+  width: 62px;
+  height: 62px;
+}
+
+.homeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.inputContainer {
+  background-color: #f2f2f2;
+  border-radius: 13px;
+  align-items: center;
+  width: 379px;
+  height: 51px;
+  margin-bottom: 20px;
+  padding: 0 19px;
+  display: flex;
+}
+
+@media (width<=991px) {
+  .inputContainer {
+    width: 100%;
+    max-width: 379px;
+  }
+}
+
+@media (width<=640px) {
+  .inputContainer {
+    width: 100%;
+  }
+}
+
+.input {
+  background: 0 0;
+  border: none;
+  width: 100%;
+  margin-left: 31px;
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+}
+
+.inputIcon {
+  width: 25px;
+  height: 24px;
+}
+
+.loginButton, .signupButton {
+  color: #fff;
+  cursor: pointer;
+  background-color: #1c1c1c;
+  border-radius: 13px;
+  width: 379px;
+  height: 51px;
+  margin-top: 20px;
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+}
+
+@media (width<=991px) {
+  .loginButton, .signupButton {
+    width: 100%;
+    max-width: 379px;
+  }
+}
+
+@media (width<=640px) {
+  .loginButton, .signupButton {
+    width: 100%;
+  }
+}
