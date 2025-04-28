@@ -4,11 +4,13 @@ import Input from "../Input/Input";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/auth/auth-slice"; 
+import { useNavigate } from "react-router-dom"; 
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
 
   const submit = async (e) => {
     e.preventDefault();
@@ -17,7 +19,9 @@ export default function LoginForm() {
     try {
       // API call to login
       // const user = await .....
-      dispatch(setUser(user));
+      // dispatch(setUser(user));
+      alert("Login successful!");
+      navigate("/"); 
     }
     catch (error) {
       alert("Login failed. Please try again.");

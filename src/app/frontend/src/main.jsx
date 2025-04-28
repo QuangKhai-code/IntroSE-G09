@@ -2,11 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {Provider} from "react-redux";
+import {store} from "./store/index";
 import App from "./App";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import {Provider} from "react-redux";
-import {store} from "./store/index";
+import Admin from "./pages/Admin/Admin";
+import TeamForm from "./components/TeamForm/TeamForm";
+import NotFound from "./pages/NotFound/NotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -21,10 +24,12 @@ root.render(
         <Routes>
           <Route path = "/" element={<HomePage />} />  
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<App />}>
           
+          <Route path="/admin" element={<Admin />}>
+            <Route path="/admin/team" element={<TeamForm />}/>
           </Route>
-          <Route path="*" element={<HomePage />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>
