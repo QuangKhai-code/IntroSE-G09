@@ -6,7 +6,9 @@ import { Outlet } from "react-router-dom";
 export default function Admin() {
     return (
         <div className={`${s.container}`}>
-            <Sidebar />
+            <div className={s.sidebar}>
+                <Sidebar />
+            </div>
             <div className={s.content}>
                 <Outlet />
             </div>

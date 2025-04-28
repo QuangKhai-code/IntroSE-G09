@@ -7,7 +7,7 @@ export default function HomeButton() {
     return (
       <div className={`${s.container}`} onClick={() => navigate("/")}>
         <button type="button" className={`${s.home_btn} `}>
-          <img src="./src/assets/home.png" alt="home button" width ="100%"/>
+          <img src="/assets/home.png" alt="home button" width ="100%"/>
         </button>
       </div>
     );

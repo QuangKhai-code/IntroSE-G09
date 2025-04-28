@@ -9,7 +9,7 @@ export default function Header() {
     <header>
       <div className={`d-flex ${s.logo}`}>
         <a href="/" className="">
-          <img src="./src/assets/logo.svg" alt="Website Logo" width="200" />
+          <img src="/assets/logo.svg" alt="Website Logo" width="200" />
         </a>
       </div>
       <div className={`${s.nav_bar}`}>
