@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./style.module.css";
-import Banner from "../../molecule/Banner/Banner";
-import Footer from "../../atom/Footer/Footer";
+import Banner from "../../components/Banner/Banner";
+import Footer from "../../components/Footer/Footer";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <section id="home">
@@ -20,7 +20,6 @@ export default function Home() {
       <section>
         <Footer />
       </section>
-
     </>
   );
 }

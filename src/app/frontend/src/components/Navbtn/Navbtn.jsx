@@ -1,8 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import s from "./style.module.css";
 
 export default function Navbtn(props) {
-    const [isHover, setIsHover] = React.useState(false);
+    const [isHover, setIsHover] = useState(false);
 
     function mouseOver() { 
         setIsHover(true);

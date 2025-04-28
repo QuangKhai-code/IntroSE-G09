@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./style.module.css";
-import Header from "../../atom/Header/Header";
+import Header from "../Header/Header";
 
 export default function Banner() {
   return (
