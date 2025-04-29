@@ -8,7 +8,7 @@ import App from "./App";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Admin from "./pages/Admin/Admin";
-import TeamForm from "./components/TeamForm/TeamForm";
+import AddTeamForm from "./pages/AddTeamForm/AddTeamForm";
 import NotFound from "./pages/NotFound/NotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,7 +26,7 @@ root.render(
           <Route path="/login" element={<LoginPage />} />
           
           <Route path="/admin" element={<Admin />}>
-            <Route path="/admin/team" element={<TeamForm />}/>
+            <Route path="/admin/newteam" element={<AddTeamForm />}/>
           </Route>
 
           <Route path="*" element={<NotFound />} />
