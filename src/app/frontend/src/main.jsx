@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Admin from "./pages/Admin/Admin";
 import AddTeamForm from "./pages/AddTeamForm/AddTeamForm";
 import NotFound from "./pages/NotFound/NotFound";
+import RuleUpdateForm from "./pages/RuleUpdateForm/RuleUpdateForm";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -22,11 +23,12 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path = "/" element={<HomePage />} />  
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          
+
           <Route path="/admin" element={<Admin />}>
-            <Route path="/admin/newteam" element={<AddTeamForm />}/>
+            <Route path="/admin/newteam" element={<AddTeamForm />} />
+            <Route path="/admin/rules" element={<RuleUpdateForm />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
