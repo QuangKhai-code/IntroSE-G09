@@ -301,3 +301,57 @@ class MatchResultCreateSerializer(serializers.ModelSerializer): # Vẫn kế th�
             )
 
         return data 
+    
+class PlayerWithGoalStatsSerializer(serializers.ModelSerializer):
+    """
+    Serializer để hiển thị danh sách cầu thủ kèm theo tổng số bàn thắng.
+    Theo Biểu mẫu 4.
+    """
+    team_name = serializers.CharField(source='team.name', read_only=True)
+    player_type_display = serializers.CharField(source='get_player_type_display', read_only=True)
+    total_goals = serializers.IntegerField(read_only=True) # Sẽ được annotate trong queryset
+
+    class Meta:
+        model = Player
+        fields = [
+            'id',                 # STT có thể được xử lý ở frontend
+            'name',               # Tên Cầu Thủ
+            'team',               # ID của Đội (để có thể click vào xem chi tiết đội)
+            'team_name',          # Tên Đội
+            'player_type',        # Mã Loại Cầu Thủ (để filter)
+            'player_type_display',# Hiển thị Loại Cầu Thủ
+            'birthdate',          # Có thể thêm ngày sinh nếu cần
+            'note',               # Có thể thêm ghi chú nếu cần
+            'total_goals'         # Tổng số bàn thắng
+        ]
+        read_only_fields = ['team_name', 'player_type_display', 'total_goals']
+
+class TeamStandingSerializer(serializers.Serializer): # Không phải ModelSerializer vì dữ liệu được tính toán
+    # id = serializers.IntegerField() # ID của đội, không bắt buộc hiển thị nhưng hữu ích
+    team_name = serializers.CharField(source='name') # Tên Đội
+    played = serializers.IntegerField()              # Số trận đã đấu
+    won = serializers.IntegerField()                 # Thắng
+    drawn = serializers.IntegerField()               # Hòa
+    lost = serializers.IntegerField()                # Thua
+    goals_for = serializers.IntegerField()           # Bàn thắng
+    goals_against = serializers.IntegerField()       # Bàn thua
+    goal_difference = serializers.IntegerField()     # Hiệu số
+    points = serializers.IntegerField()              # Điểm
+
+class TopScorerSerializer(serializers.ModelSerializer):
+    """
+    Serializer cho danh sách cầu thủ ghi bàn theo BM5.2.
+    """
+    team_name = serializers.CharField(source='team.name', read_only=True)
+    player_type_display = serializers.CharField(source='get_player_type_display', read_only=True)
+    total_goals = serializers.IntegerField(read_only=True) # Sẽ được annotate
+
+    class Meta:
+        model = Player
+        fields = [
+            'id',                 # STT có thể xử lý ở frontend
+            'name',               # Cầu Thủ
+            'team_name',          # Đội
+            'player_type_display',# Loại Cầu Thủ
+            'total_goals'         # Số Bàn Thắng
+        ]
