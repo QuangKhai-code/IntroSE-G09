@@ -10,5 +10,6 @@
 .input::placeholder {
   font-size: 16px;
   font-family: "Baloo 2", sans-serif;
-  color: rgb(0, 0, 0); 
+  color: rgb(112, 112, 112); 
+  font-style: italic;
 }
