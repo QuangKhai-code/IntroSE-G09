@@ -1,0 +1,265 @@
+.topScorers {
+  padding: 24px 16px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: none;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border: 1px solid #222;
+  border-bottom: none;
+  padding: 4px 8px;
+  background: #fff;
+}
+
+.bmCode {
+  width: 100px;
+  border-right: 1px solid #222;
+  text-align: left;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+}
+
+.reportDate {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  font-family: 'Baloo 2', sans-serif;
+  text-transform: uppercase;
+}
+
+.tableContainer {
+  display: block;
+  width: 1000px;
+  min-width: 1000px;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: transparent;
+  padding: 0;
+  min-height: 420px;
+}
+
+.table {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 20px;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: none;
+  table-layout: fixed;
+  height: 800px;
+}
+
+.table tbody {
+  min-height: 420px;
+  display: table-row-group;
+}
+
+.table th,
+.table td {
+  padding: 18px 16px;
+  font-size: 20px;
+  word-break: break-word;
+}
+
+.table th {
+  background-color: #f6f6f6;
+  font-weight: 800;
+  color: #391964;
+  border-bottom: 3px solid #e5e5e5;
+  text-align: left;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.table td {
+  background: transparent;
+  color: #391964;
+  font-weight: 400;
+  border-bottom: 1.5px solid #f0f0f0;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.leftAlign {
+  text-align: left !important;
+}
+
+.playerCell, .teamCell {
+  text-align: left;
+  font-weight: 600;
+  color: #222;
+  font-size: 18px;
+}
+
+.goalsCell {
+  font-weight: 800;
+  color: #391964;
+  font-size: 22px;
+  text-align: center !important;
+}
+
+.sttCell {
+  text-align: left;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.typeCell {
+  text-align: left;
+  color: #666;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.top3Row {
+  background: linear-gradient(90deg, #ffe066 0%, #fffbe6 100%) !important;
+  font-weight: 700;
+  color: #222 !important;
+  font-size: 19px;
+}
+
+.bottom3Row {
+  background: #f8d7da !important;
+  color: #a94442 !important;
+  font-weight: 500;
+}
+
+.table th:last-child, .table td:last-child {
+  text-align: right !important;
+}
+
+/* Responsive styles */
+@media (max-width: 1100px) {
+  .table {
+    font-size: 16px;
+  }
+  .table th, .table td {
+    font-size: 16px;
+    padding: 10px 6px;
+  }
+  .goalsCell {
+    font-size: 16px;
+  }
+  .paginationBtn {
+    font-size: 16px;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tabs button {
+  padding: 8px 20px;
+  border: 1px solid #1a73e8;
+  background: #fff;
+  color: #1a73e8;
+  font-weight: 600;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tabs button:hover {
+  background: #e3f0ff;
+}
+
+.activeTab {
+  background: #1a73e8;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.paginationBtn {
+  padding: 8px 22px;
+  margin: 0 4px;
+  border: none;
+  background: transparent;
+  color: #391964;
+  font-weight: 800;
+  font-size: 22px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+  outline: none;
+  box-shadow: none;
+}
+.paginationBtn:hover:not(:disabled) {
+  color: #6c3483;
+  background: #f6f6f6;
+}
+.paginationBtn:disabled {
+  color: #bdbdbd;
+  background: transparent;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.playerCell {
+  text-align: left;
+  font-weight: 800;
+  color: #222;
+  font-size: 18px;
+}
+
+.teamCell {
+  text-align: left;
+  font-weight: 400;
+  color: #222;
+  font-size: 18px;
+}
+
+.goalsCell {
+  font-weight: 400;
+  color: #391964;
+  font-size: 22px;
+  text-align: right !important;
+}
+
+.sortableHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.table th, .sortableHeader {
+  white-space: nowrap;
+}
+
+.noResultRow td {
+  text-align: center !important;
+  color: #888 !important;
+  font-style: italic;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  height: 120px;
+  white-space: nowrap;
+} 

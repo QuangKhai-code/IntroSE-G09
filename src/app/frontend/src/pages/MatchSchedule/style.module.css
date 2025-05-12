@@ -1,0 +1,354 @@
+.schedulePage {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('/assets/history.jpg');
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-family: 'Baloo 2', sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 40px 0 24px 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.section {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto 48px auto;
+  background: rgba(255,255,255,0.92);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  padding: 40px 32px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #391964;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.matchTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 20px;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.matchTable th, .matchTable td {
+  padding: 16px 12px;
+  font-size: 20px;
+}
+
+.matchTable th {
+  background-color: #f6f6f6;
+  font-weight: 800;
+  color: #391964;
+  border-bottom: 3px solid #e5e5e5;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.matchTable td {
+  background: transparent;
+  color: #222;
+  font-weight: 500;
+  border-bottom: 1.5px solid #f0f0f0;
+  text-align: center;
+}
+
+.matchTable tr:last-child td {
+  border-bottom: none;
+}
+
+.teamCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #391964;
+  font-size: 20px;
+  justify-content: center;
+}
+
+.teamLogo {
+  height: 36px;
+  width: auto;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.scoreCell {
+  font-size: 22px;
+  font-weight: 800;
+  color: #d90429;
+  letter-spacing: 2px;
+}
+
+.matchGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 32px;
+  margin-top: 12px;
+}
+
+.matchCard {
+  background: #181c24;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  padding: 18px 12px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 140px;
+}
+
+.teamsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.teamBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+
+.teamLogoLarge {
+  height: 44px;
+  width: auto;
+  margin-bottom: 4px;
+}
+
+.teamName {
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.vsText {
+  color: #f7c325;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 8px;
+}
+
+.matchInfoRow {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 10px 0 0 0;
+}
+
+.matchDate, .matchTime {
+  color: #b0b8c1;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #232733;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.stadiumRow {
+  color: #f7c325;
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.pastMatchList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.pastMatchRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 0 16px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f2f2f2;
+  column-gap: 20px;
+}
+
+.pastTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-end;
+}
+
+.pastTeamBlock:last-of-type {
+  justify-content: flex-start;
+}
+
+.pastTeamLogo {
+  height: 36px;
+  width: auto;
+}
+
+.pastTeamName {
+  color: #3d1857;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastScoreBlock {
+  min-width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.pastScore {
+  background: #3d1857;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 8px;
+  padding: 4px 18px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastStadiumBlock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  min-width: 220px;
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.pastStadium {
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.upcomingMatchList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.upcomingDayGroup {
+  margin-bottom: 8px;
+}
+
+.upcomingDayTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #5a206e;
+  font-family: 'Baloo 2', sans-serif;
+  margin-bottom: 8px;
+}
+
+.upcomingMatchRow {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 0 8px 0;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #f2f2f2;
+  column-gap: 10px;
+}
+
+.upcomingTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-end;
+}
+
+.upcomingTeamBlock:last-of-type {
+  justify-content: flex-start;
+}
+
+.upcomingTeamLogo {
+  height: 36px;
+  width: auto;
+}
+
+.upcomingTeamName {
+  color: #3d1857;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.upcomingTimeBlock {
+  min-width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.upcomingTime {
+  background: #e5e0f2;
+  color: #3d1857;
+  font-size: 1.08rem;
+  font-weight: 800;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.upcomingStadiumBlock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  min-width: 220px;
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.upcomingStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.upcomingStadium {
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Baloo 2', sans-serif;
+}

@@ -1,0 +1,139 @@
+.leagueStandings {
+  padding: 8px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.standingsTitle {
+  color: #333;
+  margin-bottom: 16px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.standingsTableContainer {
+  overflow-x: auto;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.standingsTable {
+  width: 60%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 24px;
+  margin: 0 auto;
+}
+
+.standingsTable th,
+.standingsTable td {
+  padding: 20px 18px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.standingsTable th {
+  background-color: #f8f9fa;
+  font-weight: 800;
+  color: #391964;
+  font-size: 28px;
+  padding: 20px 18px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.standingsTable th:nth-child(2) {
+  text-align: left;
+}
+
+.standingsTable td {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.standingsTable tr:hover {
+  background-color: #e8f0fe;
+}
+
+.teamName {
+  text-align: left;
+  font-weight: 500;
+  color: #333;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.points {
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .standingsTable {
+    font-size: 12px;
+  }
+  
+  .standingsTable th,
+  .standingsTable td {
+    padding: 4px 6px;
+  }
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 10px;
+  background: #fff;
+}
+
+.bmCode {
+  width: 90px;
+  border-right: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  color: #333;
+}
+
+.reportDate {
+  font-size: 2.5rem;
+  color: black;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.top3Row {
+  background-color: #e3f0ff !important;
+}
+
+.bottom3Row {
+  background-color: #ffe6e6 !important;
+}
+
+.teamCell {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teamLogo {
+  height: 36px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 8px;
+  display: inline-block;
+}

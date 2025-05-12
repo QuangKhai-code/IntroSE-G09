@@ -1,0 +1,367 @@
+.section {
+  width: 1000px;
+  min-width: 1000px;
+  max-width: 1000px;
+  min-height: 350px;
+  margin: 0 auto 32px auto;
+  background: rgba(255,255,255,0.95);
+  border-radius: 28px;
+  box-shadow: 0 4px 24px rgba(90,32,110,0.10);
+  padding: 32px 32px 24px 32px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #391964;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.pastMatchList {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pastMatchRow {
+  width: 100%;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 2fr;
+  align-items: center;
+  padding: 0 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: none;
+  gap: 0;
+  margin-bottom: 0;
+}
+
+.pastHomeTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-end;
+}
+
+.pastAwayTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.pastTeamLogo {
+  height: 36px;
+  width: auto;
+}
+
+.pastTeamName {
+  color: #3d1857;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastScoreBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pastScore {
+  background: #3d1857;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 8px;
+  padding: 4px 18px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastStadiumBlock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  min-width: 220px;
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.pastStadium {
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.paginationBtn {
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 22px;
+  color: #5a206e;
+  padding: 0;
+}
+.paginationBtn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+.paginationBtn:not(:disabled):hover {
+  background: #f3e6fa;
+}
+
+.paginationText {
+  font-weight: 700;
+  font-size: 18px;
+  color: #22223b;
+  min-width: 48px;
+  text-align: center;
+}
+
+.upcomingMatchRow {
+  width: 100%;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 2fr;
+  align-items: center;
+  padding: 0 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: none;
+  gap: 0;
+  margin-bottom: 0;
+}
+
+.upcomingTimeBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upcomingTime {
+  background: #3d1857;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 8px;
+  padding: 4px 18px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.matchDetailRow {
+  background: #23232b;
+  color: #fff;
+  border-radius: 18px;
+  margin: 8px 0 18px 0;
+  padding: 24px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.matchDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 32px;
+  margin-bottom: 12px;
+}
+.matchDetailTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+.matchDetailLogo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+.matchDetailName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+.matchDetailScoreBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+.matchDetailScore {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.matchDetailStatus {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 500;
+}
+.matchDetailScorers {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.matchDetailScorer {
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.matchDetailScorerName {
+  font-weight: 600;
+}
+.matchDetailScorerMinute {
+  color: #ffe082;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+.matchDetailNoScorer {
+  color: #bdbdbd;
+  font-size: 1rem;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.matchDetailTop {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-bottom: 8px;
+}
+.matchDetailLeague {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 400;
+}
+.matchDetailDate {
+  font-size: 1rem;
+  color: #7e7e8f;
+  margin-left: 8px;
+  font-weight: 400;
+}
+.matchDetailStatus {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 400;
+  margin-left: auto;
+}
+.matchDetailMain {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  gap: 32px;
+}
+.matchDetailTeamCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+.matchDetailScoreCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #bdbdbd;
+  min-width: 120px;
+  gap: 16px;
+}
+.matchDetailScoreHome, .matchDetailScoreAway {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #bdbdbd;
+}
+.matchDetailScoreDash {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #bdbdbd;
+  margin: 0 8px;
+}
+.matchDetailTeamName {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-top: 4px;
+}
+.matchDetailBottom {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 8px;
+}
+.matchDetailScorersLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2px;
+  color: #bdbdbd;
+  font-size: 0.98rem;
+}
+.matchDetailScorersRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 2px;
+  color: #bdbdbd;
+  font-size: 0.98rem;
+}
+.matchDetailBallIcon {
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+} 
