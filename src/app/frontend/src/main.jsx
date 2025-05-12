@@ -29,11 +29,10 @@ root.render(
 
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Navigate to="newteam"/>} />
-            <Route path="newteam" element={<AddTeamForm />} />
+            <Route path="newteam/add" element={<AddTeamForm />} />
             <Route path="rules" element={<RuleUpdateForm />} />
-            <Route path="newrecord" element={<MatchRecordForm />}/>
+            <Route path="newrecord/add" element={<MatchRecordForm />}/>
           </Route>
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

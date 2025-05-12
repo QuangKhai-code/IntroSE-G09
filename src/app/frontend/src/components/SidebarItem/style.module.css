@@ -13,6 +13,20 @@
     rgba(255, 255, 255, 0.5));
 }
 
+.container_active {
+    cursor: pointer;
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1.5rem 0;
+    margin: 0 1rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(90deg, 
+    rgba(143, 255, 23, 0.799), rgba(143, 255, 23, 0.514),
+    rgba(143, 255, 23, 0.146), rgba(255, 255, 255, 0));
+    transition: all 0.3s ease-in-out;
+}
+
 .container:hover {
     background: linear-gradient(90deg, 
     rgba(143, 255, 23, 0.799), rgba(143, 255, 23, 0.514),
@@ -22,7 +36,7 @@
 
 .icon_container {
     width: 15%;
-    height:fit-content;
+    height:20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,10 +44,19 @@
     margin-right: 10%;
 }
 
+.icon_shrunk{
+    width: 40%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10%;
+
+}
+
 .icon {
     width: 100%;
     height: auto;
-    margin-left: 10%;
 }
 
 .navText {
