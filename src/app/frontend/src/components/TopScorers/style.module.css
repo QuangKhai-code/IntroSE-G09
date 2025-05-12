@@ -1,8 +1,8 @@
 .topScorers {
-  padding: 24px 16px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: none;
+  padding: 32px 24px;
+  background: #f8fafd;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(57, 25, 100, 0.08);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -30,8 +30,8 @@
 }
 
 .reportDate {
-  font-size: 2.5rem;
-  color: #fff;
+  font-size: 2.7rem;
+  color: white;
   margin-bottom: 18px;
   text-align: center;
   font-weight: 900;
@@ -41,81 +41,92 @@
 }
 
 .tableContainer {
-  display: block;
   width: 1000px;
-  min-width: 1000px;
-  max-width: 1000px;
   margin: 0 auto;
-  border-radius: 12px;
-  background: transparent;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(57, 25, 100, 0.06);
   padding: 0;
-  min-height: 420px;
+  min-height: 900px;
 }
 
 .table {
   width: 100%;
-  min-width: 100%;
-  max-width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 20px;
   background: transparent;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: none;
   table-layout: fixed;
-  height: 800px;
-}
-
-.table tbody {
   min-height: 420px;
-  display: table-row-group;
-}
-
-.table th,
-.table td {
-  padding: 18px 16px;
-  font-size: 20px;
-  word-break: break-word;
 }
 
 .table th {
-  background-color: #f6f6f6;
+  background: #f3f0fa;
   font-weight: 800;
   color: #391964;
   border-bottom: 3px solid #e5e5e5;
   text-align: left;
   letter-spacing: 0.5px;
-  position: relative;
+  padding: 20px 16px;
+  font-size: 21px;
 }
 
 .table td {
-  background: transparent;
+  background: #fff;
   color: #391964;
   font-weight: 400;
   border-bottom: 1.5px solid #f0f0f0;
+  padding: 18px 16px;
+  font-size: 20px;
+  transition: background 0.15s;
 }
 
-.table tr:last-child td {
-  border-bottom: none;
+.table tr:nth-child(even) td {
+  background: #f8fafd;
+}
+
+.table tr:hover td {
+  background: #ede7f6;
 }
 
 .leftAlign {
   text-align: left !important;
 }
 
-.playerCell, .teamCell {
+.playerCell {
   text-align: left;
-  font-weight: 600;
+  font-weight: 800;
+  color: #222;
+  font-size: 18px;
+  padding-left: 0 !important;
+}
+
+/* Căn trái cho header column Cầu Thủ */
+.table th.playerHeader {
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+
+/* Nếu không có class riêng cho header, dùng nth-child (giả sử Cầu Thủ là cột thứ 2) */
+.table th:nth-child(2) {
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+
+.teamCell {
+  text-align: left;
+  font-weight: 400;
   color: #222;
   font-size: 18px;
 }
 
 .goalsCell {
-  font-weight: 800;
+  text-align: right;
+  font-weight: 600;
   color: #391964;
   font-size: 22px;
-  text-align: center !important;
 }
 
 .sttCell {
@@ -131,112 +142,32 @@
   font-weight: 400;
 }
 
-.top3Row {
-  background: linear-gradient(90deg, #ffe066 0%, #fffbe6 100%) !important;
-  font-weight: 700;
-  color: #222 !important;
-  font-size: 19px;
-}
-
-.bottom3Row {
-  background: #f8d7da !important;
-  color: #a94442 !important;
-  font-weight: 500;
-}
-
-.table th:last-child, .table td:last-child {
-  text-align: right !important;
-}
-
-/* Responsive styles */
-@media (max-width: 1100px) {
-  .table {
-    font-size: 16px;
-  }
-  .table th, .table td {
-    font-size: 16px;
-    padding: 10px 6px;
-  }
-  .goalsCell {
-    font-size: 16px;
-  }
-  .paginationBtn {
-    font-size: 16px;
-  }
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.tabs button {
-  padding: 8px 20px;
-  border: 1px solid #1a73e8;
-  background: #fff;
-  color: #1a73e8;
-  font-weight: 600;
-  border-radius: 4px 4px 0 0;
-  cursor: pointer;
-  outline: none;
-  transition: background 0.2s, color 0.2s;
-}
-
-.tabs button:hover {
-  background: #e3f0ff;
-}
-
-.activeTab {
-  background: #1a73e8;
-  color: #fff;
-  border-bottom: 2px solid #fff;
-}
 
 .paginationBtn {
   padding: 8px 22px;
   margin: 0 4px;
   border: none;
-  background: transparent;
+  background: #f3f0fa;
   color: #391964;
   font-weight: 800;
   font-size: 22px;
   border-radius: 24px;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background 0.2s, color 0.2s;
   outline: none;
   box-shadow: none;
 }
-.paginationBtn:hover:not(:disabled) {
-  color: #6c3483;
-  background: #f6f6f6;
+
+.paginationBtn:hover:not(:disabled),
+.paginationBtn.active {
+  color: #fff;
+  background: #391964;
 }
+
 .paginationBtn:disabled {
   color: #bdbdbd;
   background: transparent;
   cursor: not-allowed;
-  box-shadow: none;
-}
-
-.playerCell {
-  text-align: left;
-  font-weight: 800;
-  color: #222;
-  font-size: 18px;
-}
-
-.teamCell {
-  text-align: left;
-  font-weight: 400;
-  color: #222;
-  font-size: 18px;
-}
-
-.goalsCell {
-  font-weight: 400;
-  color: #391964;
-  font-size: 22px;
-  text-align: right !important;
 }
 
 .sortableHeader {
@@ -262,4 +193,63 @@
   align-items: center;
   height: 120px;
   white-space: nowrap;
+}
+
+.searchBarRow {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 28px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  background: #f3f0fa;
+  border-radius: 14px;
+  padding: 18px 22px 14px 22px;
+  box-shadow: 0 2px 12px rgba(57, 25, 100, 0.07);
+}
+
+.searchControl,
+.searchBarRow select {
+  border: 1.5px solid #d1c4e9;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 17px;
+  background: #fff;
+  color: #391964;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  min-width: 120px;
+  max-width: 260px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 6px rgba(57, 25, 100, 0.06);
+}
+
+.searchControl[type="text"] {
+  width: 220px;
+  min-width: 160px;
+  padding-left: 40px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23bdbdbd" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+
+.searchControl:focus,
+.searchBarRow select:focus {
+  border: 1.5px solid #7c4dff;
+  box-shadow: 0 0 0 2px #ede7f6;
+}
+
+.searchControl::placeholder {
+  color: #bdbdbd;
+  opacity: 1;
+}
+
+.searchBarRow select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%237c4dff" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
 } 

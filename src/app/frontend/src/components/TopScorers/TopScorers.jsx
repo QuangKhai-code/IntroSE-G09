@@ -60,33 +60,28 @@ const TopScorers = ({ players, reportDate }) => {
       <div className={s.topScorers}>
         {/* Title that changes based on search/filter */}
         <h2 className={s.title} style={{textAlign: 'center', marginBottom: 20, color: '#000000'}}>
-          {searchTerm || selectedTeam ? 'Kết quả tìm kiếm cầu thủ' : 'Bảng xếp hạng cầu thủ ghi bàn'}
+          {searchTerm ? 'Kết quả tìm kiếm cầu thủ' : 'Bảng xếp hạng cầu thủ ghi bàn'}
         </h2>
-        {/* Tra cứu cầu thủ và filter đội bóng */}
-        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
+        <div className={s.tableContainer} style={{marginBottom: 0}}>
+          <div className={s.searchBarRow}>
             <select
+              className={s.searchControl}
               value={selectedTeam}
               onChange={e => { setSelectedTeam(e.target.value); setPage(1); }}
-              style={{ padding: '8px 12px', fontSize: 16, borderRadius: 8, border: '1px solid #ccc', minWidth: 160 }}
             >
               <option value="">Tất cả đội bóng</option>
               {teamList.map(team => (
                 <option key={team} value={team}>{team}</option>
               ))}
             </select>
-          </div>
-          <div>
             <input
+              className={s.searchControl}
               type="text"
               placeholder="Tra cứu cầu thủ..."
               value={searchTerm}
               onChange={e => { setSearchTerm(e.target.value); setPage(1); }}
-              style={{ padding: '8px 16px', fontSize: 16, borderRadius: 8, border: '1px solid #ccc', minWidth: 220 }}
             />
           </div>
-        </div>
-        <div className={s.tableContainer}>
           <table className={s.table}>
             <thead>
               <tr>

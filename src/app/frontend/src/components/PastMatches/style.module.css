@@ -4,18 +4,36 @@
   max-width: 1000px;
   min-height: 350px;
   margin: 0 auto 32px auto;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.98);
   border-radius: 28px;
-  box-shadow: 0 4px 24px rgba(90,32,110,0.10);
+  box-shadow: 0 8px 32px rgba(90,32,110,0.12);
   padding: 32px 32px 24px 32px;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 12px 40px rgba(90,32,110,0.15);
 }
 
 .sectionTitle {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: #391964;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
   text-align: left;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #5a206e, #8a4caf);
+  border-radius: 2px;
 }
 
 .pastMatchList {
@@ -34,10 +52,19 @@
   align-items: center;
   padding: 0 24px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: none;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(90,32,110,0.06);
   gap: 0;
   margin-bottom: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1px solid rgba(90,32,110,0.08);
+}
+
+.pastMatchRow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(90,32,110,0.15);
+  border-color: rgba(90,32,110,0.2);
 }
 
 .pastHomeTeamBlock {
@@ -60,6 +87,11 @@
 .pastTeamLogo {
   height: 36px;
   width: auto;
+  transition: transform 0.3s ease;
+}
+
+.pastMatchRow:hover .pastTeamLogo {
+  transform: scale(1.1);
 }
 
 .pastTeamName {
@@ -67,6 +99,11 @@
   font-size: 1.15rem;
   font-weight: 700;
   font-family: 'Baloo 2', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.pastMatchRow:hover .pastTeamName {
+  color: #5a206e;
 }
 
 .pastScoreBlock {
@@ -76,13 +113,20 @@
 }
 
 .pastScore {
-  background: #3d1857;
+  background: linear-gradient(135deg, #3d1857, #5a206e);
   color: #fff;
   font-size: 1.15rem;
   font-weight: 800;
-  border-radius: 8px;
-  padding: 4px 18px;
+  border-radius: 12px;
+  padding: 6px 20px;
   font-family: 'Baloo 2', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(90,32,110,0.2);
+}
+
+.pastMatchRow:hover .pastScore {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(90,32,110,0.3);
 }
 
 .pastStadiumBlock {
@@ -113,81 +157,83 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
-  margin-top: 18px;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 16px 0;
 }
 
 .paginationBtn {
-  background: none;
-  border: none;
+  background: #fff;
+  border: 2px solid rgba(90,32,110,0.1);
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 22px;
   color: #5a206e;
   padding: 0;
+  position: relative;
+  overflow: hidden;
 }
+
 .paginationBtn:disabled {
   color: #ccc;
   cursor: not-allowed;
+  border-color: rgba(90,32,110,0.05);
+  background: #f8f8f8;
 }
+
 .paginationBtn:not(:disabled):hover {
-  background: #f3e6fa;
+  background: linear-gradient(135deg, #f3e6fa, #e5e0f2);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(90,32,110,0.15);
+  border-color: rgba(90,32,110,0.2);
+}
+
+.paginationBtn:not(:disabled):active {
+  transform: translateY(1px) scale(0.95);
 }
 
 .paginationText {
   font-weight: 700;
   font-size: 18px;
-  color: #22223b;
+  color: #391964;
   min-width: 48px;
   text-align: center;
+  padding: 8px 16px;
+  background: rgba(90,32,110,0.05);
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 
-.upcomingMatchRow {
-  width: 100%;
-  min-height: 60px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 2fr 2fr;
-  align-items: center;
-  padding: 0 24px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: none;
-  gap: 0;
-  margin-bottom: 0;
-}
-
-.upcomingTimeBlock {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.upcomingTime {
-  background: #3d1857;
-  color: #fff;
-  font-size: 1.15rem;
-  font-weight: 800;
-  border-radius: 8px;
-  padding: 4px 18px;
-  font-family: 'Baloo 2', sans-serif;
+.paginationText:hover {
+  background: rgba(90,32,110,0.1);
 }
 
 .matchDetailRow {
-  background: #23232b;
+  background: linear-gradient(135deg, #23232b, #2a2a35);
   color: #fff;
-  border-radius: 18px;
-  margin: 8px 0 18px 0;
-  padding: 24px 16px 16px 16px;
+  border-radius: 20px;
+  margin: 12px 0 24px 0;
+  padding: 28px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255,255,255,0.1);
 }
+
+.matchDetailRow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  border-color: rgba(255,255,255,0.15);
+}
+
 .matchDetailHeader {
   display: flex;
   align-items: center;
@@ -203,10 +249,15 @@
   min-width: 120px;
 }
 .matchDetailLogo {
-  width: 54px;
-  height: 54px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+.matchDetailRow:hover .matchDetailLogo {
+  transform: scale(1.1);
 }
 .matchDetailName {
   font-size: 1.15rem;
@@ -222,10 +273,16 @@
   min-width: 80px;
 }
 .matchDetailScore {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 800;
   color: #fff;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+.matchDetailRow:hover .matchDetailScore {
+  transform: scale(1.05);
+  text-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 .matchDetailStatus {
   font-size: 1rem;
