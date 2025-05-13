@@ -72,7 +72,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Allow React frontend to call API
+    "http://localhost:3000",
+    "http://localhost:5173",
+    # Allow React frontend to call API
 ]
 
 
@@ -105,7 +107,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'football_management',
         'USER': 'postgres', 
-        'PASSWORD': 'realpassword123',  
+        'PASSWORD': '123',  
         'HOST': 'localhost',
         'PORT': '5432',
     }

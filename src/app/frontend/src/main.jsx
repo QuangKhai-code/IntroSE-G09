@@ -14,6 +14,8 @@ import RuleUpdateForm from "./pages/RuleUpdateForm/RuleUpdateForm";
 import MatchRecordForm from "./pages/MatchRecordForm/MatchRecordForm";
 import ManualMatchSetupForm from "./pages/ManualMatchSetupForm/ManualMatchSetupForm";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
+import PlayerPage from "./pages/PlayerPage/PlayerPage";
+import MatchSchedule from "./pages/MatchSchedule/MatchSchedule";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -28,6 +30,8 @@ root.render(
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/players" element={<PlayerPage />} />
+          <Route path="/schedule" element={<MatchSchedule />} />
 
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Navigate to="rules"/>} />

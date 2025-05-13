@@ -16,15 +16,15 @@ export default function Header() {
         <ul className={`${s.nav_list} `}>
           <Navbtn
             name="Bảng xếp hạng"
-            link="#ranking"
+            route="/"
             />
           <Navbtn
-            name="Tra cứu"
-            link="/"
+            name="Cầu thủ"
+            route="/players"
             />
           <Navbtn
-            name="Lịch sử đấu"
-            link="/"
+            name="Lịch thi đấu"
+            route="/schedule"
             />
         </ul>
       </div>

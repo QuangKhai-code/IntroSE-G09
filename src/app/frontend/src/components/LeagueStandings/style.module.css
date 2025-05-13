@@ -1,0 +1,126 @@
+.leagueStandings {
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(57, 25, 100, 0.08);
+  max-width: 1100px;
+  margin: 32px auto;
+}
+
+.standingsTitle {
+  color: #391964;
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.standingsTableContainer {
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #f8f9fa;
+  padding: 0;
+}
+
+.standingsTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.standingsTable th,
+.standingsTable td {
+  padding: 18px 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.standingsTable th {
+  background: #f8f9fa;
+  color: #391964;
+  font-size: 22px;
+  font-weight: 800;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.standingsTable th:nth-child(2),
+.standingsTable td.teamCell {
+  text-align: left;
+}
+
+.standingsTable tr {
+  transition: background 0.2s;
+}
+
+.standingsTable tr:hover {
+  background: #e8f0fe;
+}
+
+.top3Row {
+  background: #e3f0ff !important;
+}
+
+.bottom3Row {
+  background: #ffe6e6 !important;
+}
+
+.teamCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.teamLogo {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f0f0f0;
+}
+
+.reportDate {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .standingsTable {
+    font-size: 14px;
+  }
+  .standingsTable th,
+  .standingsTable td {
+    padding: 8px 4px;
+  }
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 10px;
+  background: #fff;
+}
+
+.bmCode {
+  width: 90px;
+  border-right: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  color: #333;
+}
