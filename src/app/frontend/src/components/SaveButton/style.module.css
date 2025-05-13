@@ -1,0 +1,20 @@
+.submit_container {
+  width: 150px;
+}
+
+.submit_container button {
+  width: 100%;
+  border-color: white;
+  padding: 12px;
+  border-radius: 9999px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.submit_container button:hover {
+  background-color: #90FF17 ;
+  color: black;
+  border-color: black;
+}
