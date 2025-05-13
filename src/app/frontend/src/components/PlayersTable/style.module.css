@@ -1,0 +1,120 @@
+.table_container {
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/assets/admin.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .back_button {
+    cursor: pointer;
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 3.5rem;
+    aspect-ratio: 1/1;
+    background-color: rgb(144, 255, 23);
+    
+    border-radius: 9999px;
+    border-width: 1px;
+  }
+
+  
+  .icon {
+    height: 100%;
+    border-radius: 9999px;
+    /* border-width: 1px; */
+  }
+  
+  .table {
+    width: 60%;
+    height: 600px;
+    overflow: scroll;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.272);
+    backdrop-filter: blur(20px);
+    border-radius: 2rem;
+  }
+  
+  .table thead {
+    border-radius: 2rem;
+    text-align: center;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+  }
+  
+  .table td button {
+    width: 1%;
+    margin-right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .form_container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .add_player_form {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .add_player_form input {
+    padding: 10px;
+    border-radius: 1rem;
+    border: 3px solid black;
+    
+  }
+
+  .add_player_form input::placeholder {
+    font-size: 16px;
+    font-family: "Baloo 2", sans-serif;
+    color: rgb(112, 112, 112); 
+    font-style: italic;
+  }
+  
+  .add_button {
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 5%;
+    aspect-ratio: 1/1;
+    background-color: rgb(144, 255, 23);
+
+    padding: 5px;
+    border: none;
+    border-radius: 9999px;
+    border-width: 10px;
+  }

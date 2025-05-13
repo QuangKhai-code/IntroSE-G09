@@ -1,41 +1,52 @@
 import React from "react";
-import s from "./style.module.css";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setTeamName, setHomeStadium, saveTeam } from "../../store/team/team-slice";
 
+import s from "./style.module.css";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import Input from "../../components/Input/Input";
 
 export default function AddTeamForm() {
-    const [teamName, setTeamName] = useState("");
-    const [homeStadium, setStadium] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { teamName, homeStadium } = useSelector((state) => state.teamSlice);
 
-    const submit = (e) => {
-        e.preventDefault();
-        alert(`Team Name: ${teamName}, Home Stadium: ${homeStadium}`);
-
-        //TODO: API call and clear slice
-    }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(saveTeam());
+      alert("Team saved successfully!");
+    };
 
     return (
-      <form className={`${s.form_container}`} onSubmit={submit}>
+      <form className={s.form_container} onSubmit={handleSubmit}>
+        
         <div className={s.input_group}>
           <label htmlFor="teamName">Tên đội</label>
           <Input
             id="teamName"
             placeholder="Tên đội"
-            onTextChange={setTeamName}
-          ></Input>
+            value={teamName}
+            onTextChange={(value) => dispatch(setTeamName(value))}
+          />
         </div>
+
         <div className={s.input_group}>
           <label htmlFor="homeStadium">Sân nhà</label>
           <Input
             id="homeStadium"
             placeholder="Sân nhà"
-            onTextChange={setStadium}
-          ></Input>
+            value={homeStadium}
+            onTextChange={(value) => dispatch(setHomeStadium(value))}
+          />
         </div>
+
         <div className={s.detail_btn_group}>
-          <button className={s.detail_btn}>
+          <button
+            type="button"
+            className={s.detail_btn}
+            onClick={() => navigate("/admin/teams/add/players")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

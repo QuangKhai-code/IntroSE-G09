@@ -12,6 +12,8 @@ import AddTeamForm from "./pages/AddTeamForm/AddTeamForm";
 import NotFound from "./pages/NotFound/NotFound";
 import RuleUpdateForm from "./pages/RuleUpdateForm/RuleUpdateForm";
 import MatchRecordForm from "./pages/MatchRecordForm/MatchRecordForm";
+import ManualMatchSetupForm from "./pages/ManualMatchSetupForm/ManualMatchSetupForm";
+import PlayersTable from "./components/PlayersTable/PlayersTable";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -28,13 +30,17 @@ root.render(
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/admin" element={<Admin />}>
-            <Route index element={<Navigate to="newteam"/>} />
-            <Route path="newteam/add" element={<AddTeamForm />} />
+            <Route index element={<Navigate to="rules"/>} />
+            <Route path="teams/add" element={<AddTeamForm />} />
             <Route path="rules" element={<RuleUpdateForm />} />
-            <Route path="newrecord/add" element={<MatchRecordForm />}/>
+            <Route path="schedule/manual" element={<ManualMatchSetupForm />} />
+            <Route path="match-results/add" element={<MatchRecordForm />}/>
           </Route>
+          <Route path="/admin/teams/add/players" element={<PlayersTable />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
+
       </BrowserRouter>
     </Provider>
   </StrictMode>
