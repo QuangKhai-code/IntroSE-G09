@@ -1,0 +1,398 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.modalContent {
+  width: 450px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.modalContent h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.formGroup select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
+
+.formGroup select option {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  background-color: #333;
+  color: white;
+  padding: 12px;
+}
+
+.formGroup select:focus option:checked {
+  box-shadow: 0 0 10px 100px rgb(144, 255, 23) inset;
+  color: #000;
+}
+
+.formGroup select option:checked {
+  background-color: rgba(144, 255, 23, 0.3) !important;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.formGroup select option:hover,
+.formGroup select option:focus {
+  background-color: rgb(144, 255, 23) !important;
+  color: #000 !important;
+}
+
+.textArea {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+  font-family: inherit;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.cancelButton,
+.saveButton {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.saveButton {
+  background: rgb(144, 255, 23);
+  border: none;
+  color: black;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 500px) {
+  .modalContent {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Style for position select dropdown specifically */
+.formGroup select[name="position"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+/* Customize position dropdown options */
+.formGroup select[name="position"] option {
+  padding: 12px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  background-color: #333;
+}
+
+/* First option (placeholder) styling */
+.formGroup select[name="position"] option:first-child {
+  font-style: italic;
+  color: #999;
+}
+
+/* Selected option styling */
+.formGroup select[name="position"] option:checked {
+  background-color: rgba(144, 255, 23, 0.3);
+  color: white;
+}
+
+/* Hover effect for position options */
+.formGroup select[name="position"]:focus option:hover {
+  background-color: rgb(144, 255, 23);
+  color: #000;
+}
+
+/* Custom position dropdown styling */
+.customPositionDropdown {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.positionInput {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.positionInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.positionDropdownArrow {
+  position: absolute;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.positionDropdownMenu {
+  position: absolute;
+  top: 0;
+  left: 103%; /* Position to the right of the input */
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.positionOption {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.positionOption:hover {
+  background-color: rgb(144, 255, 23);
+  color: #000;
+}
+
+.positionOption.selected {
+  background-color: rgba(144, 255, 23, 0.3);
+  font-weight: bold;
+}
+
+/* Scrollbar styling for the dropdown */
+.positionDropdownMenu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.positionDropdownMenu::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.positionDropdownMenu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.positionDropdownMenu::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Custom type dropdown styling */
+.customTypeDropdown {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.typeInput {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.typeInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.typeDropdownArrow {
+  position: absolute;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.typeDropdownMenu {
+  position: absolute;
+  top: 0;
+  left: 103%; /* Position to the right of the input */
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.typeOption {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.typeOption:hover {
+  background-color: rgb(144, 255, 23);
+  color: #000;
+}
+
+.typeOption.selected {
+  background-color: rgba(144, 255, 23, 0.3);
+  font-weight: bold;
+}
+
+/* Scrollbar styling for the dropdown */
+.typeDropdownMenu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.typeDropdownMenu::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.typeDropdownMenu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.typeDropdownMenu::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}   

@@ -18,7 +18,6 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);  
 }
 
-
 .input_group {
     font-family: "Baloo 2", sans-serif;
     font-weight: 800;
@@ -34,7 +33,7 @@
 
     margin-bottom: 50px;
     border-radius: 1rem;
-    width: 30%;
+    width: 35%;
     height: 10%;
 }
 
@@ -59,4 +58,103 @@
     background-color: #f7ece6f0;
     border: none;
     color: #000000;
+}
+
+.input_section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.label {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.custom_select {
+    position: relative;
+    width: 100%;
+}
+
+.select_input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px;
+}
+
+.select_arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.buttons_container {
+    width: 60%;
+    margin: 20px 0;
+}
+
+.player_btn {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    background-color: #e8d7f1;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+}
+
+.player_btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button_icon {
+    width: 20px;
+    height: 20px;
+}
+
+.save_container {
+    margin-top: 10px;
+    width: 40%;
+}
+
+.save_btn {
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 30px;
+    border: none;
+    background-color: #000;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.save_btn:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

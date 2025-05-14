@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {Provider} from "react-redux";
-import {store} from "./store/index";
+import {store, persistor} from "./store/index";
+import { PersistGate } from 'redux-persist/integration/react';
 import App from "./App";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -26,26 +27,27 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/players" element={<PlayerPage />} />
-          <Route path="/schedule" element={<MatchSchedule />} />
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/players" element={<PlayerPage />} />
+            <Route path="/schedule" element={<MatchSchedule />} />
 
-          <Route path="/admin" element={<Admin />}>
-            <Route index element={<Navigate to="rules"/>} />
-            <Route path="teams/add" element={<AddTeamForm />} />
-            <Route path="rules" element={<RuleUpdateForm />} />
-            <Route path="schedule/manual" element={<ManualMatchSetupForm />} />
-            <Route path="match-results/add" element={<MatchRecordForm />}/>
-          </Route>
-          <Route path="/admin/teams/add/players" element={<PlayersTable />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<Navigate to="rules"/>} />
+              <Route path="teams/add" element={<AddTeamForm />} />
+              <Route path="rules" element={<RuleUpdateForm />} />
+              <Route path="schedule/manual" element={<ManualMatchSetupForm />} />
+              <Route path="match-results/add" element={<MatchRecordForm />}/>
+            </Route>
+            <Route path="/admin/teams/add/players" element={<PlayersTable />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

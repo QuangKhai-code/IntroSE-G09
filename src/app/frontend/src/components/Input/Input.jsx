@@ -8,6 +8,7 @@ export default function Input(props) {
         className={`${s.input} ${props.className || ""}`}
         type={props.type || "text"}
         placeholder={props.placeholder}
+        value={props.value}
         onChange={(e) => {
           props.onTextChange(e.target.value);
         }}
