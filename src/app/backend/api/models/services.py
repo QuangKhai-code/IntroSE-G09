@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from datetime import datetime
 import pytz
+from .Goal import Goal
 
 
 class TournamentRuleService:
@@ -51,13 +52,12 @@ class TournamentRuleService:
                 f"Thời điểm ghi bàn phải nằm trong khoảng từ 0 đến {rules.max_goal_time} phút")
 
     @staticmethod
-    def validate_goal_type(goal_type):
-        """Validate loại bàn thắng"""
-        rules = TournamentRuleService.get_current_rules()
-        valid_goal_types = [gt[0] for gt in rules.goal_types]
-        if goal_type not in valid_goal_types:
+    def validate_goal_type(goal_type_value):
+        """Validate loại bàn thắng using Goal.GOAL_TYPES as the authoritative source."""
+        defined_goal_types = [gt[0] for gt in Goal.GOAL_TYPES]
+        if goal_type_value not in defined_goal_types:
             raise ValidationError(
-                f"Loại bàn thắng không hợp lệ. Các loại hợp lệ: {valid_goal_types}")
+                f"Loại bàn thắng không hợp lệ. Các loại hợp lệ: {defined_goal_types}")
 
     @staticmethod
     def get_ranking_criteria():

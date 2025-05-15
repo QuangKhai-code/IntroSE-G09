@@ -124,8 +124,7 @@ class MatchResultViewSet(viewsets.ModelViewSet):
                 # player là đối tượng Player từ PrimaryKeyRelatedField
                 goal = Goal.objects.create(
                     match=match,
-                    # Đã là đối tượng Player, không cần .id
-                    player=goal_data['player'],
+                    player_id=goal_data['player'].id,
                     goal_type=goal_data['goal_type'],
                     minute=goal_data['minute']
                 )

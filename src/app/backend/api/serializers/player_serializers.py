@@ -65,4 +65,4 @@ class TopScorerSerializer(serializers.ModelSerializer):
             'player_type', 'player_type_display',
             'birthdate', 'total_goals'
         ]
-        read_only_fields = ['team_name', 'player_type_display', 'total_goals'] 
+        read_only_fields = ['team_name', 'player_type_display', 'total_goals']

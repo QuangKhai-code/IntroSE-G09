@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
-from .services import TournamentRuleService
 
 
 class Goal(models.Model):
@@ -32,6 +31,7 @@ class Goal(models.Model):
         return f"{self.player.name} - phút {self.minute} - {self.get_goal_type_display()}"
 
     def clean(self):
+        from .services import TournamentRuleService
         # Kiểm tra cầu thủ phải thuộc một trong hai đội thi đấu
         if hasattr(self, 'match') and hasattr(self, 'player'):
             if self.player.team != self.match.home_team and self.player.team != self.match.away_team:

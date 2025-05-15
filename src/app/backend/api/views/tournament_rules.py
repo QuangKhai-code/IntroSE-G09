@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from ..models.TournamentRule import TournamentRule
 from ..serializers.tournament_rule_serializers import TournamentRuleSerializer
 from rest_framework.decorators import action
@@ -9,6 +10,7 @@ from rest_framework import status
 class TournamentRuleViewSet(viewsets.ModelViewSet):
     queryset = TournamentRule.objects.all()
     serializer_class = TournamentRuleSerializer
+    permission_classes = [AllowAny]
 
     @action(detail=False, methods=['get'])
     def current(self, request):

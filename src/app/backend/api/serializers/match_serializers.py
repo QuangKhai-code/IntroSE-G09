@@ -139,38 +139,43 @@ class MatchResultCreateSerializer(serializers.ModelSerializer):
         # Kiểm tra số lượng bàn thắng
         home_score = data.get('home_score', 0)
         away_score = data.get('away_score', 0)
-        goals = data.get('goals', [])
+        # 'goals' in data now contains a list of dictionaries,
+        # where each dictionary's 'player' key holds a Player *instance*
+        # due to GoalCreateSerializer's PrimaryKeyRelatedField.
+        goals_input_data = data.get('goals', [])
 
-        # Đếm số bàn thắng của từng đội từ goals
-        home_team_goals = 0
-        away_team_goals = 0
+        home_team_goals_count = 0
+        away_team_goals_count = 0
 
-        # Nếu không có goals, bỏ qua kiểm tra
-        if goals:
-            # Duyệt qua từng bàn thắng và kiểm tra
-            for goal_data in goals:
-                player_id = goal_data.get('player')
-                from ..models import Player
-                try:
-                    player = Player.objects.get(id=player_id)
-                    if player.team == match.home_team:
-                        home_team_goals += 1
-                    elif player.team == match.away_team:
-                        away_team_goals += 1
-                    else:
-                        raise serializers.ValidationError(
-                            f"Cầu thủ {player.name} không thuộc một trong hai đội thi đấu")
-                except Player.DoesNotExist:
+        if goals_input_data:
+            for goal_item in goals_input_data:
+                # goal_item['player'] is already a Player instance.
+                player_object = goal_item.get('player')
+
+                if not player_object:  # Should not happen if input is valid and PKRelatedField worked
                     raise serializers.ValidationError(
-                        f"Không tìm thấy cầu thủ với ID {player_id}")
+                        "Dữ liệu bàn thắng không hợp lệ: thiếu thông tin cầu thủ.")
 
-            # Kiểm tra tổng số bàn thắng
-            if home_score != home_team_goals:
+                # No need to Player.objects.get(id=player_object) - this was the error source.
+                # We directly use player_object.
+
+                if player_object.team == match.home_team:
+                    home_team_goals_count += 1
+                elif player_object.team == match.away_team:
+                    away_team_goals_count += 1
+                else:
+                    # Ensure player_object has a 'name' attribute for the error message
+                    player_name = getattr(player_object, 'name', 'Không rõ')
+                    raise serializers.ValidationError(
+                        f"Cầu thủ {player_name} (ID: {player_object.id}) không thuộc đội nhà hoặc đội khách của trận đấu này.")
+
+            # Kiểm tra tổng số bàn thắng với input scores
+            if home_score != home_team_goals_count:
                 raise serializers.ValidationError(
-                    f"Số bàn thắng đội nhà ({home_score}) không khớp với số bàn thắng đã ghi nhận ({home_team_goals})")
-            if away_score != away_team_goals:
+                    f"Số bàn thắng đội nhà ({home_score}) không khớp với số bàn thắng được khai báo từ các cầu thủ ({home_team_goals_count}).")
+            if away_score != away_team_goals_count:
                 raise serializers.ValidationError(
-                    f"Số bàn thắng đội khách ({away_score}) không khớp với số bàn thắng đã ghi nhận ({away_team_goals})")
+                    f"Số bàn thắng đội khách ({away_score}) không khớp với số bàn thắng được khai báo từ các cầu thủ ({away_team_goals_count}).")
 
         return data
 
