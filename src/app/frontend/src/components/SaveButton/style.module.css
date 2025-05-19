@@ -18,6 +18,7 @@
 
 .submit_container:hover {
   border-color: black;
+  transform: translateY(-2px);
 }
 
 .submit_container:hover button {
