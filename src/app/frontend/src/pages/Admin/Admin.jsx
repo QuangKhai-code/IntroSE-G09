@@ -8,8 +8,9 @@ import calendarIconSrc from "/assets/calendar.png";
 import recordIconSrc from "/assets/record.png";
 import ruleIconSrc from "/assets/rule.png";
 import profileIconSrc from "/assets/profile.png";
+import { withAuthRequired } from "../../hoc/withAuthRequired";
 
-export default function Admin() {
+export function Admin() {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -87,3 +88,5 @@ export default function Admin() {
     </div>
   );
 }
+
+export const ProtectedAdmin = withAuthRequired(Admin);

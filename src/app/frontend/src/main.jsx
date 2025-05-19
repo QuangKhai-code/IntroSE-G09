@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from "./App";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import Admin from "./pages/Admin/Admin";
+import {Admin, ProtectedAdmin} from "./pages/Admin/Admin";
 import AddTeamForm from "./pages/AddTeamForm/AddTeamForm";
 import NotFound from "./pages/NotFound/NotFound";
 import RuleUpdateForm from "./pages/RuleUpdateForm/RuleUpdateForm";
@@ -35,7 +35,7 @@ root.render(
             <Route path="/players" element={<PlayerPage />} />
             <Route path="/schedule" element={<MatchSchedule />} />
 
-            <Route path="/admin" element={<Admin />}>
+            <Route path="/admin" element={<ProtectedAdmin />}>
               <Route index element={<Navigate to="rules"/>} />
               <Route path="teams/add" element={<AddTeamForm />} />
               <Route path="rules" element={<RuleUpdateForm />} />
