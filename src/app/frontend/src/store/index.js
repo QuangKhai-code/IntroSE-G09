@@ -7,7 +7,13 @@ import { authReducer } from './auth/auth-slice';
 import { rulesReducer } from './rules/rules-slice';
 import { teamReducer } from './team/team-slice';
 
-// Configure persist for the team slice only
+// Configure persist for auth and team slices
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['auth'] // only persist auth state
+};
+
 const teamPersistConfig = {
   key: 'team',
   storage,
@@ -15,7 +21,7 @@ const teamPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  authSlice: authReducer,
+  authSlice: persistReducer(authPersistConfig, authReducer),
   rulesSlice: rulesReducer,
   teamSlice: persistReducer(teamPersistConfig, teamReducer),
 });
