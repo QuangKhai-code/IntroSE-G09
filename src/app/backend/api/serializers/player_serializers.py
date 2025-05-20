@@ -6,7 +6,7 @@ from ..models.services import TournamentRuleService
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ['id', 'name', 'birthdate', 'player_type', 'note']
+        fields = ['id', 'name', 'birthdate', 'player_type', 'position', 'note']
 
     def validate_birthdate(self, value):
         TournamentRuleService.validate_player_age(value)
@@ -43,7 +43,8 @@ class PlayerWithGoalStatsSerializer(serializers.ModelSerializer):
             'player_type',        # Mã Loại Cầu Thủ (để filter)
             'player_type_display',  # Hiển thị Loại Cầu Thủ
             'birthdate',          # Có thể thêm ngày sinh nếu cần
-            'note',               # Có thể thêm ghi chú nếu cần
+            'position',           # Changed from note
+            'note',               # Added new note
             'total_goals'         # Tổng số bàn thắng
         ]
         read_only_fields = ['team_name', 'player_type_display', 'total_goals']

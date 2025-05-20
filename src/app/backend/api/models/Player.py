@@ -19,6 +19,7 @@ class Player(models.Model):
         verbose_name="Ngày sinh", validators=[validate_player_age])
     player_type = models.CharField(
         max_length=10, choices=PLAYER_TYPES, verbose_name="Loại cầu thủ")
+    position = models.TextField(verbose_name="Vị trí", blank=True, null=True)
     note = models.TextField(verbose_name="Ghi chú", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
