@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, Outlet, Link } from "react-router-dom";
+import { useLocation, Outlet, useNavigate } from "react-router-dom";
 import s from "./style.module.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
@@ -13,17 +13,19 @@ import { withAuthRequired } from "../../hoc/withAuthRequired";
 export function Admin() {
   const location = useLocation();
   const currentPath = location.pathname;
-
+  const navigate = useNavigate();
+  
   const navList = [
     { iconSrc: homeIconSrc, text: "Trang chủ", route: "/" },
+    { iconSrc: ruleIconSrc, text: "Thay đổi quy định", route: "/admin/rules" },
     {
       iconSrc: calendarIconSrc,
       text: "Quản lý lịch đấu",
       route: "/admin/schedule/manual",
       subItems: [
-        { text: "Chỉnh sửa lịch", route: "/admin/schedule/edit" },
         { text: "Lập lịch thủ công", route: "/admin/schedule/manual" },
         { text: "Lập lịch tự động", route: "/admin/schedule/auto" },
+        { text: "Chỉnh sửa lịch", route: "/admin/schedule/edit" },
       ],
     },
     {
@@ -44,13 +46,13 @@ export function Admin() {
             { text: "Chỉnh sửa hồ sơ", route: "/admin/teams/edit" },
         ],
     },
-    { iconSrc: ruleIconSrc, text: "Thay đổi quy định", route: "/admin/rules" },
   ];
 
   // Determine the active main item based on the current route
   const activeMainItem = navList.find((item) => {
     if (item.subItems) {
-      return currentPath.startsWith(item.route);
+      const route = item.route.split("/").slice(0, -1).join("/");
+      return currentPath.startsWith(route);
     } else {
       return currentPath === item.route;
     }
@@ -61,7 +63,7 @@ export function Admin() {
 
   return (
     <div className={s.container}>
-      {/* Sidebar */}
+
       <div className={s.sidebar}>
         <Sidebar navList={navList} currentPath={currentPath} />
       </div>
@@ -71,13 +73,13 @@ export function Admin() {
         {subItems.length > 0 && (
           <div className={s.subItems}>
             {subItems.map((subItem, index) => (
-              <Link
+              <div
                 key={index}
-                to={subItem.route}
+                onClick={() => navigate(subItem.route)}
                 className={currentPath === subItem.route ? s.subItem_active : s.subItem}
               >
                 {subItem.text}
-              </Link>
+              </div>
             ))}
           </div>
         )}

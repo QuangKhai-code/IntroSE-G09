@@ -33,6 +33,7 @@
     color: rgb(128, 248, 0);
     text-decoration: none;
     position: relative;
+    cursor: pointer;
 }
 
 .subItem_active::after {
@@ -61,7 +62,7 @@
     font-family: "Baloo 2", sans-serif;
     font-weight: 800;
     font-size: clamp(0.8rem, 2vw, 1.2rem);
-    
+    cursor: pointer;
 }
 
 .subItem:hover {

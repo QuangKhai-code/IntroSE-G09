@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setTeamName, setHomeStadium, saveTeam, clearFormData, clearFormSubmittedFlag } from "../../store/team/team-slice";
 
@@ -9,14 +9,67 @@ import Input from "../../components/Input/Input";
 
 export default function AddTeamForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { teamName, homeStadium, formSubmitted, players } = useSelector((state) => state.teamSlice);
 
+  // Check if there are unsaved changes
+  const hasUnsavedChanges = teamName || homeStadium || players.length > 0;
+
+  // Expose unsaved changes state to window object
+  useEffect(() => {
+    window.hasUnsavedTeamChanges = hasUnsavedChanges;
+    return () => {
+      window.hasUnsavedTeamChanges = false;
+    };
+  }, [hasUnsavedChanges]);
+
+  // Handle browser refresh/close
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
+  // Handle form clearing from sidebar navigation
+  useEffect(() => {
+    const handleClearForm = () => {
+      dispatch(clearFormData());
+    };
+
+    window.addEventListener('clearTeamForm', handleClearForm);
+    return () => window.removeEventListener('clearTeamForm', handleClearForm);
+  }, [dispatch]);
+
+  // Handle navigation with links
+  useEffect(() => {
+    const handleClick = (e) => {
+      // Check if the clicked element is a link
+      const link = e.target.closest('a');
+      if (link && hasUnsavedChanges) {
+        e.preventDefault();
+        const confirmed = window.confirm('Bạn có thay đổi chưa lưu. Bạn có chắc chắn muốn rời đi?');
+        if (confirmed) {
+          dispatch(clearFormData());
+          window.location.href = link.href;
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [hasUnsavedChanges, dispatch]);
+  
   // Check if the form was previously submitted and reset the flag
   useEffect(() => {
     if (formSubmitted) {
-      // If form was successfully submitted, clear the data
-      dispatch(clearFormData());
+      dispatch(clearFormSubmittedFlag());
     }
   }, [formSubmitted, dispatch]);
 
@@ -47,7 +100,6 @@ export default function AddTeamForm() {
 
   return (
     <form className={s.form_container} onSubmit={handleSubmit}>
-      
       <div className={s.input_group}>
         <label htmlFor="teamName">Tên đội</label>
         <Input
