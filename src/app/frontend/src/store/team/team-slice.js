@@ -1,4 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 export const teamSlice = createSlice({
   name: 'teamSlice',
@@ -31,30 +34,45 @@ export const teamSlice = createSlice({
     },
 
     saveTeam: (state) => {
-      // Set submitted flag to true
       state.formSubmitted = true;
       
-      // Simulate sending data to the backend
-      console.log('Saving team to backend:', {
-        teamName: state.teamName,
-        homeStadium: state.homeStadium,
-        players: state.players,
-      });
+      const teamData = {
+        name: state.teamName,
+        home_stadium: state.homeStadium,
+        players: state.players.map(player => ({
+          name: player.name,
+          birthdate: player.dateOfBirth,
+          player_type: player.type.toLowerCase(),
+          position: player.position,
+          note: player.notes
+        }))
+      };
 
-      // Clear form data only after successful submission to backend
-      // Will be done in a separate action now so we can better control it
+      console.log('Sending team data to backend:', teamData);
+      
+      axios.post(`${API_BASE}/api/teams/`, teamData)
+        .then(response => {
+          console.log('Team saved successfully:', response.data);
+          // Dispatch clearFormData action after successful save
+          window.dispatchEvent(new CustomEvent('teamSaved'));
+        })
+        .catch(error => {
+          console.error('Error saving team:', error.response?.data || error.message);
+          state.formSubmitted = false;
+        });
     },
+
     clearFormData: (state) => {
-      // Reset state after successfully sending to backend
       state.teamName = '';
       state.homeStadium = '';
       state.players = [];
       state.formSubmitted = false;
     },
+
     clearFormSubmittedFlag: (state) => {
       state.formSubmitted = false;
     }
-  },
+  }
 });
 
 export const { 

@@ -28,7 +28,7 @@ export default function EditTeamForm() {
             name: player.name,
             dateOfBirth: player.birthdate,
             position: player.position,
-            type: player.player_type === 'foreign' ? 'Foreign' : 'Domestic',
+            type: player.player_type,
             notes: player.note
           }))
         }));

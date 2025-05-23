@@ -10,6 +10,7 @@ export default function TeamModal({ team, onSave, onClose }) {
   });
 
   const [editingPlayer, setEditingPlayer] = useState(null);
+  
   const [newPlayer, setNewPlayer] = useState({
     name: '',
     dateOfBirth: '',
@@ -17,7 +18,7 @@ export default function TeamModal({ team, onSave, onClose }) {
     type: 'Trong nước',
     notes: ''
   });
-
+  
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -30,11 +31,13 @@ export default function TeamModal({ team, onSave, onClose }) {
     }
   }, [team]);
 
+  // Handle change for team name and home stadium
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // handle when typing in player fields
   const handlePlayerChange = (e) => {
     const { name, value } = e.target;
     setNewPlayer((prev) => ({ ...prev, [name]: value }));
@@ -56,6 +59,7 @@ export default function TeamModal({ team, onSave, onClose }) {
     }
   };
 
+  // handle when click on edit button of player
   const handleEditPlayer = (player) => {
     setEditingPlayer(player);
     setNewPlayer(player);
@@ -105,24 +109,14 @@ export default function TeamModal({ team, onSave, onClose }) {
 
   // Position options
   const positionOptions = [
-    "Thủ môn",
-    "Hậu vệ trung tâm",
-    "Hậu vệ cánh trái",
-    "Hậu vệ cánh phải",
-    "Tiền vệ phòng ngự",
-    "Tiền vệ trung tâm",
-    "Tiền vệ cánh trái",
-    "Tiền vệ cánh phải",
-    "Tiền vệ tấn công",
-    "Tiền đạo cắm",
-    "Tiền đạo trung tâm",
-    "Hộ công",
-    "Tiền đạo cánh trái",
-    "Tiền đạo cánh phải"
+    "Forward",
+    "Midfielder",
+    "Defender",
+    "Goalkeeper"
   ];
 
   // Type options
-  const typeOptions = ["Trong nước", "Ngoại quốc"];
+  const typeOptions = ["foreign", "domestic"];
 
   // Filter players based on search query
   const filteredPlayers = formData.players.filter(player => 
@@ -141,6 +135,7 @@ export default function TeamModal({ team, onSave, onClose }) {
       >
         <h2>Chỉnh sửa đội bóng</h2>
         <form onSubmit={handleSubmit} className={s.form}>
+
           <div className={s.formSection}>
             <h3>Thông tin đội bóng</h3>
             <div className={s.gridLayout}>
@@ -239,6 +234,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                 />
               </div>
             </div>
+
             <div className={s.playerButtonGroup}>
               <button
                 type="button"
@@ -322,6 +318,7 @@ export default function TeamModal({ team, onSave, onClose }) {
               Hủy bỏ
             </button>
           </div>
+
         </form>
       </motion.div>
     </div>

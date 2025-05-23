@@ -6,8 +6,7 @@
 }
 
 .toast_content {
-  background-color: #ff4d4f;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 12px 24px;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -19,12 +18,14 @@
 
 .message {
   margin-right: 12px;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 600;
 }
 
 .close_button {
   background: none;
   border: none;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 20px;
   cursor: pointer;
   padding: 0;

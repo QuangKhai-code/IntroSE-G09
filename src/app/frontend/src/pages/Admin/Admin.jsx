@@ -2,6 +2,9 @@ import React from "react";
 import { useLocation, Outlet, useNavigate } from "react-router-dom";
 import s from "./style.module.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import homeIconSrc from "/assets/home.png";
 import calendarIconSrc from "/assets/calendar.png";
@@ -63,7 +66,7 @@ export function Admin() {
 
   return (
     <div className={s.container}>
-
+      <ToastContainer />
       <div className={s.sidebar}>
         <Sidebar navList={navList} currentPath={currentPath} />
       </div>

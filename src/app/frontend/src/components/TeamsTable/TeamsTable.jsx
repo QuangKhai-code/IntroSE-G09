@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import s from './style.module.css';
 import TeamModal from '../TeamModal/TeamModal';
 
-export default function TeamsTable({ teams, onDelete, onUpdate, onUpdatePlayers }) {
-  const navigate = useNavigate();
+export default function TeamsTable({ teams, onDelete, onUpdate}) {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const teamsPerPage = 10;
@@ -65,6 +64,7 @@ export default function TeamsTable({ teams, onDelete, onUpdate, onUpdatePlayers 
           ))}
         </tbody>
       </table>
+      
       <div className={s.pagination}>
         <button 
           onClick={() => handlePageChange(currentPage - 1)}
@@ -90,6 +90,7 @@ export default function TeamsTable({ teams, onDelete, onUpdate, onUpdatePlayers 
           &gt;
         </button>
       </div>
+
       {selectedTeam && (
         <TeamModal
           team={selectedTeam}
@@ -97,6 +98,7 @@ export default function TeamsTable({ teams, onDelete, onUpdate, onUpdatePlayers 
           onClose={handleCloseModal}
         />
       )}
+
     </div>
   );
 } 
