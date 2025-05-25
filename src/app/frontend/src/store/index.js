@@ -6,6 +6,8 @@ import { combineReducers } from 'redux';
 import { authReducer } from './auth/auth-slice';
 import { rulesReducer } from './rules/rules-slice';
 import { teamReducer } from './team/team-slice';
+import teamUpdateReducer from './team/teamUpdate-slice';
+import teamListReducer from './team/teamList-slice';
 
 // Configure persist for auth and team slices
 const authPersistConfig = {
@@ -24,6 +26,8 @@ const rootReducer = combineReducers({
   authSlice: persistReducer(authPersistConfig, authReducer),
   rulesSlice: rulesReducer,
   teamSlice: persistReducer(teamPersistConfig, teamReducer),
+  teamUpdateSlice: teamUpdateReducer,
+  teamListSlice: teamListReducer,
 });
 
 const store = configureStore({

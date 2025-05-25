@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateTeam, addPlayer, removePlayer, updatePlayer, setCurrentTeam } from '../../store/team/teamUpdate-slice';
+import { fetchTeams } from '../../store/team/teamList-slice';
+import { toast } from 'react-toastify';
 import s from './style.module.css';
 
-export default function TeamModal({ team, onSave, onClose }) {
+export default function TeamModal({ team, onClose }) {
+  const dispatch = useDispatch();
+  const currentTeam = useSelector(state => state.teamUpdateSlice.currentTeam);
+  const status = useSelector(state => state.teamUpdateSlice.status);
+
   const [formData, setFormData] = useState({
     name: '',
     homeStadium: '',
@@ -10,26 +18,29 @@ export default function TeamModal({ team, onSave, onClose }) {
   });
 
   const [editingPlayer, setEditingPlayer] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   
   const [newPlayer, setNewPlayer] = useState({
     name: '',
     dateOfBirth: '',
-    position: '',
-    type: 'Trong nước',
+    position: 'Forward',
+    type: 'domestic',
     notes: ''
   });
   
   const [searchQuery, setSearchQuery] = useState('');
 
+  
   useEffect(() => {
     if (team) {
+      dispatch(setCurrentTeam(team));
       setFormData({
         name: team.name || '',
         homeStadium: team.homeStadium || '',
         players: team.players || [],
       });
     }
-  }, [team]);
+  }, [team, dispatch]);
 
   // Handle change for team name and home stadium
   const handleChange = (e) => {
@@ -40,47 +51,104 @@ export default function TeamModal({ team, onSave, onClose }) {
   // handle when typing in player fields
   const handlePlayerChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'position'){
+      console.log(value);
+    }
     setNewPlayer((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddPlayer = () => {
+  const handleAddPlayer = async () => {
     if (newPlayer.name && newPlayer.dateOfBirth) {
-      setFormData((prev) => ({
-        ...prev,
-        players: [...prev.players, { ...newPlayer, id: Date.now() }],
-      }));
-      setNewPlayer({
-        name: '',
-        dateOfBirth: '',
-        position: '',
-        type: 'Trong nước',
-        notes: ''
-      });
+      try {
+        const playerData = {
+          name: newPlayer.name,
+          birthdate: newPlayer.dateOfBirth,
+          position: newPlayer.position,
+          player_type: newPlayer.type,
+          note: newPlayer.notes || ""
+        };
+
+        await dispatch(addPlayer({ teamId: team.id, playerData })).unwrap();
+        await dispatch(fetchTeams()); // Fetch fresh data
+        toast.success('Thêm cầu thủ thành công!');
+        
+        setNewPlayer({
+          name: '',
+          dateOfBirth: '',
+          position: '',
+          type: 'domestic',
+          notes: ''
+        });
+      } catch (error) {
+        console.error('Error adding player:', error);
+        toast.error(error.detail || error.message || 'Có lỗi xảy ra khi thêm cầu thủ!',
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      }
     }
   };
 
   // handle when click on edit button of player
   const handleEditPlayer = (player) => {
     setEditingPlayer(player);
-    setNewPlayer(player);
+    setNewPlayer({
+      id: player.id,
+      name: player.name,
+      dateOfBirth: player.dateOfBirth,
+      position: player.position,
+      type: player.type,
+      notes: player.note || ''
+    });
   };
 
-  const handleUpdatePlayer = () => {
+  const handleUpdatePlayer = async () => {
     if (editingPlayer) {
-      setFormData((prev) => ({
-        ...prev,
-        players: prev.players.map((p) =>
-          p.id === editingPlayer.id ? { ...newPlayer, id: p.id } : p
-        ),
-      }));
-      setEditingPlayer(null);
-      setNewPlayer({
-        name: '',
-        dateOfBirth: '',
-        position: '',
-        type: 'Trong nước',
-        notes: ''
-      });
+      try {
+        const playerData = {
+          name: newPlayer.name,
+          birthdate: newPlayer.dateOfBirth,
+          position: newPlayer.position,
+          player_type: newPlayer.type,
+          note: newPlayer.notes || ""
+        };
+
+        await dispatch(updatePlayer({ 
+          teamId: team.id, 
+          playerId: editingPlayer.id, 
+          playerData 
+        })).unwrap();
+        
+        await dispatch(fetchTeams()); // Fetch fresh data
+        toast.success('Cập nhật cầu thủ thành công!');
+
+        setEditingPlayer(null);
+        setNewPlayer({
+          name: '',
+          dateOfBirth: '',
+          position: '',
+          type: 'domestic',
+          notes: ''
+        });
+      } catch (error) {
+        console.error('Error updating player:', error);
+        toast.error(error.detail || error.message || 'Có lỗi xảy ra khi cập nhật cầu thủ!',
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      }
     }
   };
 
@@ -90,52 +158,96 @@ export default function TeamModal({ team, onSave, onClose }) {
       name: '',
       dateOfBirth: '',
       position: '',
-      type: 'Trong nước',
+      type: 'domestic',
       notes: ''
     });
   };
 
-  const handleDeletePlayer = (playerId) => {
-    setFormData((prev) => ({
-      ...prev,
-      players: prev.players.filter((p) => p.id !== playerId),
-    }));
+  const handleDeletePlayer = async (playerId) => {
+    try {
+      await dispatch(removePlayer({ teamId: team.id, playerId })).unwrap();
+      await dispatch(fetchTeams()); // Fetch fresh data
+      toast.success('Xóa cầu thủ thành công!');
+    } catch (error) {
+      toast.error(error.detail || error.message || 'Có lỗi xảy ra khi xóa cầu thủ!',
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave({ ...team, ...formData });
+    setIsSaving(true); 
+    try {
+      const teamData = {
+        name: formData.name,
+        home_stadium: formData.homeStadium
+      };
+
+      await dispatch(updateTeam({ teamId: team.id, teamData })).unwrap();
+      await dispatch(fetchTeams()); // Fetch fresh data
+      toast.success('Cập nhật thông tin đội bóng thành công!');
+      onClose();
+    } catch (error) {
+      toast.error(error.detail || error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!',
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Position options
   const positionOptions = [
-    "Forward",
-    "Midfielder",
-    "Defender",
-    "Goalkeeper"
+    {value: "Forward", label: "Forward"},
+    {value: "Midfielder", label: "Midfielder"},
+    {value: "Defender", label: "Defender"},
+    {value: "Goalkeeper", label: "Goalkeeper"}
   ];
 
   // Type options
-  const typeOptions = ["foreign", "domestic"];
+  const typeOptions = [
+    { value: "domestic", label: "domestic" },
+    { value: "foreign", label: "foreign" }
+  ];
 
   // Filter players based on search query
   const filteredPlayers = formData.players.filter(player => 
     (player.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (player.position || '').toLowerCase().includes(searchQuery.toLowerCase())
+    (player.position || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (player.type || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className={s.modal_overlay}>
       <motion.div
-        className={s.modal_content}
+        className={`${s.modal_content} ${isSaving ? s.loading : ''}`}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.3 }}
       >
+        {isSaving && (
+          <div className={s.loading_overlay}>
+            <div className={s.loading_spinner}></div>
+          </div>
+        )}
         <h2>Chỉnh sửa đội bóng</h2>
         <form onSubmit={handleSubmit} className={s.form}>
-
           <div className={s.formSection}>
             <h3>Thông tin đội bóng</h3>
             <div className={s.gridLayout}>
@@ -149,6 +261,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                   onChange={handleChange}
                   required
                   placeholder="Nhập tên đội"
+                  disabled={isSaving}
                 />
               </div>
               <div className={s.formGroup}>
@@ -161,6 +274,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                   onChange={handleChange}
                   required
                   placeholder="Nhập sân nhà"
+                  disabled={isSaving}
                 />
               </div>
             </div>
@@ -178,6 +292,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                   value={newPlayer.name}
                   onChange={handlePlayerChange}
                   placeholder="Nhập tên cầu thủ"
+                  disabled={isSaving}
                 />
               </div>
               <div className={s.formGroup}>
@@ -188,7 +303,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                   name="dateOfBirth"
                   value={newPlayer.dateOfBirth}
                   onChange={handlePlayerChange}
-                  required
+                  disabled={isSaving}
                 />
               </div>
               <div className={s.formGroup}>
@@ -198,11 +313,11 @@ export default function TeamModal({ team, onSave, onClose }) {
                   name="position"
                   value={newPlayer.position}
                   onChange={handlePlayerChange}
+                  disabled={isSaving}
                 >
-                  <option value="">Chọn vị trí</option>
                   {positionOptions.map((position) => (
-                    <option key={position} value={position}>
-                      {position}
+                    <option key={position.value} value={position.value}>
+                      {position.label}
                     </option>
                   ))}
                 </select>
@@ -214,10 +329,11 @@ export default function TeamModal({ team, onSave, onClose }) {
                   name="type"
                   value={newPlayer.type}
                   onChange={handlePlayerChange}
+                  disabled={isSaving}
                 >
                   {typeOptions.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                    <option key={type.value} value={type.value}>
+                      {type.label}
                     </option>
                   ))}
                 </select>
@@ -231,6 +347,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                   onChange={handlePlayerChange}
                   placeholder="Nhập ghi chú cho cầu thủ"
                   rows={3}
+                  disabled={isSaving}
                 />
               </div>
             </div>
@@ -240,6 +357,7 @@ export default function TeamModal({ team, onSave, onClose }) {
                 type="button"
                 className={s.addPlayerButton}
                 onClick={editingPlayer ? handleUpdatePlayer : handleAddPlayer}
+                disabled={isSaving}
               >
                 {editingPlayer ? 'Cập nhật cầu thủ' : 'Thêm cầu thủ'}
               </button>
@@ -248,8 +366,9 @@ export default function TeamModal({ team, onSave, onClose }) {
                   type="button"
                   className={s.cancelEditButton}
                   onClick={handleCancelEdit}
+                  disabled={isSaving}
                 >
-                  Hủy chỉnh sửa
+                  Hủy cập nhật
                 </button>
               )}
             </div>
@@ -262,9 +381,10 @@ export default function TeamModal({ team, onSave, onClose }) {
                 <input
                   type="text"
                   className={s.searchInput}
-                  placeholder="Tìm kiếm theo tên hoặc vị trí..."
+                  placeholder="Tìm kiếm theo tên hoặc vị trí"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  disabled={isSaving}
                 />
               </div>
             </div>
@@ -285,20 +405,23 @@ export default function TeamModal({ team, onSave, onClose }) {
                     <tr key={player.id}>
                       <td>{player.name}</td>
                       <td>{player.dateOfBirth}</td>
-                      <td>{player.position || "Chưa có"}</td>
-                      <td>{player.type || "Trong nước"}</td>
+                      <td>{player.position}</td>
+                      <td>{player.type}</td>
                       <td className={s.playerActions}>
                         <button
                           type="button"
                           className={s.editPlayerButton}
                           onClick={() => handleEditPlayer(player)}
+                          disabled={isSaving}
                         >
                           ✏️
                         </button>
+
                         <button
                           type="button"
                           className={s.deletePlayerButton}
                           onClick={() => handleDeletePlayer(player.id)}
+                          disabled={isSaving}
                         >
                           🗑️
                         </button>
@@ -311,14 +434,22 @@ export default function TeamModal({ team, onSave, onClose }) {
           </div>
 
           <div className={s.buttonGroup}>
-            <button type="submit" className={s.saveButton}>
-              Cập nhật
+            <button 
+              type="submit" 
+              className={s.saveButton}
+              disabled={isSaving}
+            >
+              {isSaving ? 'Đang cập nhật...' : 'Cập nhật'}
             </button>
-            <button type="button" onClick={onClose} className={s.cancelButton}>
+            <button 
+              type="button" 
+              onClick={onClose} 
+              className={s.cancelButton}
+              disabled={isSaving}
+            >
               Hủy bỏ
             </button>
           </div>
-
         </form>
       </motion.div>
     </div>

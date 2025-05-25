@@ -20,7 +20,7 @@ export default function EditTeamForm() {
         const data = await response.json();
         // Transform the API data to match our component's expected format
         const transformedTeams = data.map(team => ({
-          id: team.id || Math.random(), // Use existing id or generate a random one
+          id: team.id || Math.random(),  
           name: team.name,
           homeStadium: team.home_stadium,
           players: team.players.map(player => ({
@@ -91,51 +91,6 @@ export default function EditTeamForm() {
     } catch (error) {
       console.error('Error updating team:', error);
       alert(error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!');
-    }
-  };
-
-  const handleUpdatePlayers = async (teamId, updatedPlayers) => {
-    try {
-      const response = await fetch(`/api/teams/${teamId}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          players: updatedPlayers.map(player => ({
-            name: player.name,
-            birthdate: player.dateOfBirth,
-            player_type: player.type === 'Foreign' ? 'foreign' : 'domestic',
-            note: player.position
-          })),
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to update players');
-      }
-
-      const updatedTeamData = await response.json();
-      setTeams(teams.map(team => 
-        team.id === teamId 
-          ? { 
-              ...team, 
-              players: updatedTeamData.players.map(player => ({
-                id: player.id,
-                name: player.name,
-                dateOfBirth: player.birthdate,
-                position: player.position,
-                type: player.player_type === 'foreign' ? 'Foreign' : 'Domestic',
-                notes: player.note
-              }))
-            }
-          : team
-      ));
-      alert('Cập nhật danh sách cầu thủ thành công!');
-    } catch (error) {
-      console.error('Error updating players:', error);
-      alert(error.message || 'Có lỗi xảy ra khi cập nhật danh sách cầu thủ!');
     }
   };
 
