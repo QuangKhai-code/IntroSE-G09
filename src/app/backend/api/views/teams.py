@@ -7,6 +7,8 @@ from ..serializers.player_serializers import PlayerSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db import transaction
 from django.db.models import Q
+from ..models.services import TournamentRuleService
+from django.core.exceptions import ValidationError
 
 
 class TeamViewSet(viewsets.ModelViewSet):
@@ -90,25 +92,19 @@ class TeamViewSet(viewsets.ModelViewSet):
         """
         team = self.get_object()
 
-        # Kiểm tra số lượng cầu thủ
-        if team.players.count() >= 22:
-            return Response(
-                {"detail": "Đội bóng đã có đủ 22 cầu thủ, không thể thêm mới"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        # Kiểm tra số lượng cầu thủ nước ngoài nếu thêm cầu thủ nước ngoài
-        if request.data.get('player_type') == 'foreign' and team.players.filter(player_type='foreign').count() >= 3:
-            return Response(
-                {"detail": "Đội bóng chỉ được có tối đa 3 cầu thủ nước ngoài"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        # Tạo và lưu cầu thủ mới
+        # Create and save player first
         player_serializer = PlayerSerializer(data=request.data)
         if player_serializer.is_valid():
-            player_serializer.save(team=team)
-            return Response(player_serializer.data, status=status.HTTP_201_CREATED)
+            new_player = player_serializer.save(team=team)
+            try:
+                # Validate team rules after adding the player
+                TournamentRuleService.validate_team_players(team)
+                TournamentRuleService.validate_foreign_players(team)
+            except ValidationError as e:
+                # Transaction will roll back new_player creation
+                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            
+            return Response(PlayerSerializer(new_player).data, status=status.HTTP_201_CREATED)
         return Response(player_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @transaction.atomic
@@ -134,14 +130,16 @@ class TeamViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # Kiểm tra nếu xóa cầu thủ có làm số lượng cầu thủ giảm xuống dưới 15 không
-        if team.players.count() <= 15:
-            return Response(
-                {"detail": "Không thể xóa cầu thủ vì đội bóng phải có ít nhất 15 cầu thủ"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        player.delete() # Delete player first
 
-        player.delete()
+        try:
+            # Validate team rules after removing the player
+            TournamentRuleService.validate_team_players(team)
+            TournamentRuleService.validate_foreign_players(team)
+        except ValidationError as e:
+            # Transaction will roll back player deletion
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
         return Response({"detail": "Đã xóa cầu thủ khỏi đội bóng"}, status=status.HTTP_200_OK)
 
     @transaction.atomic
@@ -167,23 +165,19 @@ class TeamViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # Kiểm tra nếu cập nhật làm tăng số lượng cầu thủ nước ngoài quá giới hạn
-        current_type = player.player_type
-        new_type = request.data.get('player_type')
-
-        if current_type == 'domestic' and new_type == 'foreign':
-            foreign_count = team.players.filter(player_type='foreign').count()
-            if foreign_count >= 3:
-                return Response(
-                    {"detail": "Đội bóng chỉ được có tối đa 3 cầu thủ nước ngoài"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-        # Cập nhật thông tin cầu thủ
+        # Update player information first
         player_serializer = PlayerSerializer(
             player, data=request.data, partial=True)
         if player_serializer.is_valid():
             player_serializer.save()
+            try:
+                # Validate team rules after updating the player
+                TournamentRuleService.validate_team_players(team)
+                TournamentRuleService.validate_foreign_players(team)
+            except ValidationError as e:
+                # Transaction will roll back player update
+                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            
             return Response(player_serializer.data)
         return Response(player_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

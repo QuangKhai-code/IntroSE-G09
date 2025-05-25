@@ -9,7 +9,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ['name', 'home_stadium', 'players']
+        fields = ['id', 'name', 'home_stadium', 'players']
 
     def validate_players(self, players_data):
         rules = TournamentRuleService.get_current_rules()
