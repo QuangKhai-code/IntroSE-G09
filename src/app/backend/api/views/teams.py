@@ -91,7 +91,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         team = self.get_object()
 
         # Kiểm tra số lượng cầu thủ
-        if team.players.count() >= 22:
+        if team.players.count() >= 30:
             return Response(
                 {"detail": "Đội bóng đã có đủ 22 cầu thủ, không thể thêm mới"},
                 status=status.HTTP_400_BAD_REQUEST
