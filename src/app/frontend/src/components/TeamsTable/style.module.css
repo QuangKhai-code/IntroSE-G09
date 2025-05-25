@@ -1,0 +1,401 @@
+.table_container {
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  width: 70%;
+  min-height: 500px;
+  max-height: 500px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.272);
+  backdrop-filter: blur(20px);
+  border-radius: 2rem;
+  border-collapse: collapse;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.table thead {
+  border-radius: 2rem 2rem 0 0;
+  text-align: center;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid rgba(204, 204, 204, 0.5);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  vertical-align: middle;
+  height: 50px;
+}
+
+.table th {
+  background-color: rgba(248, 249, 250, 0.7);
+  font-weight: bold;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  vertical-align: middle;
+  font-size: 1rem;
+  height: 50px;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 30%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 30%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 20%;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: auto;
+}
+
+.action_buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%; 
+  align-items: center;
+  padding: 0 15px;
+}
+
+.icon_button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+}
+
+.icon_button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon_button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.edit_icon_svg {
+  display: block;
+  color: #333;
+}
+
+.icon_button:hover .edit_icon_svg {
+  color: #000;
+}
+
+.delete_icon_svg {
+  display: block;
+  color: rgba(255, 40, 25, 0.434);
+}
+
+.icon_button:hover .delete_icon_svg {
+  color: rgb(255, 0, 0);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.pagination button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.pagination button.active {
+  background-color: rgb(144, 255, 23);
+  color: black;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.add_button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 40px;
+  padding: 0 20px;
+  background-color: rgb(144, 255, 23);
+  border: 3px solid rgba(0, 0, 0, 0.998);
+  border-radius: 12px;
+  transition: all 0.2s;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add_button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  border: 3px solid rgba(255, 255, 255, 0.998);
+}
+
+.add_button img {
+  width: 20px;
+  height: 20px;
+}
+
+.players_button {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.players_button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.edit_input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.edit_input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal_content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 2rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal_header h2 {
+  color: #333;
+  font-size: 1.8rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  margin: 0;
+}
+
+.close_button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #666;
+}
+
+.close_button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.table tbody {
+  min-height: 500px;
+}
+
+.table tbody:after {
+  content: '';
+  display: block;
+  height: 1px;
+  visibility: hidden;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.formGroup input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.formGroup input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.playerList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+.playerItem {
+  padding: 8px 12px;
+  color: white;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.playerItem:last-child {
+  border-bottom: none;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.saveButton, .cancelButton {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+}
+
+.saveButton {
+  background: rgb(144, 255, 23);
+  border: none;
+  color: black;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+} 

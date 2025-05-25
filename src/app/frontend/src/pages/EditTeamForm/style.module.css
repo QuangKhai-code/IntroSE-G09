@@ -1,0 +1,12 @@
+ 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1rem, 2vw, 5rem);
+  color: #ffffff;
+} 
