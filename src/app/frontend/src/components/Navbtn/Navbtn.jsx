@@ -16,7 +16,16 @@ export default function Navbtn(props) {
     }
 
     const handleClick = (e) => {
-        if (props.route) {
+        if (props.name === "Bảng xếp hạng") {
+            e.preventDefault();
+            navigate('/', { replace: false });
+            setTimeout(() => {
+                const el = document.getElementById('ranking');
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        } else if (props.route) {
             e.preventDefault();
             navigate(props.route);
         }

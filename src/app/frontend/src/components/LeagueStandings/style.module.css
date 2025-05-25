@@ -21,6 +21,7 @@
   border-radius: 12px;
   background: #f8f9fa;
   padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .standingsTable {
@@ -33,34 +34,47 @@
 
 .standingsTable th,
 .standingsTable td {
-  padding: 18px 12px;
+  padding: 20px 16px;
   text-align: center;
   border-bottom: 1px solid #e0e0e0;
+  font-weight: 500;
 }
 
 .standingsTable th {
-  background: #f8f9fa;
-  color: #391964;
-  font-size: 22px;
-  font-weight: 800;
-  border-bottom: 2px solid #e0e0e0;
+  background: #391964;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 22px 16px;
+}
+
+.standingsTable th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.standingsTable th:last-child {
+  border-top-right-radius: 12px;
 }
 
 .standingsTable th:nth-child(2),
 .standingsTable td.teamCell {
   text-align: left;
+  padding-left: 28px;
 }
 
 .standingsTable tr {
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .standingsTable tr:hover {
-  background: #e8f0fe;
+  background: #f0f0f0;
 }
 
 .top3Row {
   background: #e3f0ff !important;
+  font-weight: 600;
 }
 
 .bottom3Row {
@@ -70,35 +84,75 @@
 .teamCell {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  min-width: 240px;
 }
 
 .teamLogo {
-  height: 36px;
-  width: 36px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   object-fit: cover;
   background: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.teamName {
+  font-weight: 500;
+  color: #333;
+  font-size: 20px;
+}
+
+.numCell {
+  font-weight: 500;
+  color: #444;
+  font-size: 20px;
+}
+
+.rankCell {
+  font-weight: 600;
+  color: #391964;
+  font-size: 20px;
+}
+
+.sttCell {
+  font-weight: 600;
+  color: #666;
+  width: 80px;
+  font-size: 20px;
 }
 
 .reportDate {
-  font-size: 20px;
-  color: #333;
+  font-size: 22px;
+  color: #391964;
   text-align: center;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  margin-bottom: 32px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
   .standingsTable {
-    font-size: 14px;
+    font-size: 18px;
   }
+  
   .standingsTable th,
   .standingsTable td {
-    padding: 8px 4px;
+    padding: 16px 12px;
+  }
+  
+  .teamCell {
+    min-width: 200px;
+  }
+  
+  .teamLogo {
+    height: 36px;
+    width: 36px;
+  }
+
+  .reportDate {
+    font-size: 20px;
   }
 }
 
