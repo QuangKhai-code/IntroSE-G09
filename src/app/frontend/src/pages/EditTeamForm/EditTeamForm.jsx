@@ -1,53 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TeamsTable from '../../components/TeamsTable/TeamsTable';
+import { toast } from 'react-toastify';
+import { fetchTeams, updateTeamLocally } from '../../store/team/teamList-slice';
 import s from './style.module.css';
 
 const API_BASE = import.meta.env.VITE_API_URL || "";
 
 export default function EditTeamForm() {
   const dispatch = useDispatch();
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const teams = useSelector(state => state.teamListSlice.teams);
+  const status = useSelector(state => state.teamListSlice.status);
+  const error = useSelector(state => state.teamListSlice.error);
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/api/teams/`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch teams');
-        }
-        const data = await response.json();
-        // Transform the API data to match our component's expected format
-        const transformedTeams = data.map(team => ({
-          id: team.id || Math.random(),  
-          name: team.name,
-          homeStadium: team.home_stadium,
-          players: team.players.map(player => ({
-            id: player.id,
-            name: player.name,
-            dateOfBirth: player.birthdate,
-            position: player.position,
-            type: player.player_type,
-            notes: player.note
-          }))
-        }));
-        setTeams(transformedTeams);
-      } catch (error) {
-        console.error('Error fetching teams:', error);
-        alert('Có lỗi xảy ra khi tải danh sách đội bóng!');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeams();
-  }, []);
+    if (status === 'idle') {
+      dispatch(fetchTeams());
+    }
+  }, [status, dispatch]);
 
   const handleDelete = async (teamId) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa đội bóng này?')) {
       try {
-        const response = await fetch(`/api/teams/${teamId}/delete_team/`, {
+        const response = await fetch(`${API_BASE}/api/teams/${teamId}/delete_team/`, {
           method: 'DELETE',
         });
 
@@ -56,7 +31,8 @@ export default function EditTeamForm() {
           throw new Error(errorData.detail || 'Failed to delete team');
         }
 
-        setTeams(teams.filter(team => team.id !== teamId));
+        // Refresh teams list after deletion
+        dispatch(fetchTeams());
         alert('Xóa đội bóng thành công!');
       } catch (error) {
         console.error('Error deleting team:', error);
@@ -67,7 +43,7 @@ export default function EditTeamForm() {
 
   const handleUpdate = async (updatedTeam) => {
     try {
-      const response = await fetch(`/api/teams/${updatedTeam.id}/update_team_info/`, {
+      const response = await fetch(`${API_BASE}/api/teams/${updatedTeam.id}/update_team_info/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -83,16 +59,38 @@ export default function EditTeamForm() {
         throw new Error(errorData.detail || 'Failed to update team');
       }
 
-      const updatedTeamData = await response.json();
-      setTeams(teams.map(team => 
-        team.id === updatedTeam.id ? { ...team, ...updatedTeamData } : team
-      ));
-      alert('Cập nhật thông tin đội bóng thành công!');
+      // Update local state first
+      dispatch(updateTeamLocally(updatedTeam));
+      
+      // Then refresh the teams list
+      dispatch(fetchTeams());
+
+      toast.success('Cập nhật thông tin đội bóng thành công!',
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
     } catch (error) {
-      console.error('Error updating team:', error);
-      alert(error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!');
+      toast.error(error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!');
     }
   };
+
+  if (status === 'loading') {
+    return(
+      <div className={s.loading_overlay}>
+        <div className={s.loading_spinner}></div>
+      </div>
+    )
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className={s.container}>

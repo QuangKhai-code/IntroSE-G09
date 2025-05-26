@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import s from './style.module.css';
 import TeamModal from '../TeamModal/TeamModal';
+
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 export default function TeamsTable({ teams, onDelete, onUpdate}) {
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -14,8 +15,32 @@ export default function TeamsTable({ teams, onDelete, onUpdate}) {
   const currentTeams = teams.slice(indexOfFirstTeam, indexOfLastTeam);
   const totalPages = Math.ceil(teams.length / teamsPerPage);
 
-  const handleEdit = (team) => {
-    setSelectedTeam(team);
+  const handleEdit = async (team) => {
+    try {
+      const response = await fetch(`${API_BASE}/api/teams/${team.id}/`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch team details');
+      }
+      const teamData = await response.json();
+      // Transform the API data to match our component's expected format
+      const transformedTeam = {
+        id: teamData.id,
+        name: teamData.name,
+        homeStadium: teamData.home_stadium,
+        players: teamData.players.map(player => ({
+          id: player.id,
+          name: player.name,
+          dateOfBirth: player.birthdate,
+          position: player.position,
+          type: player.player_type,
+          notes: player.note
+        }))
+      };
+      setSelectedTeam(transformedTeam);
+    } catch (error) {
+      console.error('Error fetching team details:', error);
+      alert('Có lỗi xảy ra khi tải thông tin đội bóng!');
+    }
   };
 
   const handleCloseModal = () => {
@@ -47,7 +72,7 @@ export default function TeamsTable({ teams, onDelete, onUpdate}) {
             <tr key={team.id}>
               <td>{team.name}</td>
               <td>{team.homeStadium}</td>
-              <td>{team.players?.length || 0}</td>
+              <td>{team.totalPlayers}</td>
               <td className={s.action_buttons}>
                 <button onClick={() => handleEdit(team)} className={s.icon_button} title="Chỉnh sửa">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={s.edit_icon_svg} viewBox="0 0 16 16">
@@ -98,7 +123,6 @@ export default function TeamsTable({ teams, onDelete, onUpdate}) {
           onClose={handleCloseModal}
         />
       )}
-
     </div>
   );
 } 

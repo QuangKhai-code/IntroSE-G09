@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateTeam, addPlayer, removePlayer, updatePlayer, setCurrentTeam } from '../../store/team/teamUpdate-slice';
-import { fetchTeams } from '../../store/team/teamList-slice';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import s from './style.module.css';
 
-export default function TeamModal({ team, onClose }) {
-  const dispatch = useDispatch();
-  const currentTeam = useSelector(state => state.teamUpdateSlice.currentTeam);
-  const status = useSelector(state => state.teamUpdateSlice.status);
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
+export default function TeamModal({ team, onClose, onSave }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
     homeStadium: '',
@@ -30,17 +27,15 @@ export default function TeamModal({ team, onClose }) {
   
   const [searchQuery, setSearchQuery] = useState('');
 
-  
   useEffect(() => {
     if (team) {
-      dispatch(setCurrentTeam(team));
       setFormData({
         name: team.name || '',
         homeStadium: team.homeStadium || '',
         players: team.players || [],
       });
     }
-  }, [team, dispatch]);
+  }, [team]);
 
   // Handle change for team name and home stadium
   const handleChange = (e) => {
@@ -51,9 +46,6 @@ export default function TeamModal({ team, onClose }) {
   // handle when typing in player fields
   const handlePlayerChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'position'){
-      console.log(value);
-    }
     setNewPlayer((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -68,34 +60,51 @@ export default function TeamModal({ team, onClose }) {
           note: newPlayer.notes || ""
         };
 
-        await dispatch(addPlayer({ teamId: team.id, playerData })).unwrap();
-        await dispatch(fetchTeams()); // Fetch fresh data
+        const response = await fetch(`${API_BASE}/api/teams/${team.id}/add_player/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(playerData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add player');
+        }
+
+        // Fetch updated team data
+        const teamResponse = await fetch(`${API_BASE}/api/teams/${team.id}/`);
+        if (teamResponse.ok) {
+          const teamData = await teamResponse.json();
+          setFormData(prev => ({
+            ...prev,
+            players: teamData.players.map(player => ({
+              id: player.id,
+              name: player.name,
+              dateOfBirth: player.birthdate,
+              position: player.position,
+              type: player.player_type,
+              notes: player.note
+            }))
+          }));
+        }
+
         toast.success('Thêm cầu thủ thành công!');
         
         setNewPlayer({
           name: '',
           dateOfBirth: '',
-          position: '',
+          position: 'Forward',
           type: 'domestic',
           notes: ''
         });
       } catch (error) {
         console.error('Error adding player:', error);
-        toast.error(error.detail || error.message || 'Có lỗi xảy ra khi thêm cầu thủ!',
-          {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        );
+        toast.error(error.message || 'Có lỗi xảy ra khi thêm cầu thủ!');
       }
     }
   };
 
-  // handle when click on edit button of player
   const handleEditPlayer = (player) => {
     setEditingPlayer(player);
     setNewPlayer({
@@ -104,7 +113,7 @@ export default function TeamModal({ team, onClose }) {
       dateOfBirth: player.dateOfBirth,
       position: player.position,
       type: player.type,
-      notes: player.note || ''
+      notes: player.notes || ''
     });
   };
 
@@ -112,6 +121,7 @@ export default function TeamModal({ team, onClose }) {
     if (editingPlayer) {
       try {
         const playerData = {
+          id: newPlayer.id,
           name: newPlayer.name,
           birthdate: newPlayer.dateOfBirth,
           position: newPlayer.position,
@@ -119,35 +129,48 @@ export default function TeamModal({ team, onClose }) {
           note: newPlayer.notes || ""
         };
 
-        await dispatch(updatePlayer({ 
-          teamId: team.id, 
-          playerId: editingPlayer.id, 
-          playerData 
-        })).unwrap();
-        
-        await dispatch(fetchTeams()); // Fetch fresh data
+        const response = await fetch(`${API_BASE}/api/teams/${team.id}/update_player/`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(playerData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update player');
+        }
+
+        // Fetch updated team data
+        const teamResponse = await fetch(`${API_BASE}/api/teams/${team.id}/`);
+        if (teamResponse.ok) {
+          const teamData = await teamResponse.json();
+          setFormData(prev => ({
+            ...prev,
+            players: teamData.players.map(player => ({
+              id: player.id,
+              name: player.name,
+              dateOfBirth: player.birthdate,
+              position: player.position,
+              type: player.player_type,
+              notes: player.note
+            }))
+          }));
+        }
+
         toast.success('Cập nhật cầu thủ thành công!');
 
         setEditingPlayer(null);
         setNewPlayer({
           name: '',
           dateOfBirth: '',
-          position: '',
+          position: 'Forward',
           type: 'domestic',
           notes: ''
         });
       } catch (error) {
         console.error('Error updating player:', error);
-        toast.error(error.detail || error.message || 'Có lỗi xảy ra khi cập nhật cầu thủ!',
-          {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        );
+        toast.error(error.message || 'Có lỗi xảy ra khi cập nhật cầu thủ!');
       }
     }
   };
@@ -157,7 +180,7 @@ export default function TeamModal({ team, onClose }) {
     setNewPlayer({
       name: '',
       dateOfBirth: '',
-      position: '',
+      position: 'Forward',
       type: 'domestic',
       notes: ''
     });
@@ -165,47 +188,72 @@ export default function TeamModal({ team, onClose }) {
 
   const handleDeletePlayer = async (playerId) => {
     try {
-      await dispatch(removePlayer({ teamId: team.id, playerId })).unwrap();
-      await dispatch(fetchTeams()); // Fetch fresh data
+      const response = await fetch(`${API_BASE}/api/teams/${team.id}/delete_player/${playerId}/`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete player');
+      }
+
+      // Fetch updated team data
+      const teamResponse = await fetch(`${API_BASE}/api/teams/${team.id}/`);
+      if (teamResponse.ok) {
+        const teamData = await teamResponse.json();
+        setFormData(prev => ({
+          ...prev,
+          players: teamData.players.map(player => ({
+            id: player.id,
+            name: player.name,
+            dateOfBirth: player.birthdate,
+            position: player.position,
+            type: player.player_type,
+            notes: player.note
+          }))
+        }));
+      }
+
       toast.success('Xóa cầu thủ thành công!');
     } catch (error) {
-      toast.error(error.detail || error.message || 'Có lỗi xảy ra khi xóa cầu thủ!',
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        }
-      );
+      console.error('Error deleting player:', error);
+      toast.error(error.message || 'Có lỗi xảy ra khi xóa cầu thủ!');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSaving(true); 
+    setIsSaving(true);
     try {
-      const teamData = {
-        name: formData.name,
-        home_stadium: formData.homeStadium
-      };
+      // Only update if name or stadium has changed
+      if (formData.name !== team.name || formData.homeStadium !== team.homeStadium) {
+        const teamData = {
+          name: formData.name,
+          home_stadium: formData.homeStadium
+        };
 
-      await dispatch(updateTeam({ teamId: team.id, teamData })).unwrap();
-      await dispatch(fetchTeams()); // Fetch fresh data
-      toast.success('Cập nhật thông tin đội bóng thành công!');
+        const response = await fetch(`${API_BASE}/api/teams/${team.id}/update_team_info/`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(teamData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update team');
+        }
+
+        onSave({
+          id: team.id,
+          name: formData.name,
+          homeStadium: formData.homeStadium
+        });
+      }
+      
       onClose();
     } catch (error) {
-      toast.error(error.detail || error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!',
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        }
-      );
+      console.error('Error updating team:', error);
+      toast.error(error.message || 'Có lỗi xảy ra khi cập nhật thông tin đội bóng!');
     } finally {
       setIsSaving(false);
     }
