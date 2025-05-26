@@ -9,6 +9,8 @@ export default function Input(props) {
         type={props.type || "text"}
         placeholder={props.placeholder}
         value={props.value}
+        min={props.min || ""}
+        max={props.max || ""}
         onChange={(e) => {
           props.onTextChange(e.target.value);
           props.handleChange(e);

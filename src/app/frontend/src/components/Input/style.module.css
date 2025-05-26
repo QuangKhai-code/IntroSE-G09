@@ -5,6 +5,7 @@
   border-color: black;
   background: white;
   font-size: 16px; 
+  transition: transform 0.3s ease, background-color 0.2s ease;
 }
 
 .input::placeholder {
@@ -12,4 +13,10 @@
   font-family: "Baloo 2", sans-serif;
   color: rgb(112, 112, 112); 
   font-style: italic;
+}
+
+.input:focus {
+  outline: none;
+  transform: translate(2px, -2px);
+  box-shadow: 0 4px 8px rgb(124, 255, 146);
 }
