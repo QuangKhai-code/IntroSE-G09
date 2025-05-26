@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import RuleUpdateForm from "./pages/RuleUpdateForm/RuleUpdateForm";
 import MatchRecordForm from "./pages/MatchRecordForm/MatchRecordForm";
 import ManualMatchSetupForm from "./pages/ManualMatchSetupForm/ManualMatchSetupForm";
+import AutoScheduleForm from "./pages/AutoScheduleForm/AutoScheduleForm";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import MatchSchedule from "./pages/MatchSchedule/MatchSchedule";
@@ -43,8 +44,12 @@ root.render(
               <Route path="teams/edit" element={<EditTeamForm />} />
               
               <Route path="rules" element={<RuleUpdateForm />} />
+
               <Route path="schedule/manual" element={<ManualMatchSetupForm />} />
+              <Route path="schedule/auto" element={<AutoScheduleForm />} />
+              
               <Route path="match-results/add" element={<MatchRecordForm />}/>
+            
             </Route>
             <Route path="admin/teams/add/players" element={<PlayersTable />} />
 
