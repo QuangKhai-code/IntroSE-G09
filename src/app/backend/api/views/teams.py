@@ -196,3 +196,23 @@ class TeamViewSet(viewsets.ModelViewSet):
         }
 
         return Response(stats)
+
+    @action(detail=False, methods=['get'], url_path='all-stats')
+    def all_teams_stats(self, request):
+        teams = Team.objects.all().prefetch_related('players')
+        all_stats = []
+
+        for team in teams:
+            domestic_count = team.players.filter(player_type='domestic').count()
+            foreign_count = team.players.filter(player_type='foreign').count()
+            stats = {
+                'id': team.id,
+                'team_name': team.name,
+                'home_stadium': team.home_stadium,
+                'total_players': team.players.count(),
+                'domestic_players': domestic_count,
+                'foreign_players': foreign_count,
+            }
+            all_stats.append(stats)
+
+        return Response(all_stats)
