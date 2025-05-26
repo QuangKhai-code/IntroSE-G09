@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useCallback, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setTeamName, setHomeStadium, saveTeam, clearFormData, clearFormSubmittedFlag } from "../../store/team/team-slice";
+import Toast from "../../components/Toast/Toast";
 
 import s from "./style.module.css";
 import SaveButton from "../../components/SaveButton/SaveButton";
@@ -9,16 +10,85 @@ import Input from "../../components/Input/Input";
 
 export default function AddTeamForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { teamName, homeStadium, formSubmitted, players } = useSelector((state) => state.teamSlice);
+  const [showToast, setShowToast] = useState(false);
 
+  // Check if there are unsaved changes
+  const hasUnsavedChanges = teamName || homeStadium || players.length > 0;
+
+  // Expose unsaved changes state to window object
+  useEffect(() => {
+    window.hasUnsavedTeamChanges = hasUnsavedChanges;
+    return () => {
+      window.hasUnsavedTeamChanges = false;
+    };
+  }, [hasUnsavedChanges]);
+
+  // Handle browser refresh/close
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
+  // Handle form clearing from sidebar navigation
+  useEffect(() => {
+    const handleClearForm = () => {
+      dispatch(clearFormData());
+    };
+
+    window.addEventListener('clearTeamForm', handleClearForm);
+    return () => window.removeEventListener('clearTeamForm', handleClearForm);
+  }, [dispatch]);
+
+  // Handle navigation with links
+  useEffect(() => {
+    const handleClick = (e) => {
+      // Check if the clicked element is a link
+      const link = e.target.closest('a');
+      if (link && hasUnsavedChanges) {
+        e.preventDefault();
+        const confirmed = window.confirm('Bạn có thay đổi chưa lưu. Bạn có chắc chắn muốn rời đi?');
+        if (confirmed) {
+          dispatch(clearFormData());
+          window.location.href = link.href;
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [hasUnsavedChanges, dispatch]);
+  
   // Check if the form was previously submitted and reset the flag
   useEffect(() => {
     if (formSubmitted) {
-      // If form was successfully submitted, clear the data
-      dispatch(clearFormData());
+      dispatch(clearFormSubmittedFlag());
     }
   }, [formSubmitted, dispatch]);
+
+  // Handle successful team save
+  useEffect(() => {
+    const handleTeamSaved = () => {
+      dispatch(clearFormData());
+      setShowToast(true);
+      // Add a small delay before navigation to allow toast to be seen
+      setTimeout(() => {
+        navigate('/admin/teams/add');
+      }, 1500);
+    };
+
+    window.addEventListener('teamSaved', handleTeamSaved);
+    return () => window.removeEventListener('teamSaved', handleTeamSaved);
+  }, [dispatch, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,13 +98,12 @@ export default function AddTeamForm() {
     }
     
     // Only save if there are players added
-    if (players.length === 0) {
-      alert("Vui lòng thêm ít nhất một cầu thủ!");
+    if (players.length < 15) {
+      alert("Vui lòng nhập ít nhất 15 cầu thủ!");
       return;
     }
     
     dispatch(saveTeam());
-    alert("Lưu thông tin đội bóng thành công!");
   };
 
   const handleAddPlayers = () => {
@@ -46,17 +115,24 @@ export default function AddTeamForm() {
   };
 
   return (
-    <form className={s.form_container} onSubmit={handleSubmit}>
-      
-      <div className={s.input_group}>
-        <label htmlFor="teamName">Tên đội</label>
-        <Input
-          id="teamName"
-          placeholder="Tên đội"
-          value={teamName}
-          onTextChange={(value) => dispatch(setTeamName(value))}
+    <>
+      {showToast && (
+        <Toast 
+          message="Lưu thông tin đội bóng thành công!" 
+          color="#7ff700" 
+          onClose={() => setShowToast(false)}
         />
-      </div>
+      )}
+      <form className={s.form_container} onSubmit={handleSubmit}>
+        <div className={s.input_group}>
+          <label htmlFor="teamName">Tên đội</label>
+          <Input
+            id="teamName"
+            placeholder="Tên đội"
+            value={teamName}
+            onTextChange={(value) => dispatch(setTeamName(value))}
+          />
+        </div>
 
       <div className={s.input_group}>
         <label htmlFor="homeStadium">Sân nhà</label>
@@ -90,5 +166,6 @@ export default function AddTeamForm() {
       
       <SaveButton />
     </form>
+    </>
   );
 }

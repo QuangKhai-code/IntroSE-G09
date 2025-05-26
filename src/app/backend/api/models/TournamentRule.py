@@ -15,7 +15,7 @@ class TournamentRule(models.Model):
     # QĐ1: Quy định về cầu thủ
     min_player_age = models.IntegerField(default=16)
     max_player_age = models.IntegerField(default=40)
-    min_team_players = models.IntegerField(default=15)
+    min_team_players = models.IntegerField(default=11)
     max_team_players = models.IntegerField(default=22)
     max_foreign_players = models.IntegerField(default=3)
 

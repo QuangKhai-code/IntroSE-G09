@@ -1,4 +1,5 @@
 node_modules/
+<<<<<<< HEAD
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -119,3 +120,7 @@ venv.bak/
 # PyCharm
 #  JetBrains temporary files
 .idea/
+=======
+__pycache__/
+*.pyc
+>>>>>>> 1c48b577f721b0045d7a667d61782a7a16f3837d

@@ -1,0 +1,345 @@
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal_content {
+    
+  min-width: 1000px;
+  max-width: 95vw;
+  max-height: 90vh;
+
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 30px;
+  
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(143, 255, 23, 0.26) rgba(255, 255, 255, 0);
+}
+
+.modal_content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formSection {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.formSection h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: rgb(144, 255, 23);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+}
+
+.gridLayout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+}
+
+.formGroup input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.formGroup input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.tableHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.manageButton {
+  background: rgb(144, 255, 23);
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.manageButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tableWrapper {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(144, 255, 23, 0.3) rgba(255, 255, 255, 0);
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #333333;
+  color: rgb(144, 255, 23);
+}
+
+.table th, .table td {
+  padding: 12px 10px;
+  font-family: "Baloo 2", sans-serif;
+  vertical-align: middle;
+}
+
+.table th {
+  font-weight: 600;
+  color: rgb(144, 255, 23);
+  border-bottom: 2px solid rgba(144, 255, 23, 0.3);
+  background: rgba(144, 255, 23, 0.1);
+}
+
+.table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table th:first-child, .table td:first-child {
+  text-align: center;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  width:30%;
+}
+
+.table th:nth-child(2), .table td:nth-child(2) {
+  text-align: center;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  width: 50%;
+}
+
+.table th:last-child, .table td:last-child {
+  text-align: center;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  width: auto;
+}
+
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  height: 100%;
+  padding-top: 30px;
+}
+
+.saveButton, .cancelButton {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+}
+
+.saveButton {
+  background: rgb(144, 255, 23);
+  border: none;
+  color: black;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.goalTypeForm {
+  display: grid;
+  grid-template-columns: 0.25fr 1.75fr auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.editButton, .deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.editButton:hover {
+  background: rgba(144, 255, 23, 0.2);
+}
+
+.deleteButton:hover {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.addButton {
+  background: rgb(144, 255, 23);
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Baloo 2", sans-serif;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1000px) {
+  .modal_content {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .gridLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .goalTypeForm {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loading {
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.loading_overlay {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  border-radius: 16px;
+}
+
+.loading_spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid rgb(144, 255, 23);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

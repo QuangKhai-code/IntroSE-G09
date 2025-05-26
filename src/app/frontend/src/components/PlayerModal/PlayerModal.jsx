@@ -7,7 +7,7 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
     name: '',
     dateOfBirth: '',
     position: '',
-    type: 'Trong nước',
+    type: '',
     notes: ''
   });
   
@@ -76,26 +76,16 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
   
   // Position options
   const positionOptions = [
-    "Thủ môn",
-    "Hậu vệ trung tâm",
-    "Hậu vệ cánh trái",
-    "Hậu vệ cánh phải",
-    "Tiền vệ phòng ngự",
-    "Tiền vệ trung tâm",
-    "Tiền vệ cánh trái",
-    "Tiền vệ cánh phải",
-    "Tiền vệ tấn công",
-    "Tiền đạo cắm",
-    "Tiền đạo trung tâm",
-    "Hộ công",
-    "Tiền đạo cánh trái",
-    "Tiền đạo cánh phải"
+    "Forward",
+    "Midfielder",
+    "Defender",
+    "Goalkeeper"
   ];
   
   // Type options
   const typeOptions = [
-    "Trong nước",
-    "Ngoại quốc"
+    "foreign",
+    "domestic"
   ];
 
   return (

@@ -11,6 +11,7 @@ export default function Input(props) {
         value={props.value}
         onChange={(e) => {
           props.onTextChange(e.target.value);
+          props.handleChange(e);
         }}
       />
     </>
