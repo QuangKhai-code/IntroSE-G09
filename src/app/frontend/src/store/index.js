@@ -8,6 +8,7 @@ import { rulesReducer } from './rules/rules-slice';
 import { teamReducer } from './team/team-slice';
 import teamUpdateReducer from './team/teamUpdate-slice';
 import teamListReducer from './team/teamList-slice';
+import matchesReducer from './matches/matches-slice';
 
 // Configure persist for auth and team slices
 const authPersistConfig = {
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   teamSlice: persistReducer(teamPersistConfig, teamReducer),
   teamUpdateSlice: teamUpdateReducer,
   teamListSlice: teamListReducer,
+  matchesSlice: matchesReducer,
 });
 
 const store = configureStore({

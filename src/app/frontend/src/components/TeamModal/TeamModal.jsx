@@ -59,7 +59,7 @@ export default function TeamModal({ team, onClose, onSave }) {
           player_type: newPlayer.type,
           note: newPlayer.notes || ""
         };
-
+        console.log(playerData);
         const response = await fetch(`${API_BASE}/api/teams/${team.id}/add_player/`, {
           method: 'POST',
           headers: {
@@ -186,14 +186,34 @@ export default function TeamModal({ team, onClose, onSave }) {
     });
   };
 
-  const handleDeletePlayer = async (playerId) => {
+  const handleDeletePlayer = async (player) => {
+    // Add confirmation dialog
+    const isConfirmed = window.confirm(`Bạn có chắc chắn muốn xóa cầu thủ ${player.name}?`);
+    
+    if (!isConfirmed) {
+      return;
+    }
+
     try {
-      const response = await fetch(`${API_BASE}/api/teams/${team.id}/delete_player/${playerId}/`, {
+      const playerData = {
+          player_id: player.id,
+          name: player.name,
+          birthdate: player.dateOfBirth,
+          position: player.position,
+          player_type: player.type,
+          note: player.notes || ""
+        };
+      console.log(playerData);
+      const response = await fetch(`${API_BASE}/api/teams/${team.id}/remove_player/`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(playerData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete player');
+        throw response;
       }
 
       // Fetch updated team data
@@ -215,8 +235,8 @@ export default function TeamModal({ team, onClose, onSave }) {
 
       toast.success('Xóa cầu thủ thành công!');
     } catch (error) {
-      console.error('Error deleting player:', error);
-      toast.error(error.message || 'Có lỗi xảy ra khi xóa cầu thủ!');
+      console.log('Error deleting player:', error);
+      toast.error(error || 'Có lỗi xảy ra khi xóa cầu thủ!');
     }
   };
 
@@ -468,7 +488,7 @@ export default function TeamModal({ team, onClose, onSave }) {
                         <button
                           type="button"
                           className={s.deletePlayerButton}
-                          onClick={() => handleDeletePlayer(player.id)}
+                          onClick={() => handleDeletePlayer(player)}
                           disabled={isSaving}
                         >
                           🗑️

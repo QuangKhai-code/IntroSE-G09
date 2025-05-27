@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRules, saveRules, updateRulesLocally } from "../../store/rules/rules-slice";
+
 import s from "./style.module.css";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

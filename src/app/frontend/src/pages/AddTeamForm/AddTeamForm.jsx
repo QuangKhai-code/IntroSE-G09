@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setTeamName, setHomeStadium, saveTeam, clearFormData, clearFormSubmittedFlag } from "../../store/team/team-slice";
 import Toast from "../../components/Toast/Toast";
+import { toast } from "react-toastify";
 
 import s from "./style.module.css";
 import SaveButton from "../../components/SaveButton/SaveButton";
@@ -10,10 +11,10 @@ import Input from "../../components/Input/Input";
 
 export default function AddTeamForm() {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
   const { teamName, homeStadium, formSubmitted, players } = useSelector((state) => state.teamSlice);
   const [showToast, setShowToast] = useState(false);
+  const rules = useSelector((store) => store.rulesSlice.rules);
 
   // Check if there are unsaved changes
   const hasUnsavedChanges = teamName || homeStadium || players.length > 0;
@@ -93,13 +94,13 @@ export default function AddTeamForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!teamName || !homeStadium) {
-      alert("Vui lòng nhập đầy đủ thông tin đội bóng!");
+      toast.error("Vui lòng nhập đầy đủ thông tin đội bóng!");
       return;
     }
     
     // Only save if there are players added
-    if (players.length < 15) {
-      alert("Vui lòng nhập ít nhất 15 cầu thủ!");
+    if (players.length < rules.min_team_players) {
+      toast.error(`Vui lòng nhập ít nhất ${rules.min_team_players} cầu thủ!`);
       return;
     }
     
@@ -108,7 +109,7 @@ export default function AddTeamForm() {
 
   const handleAddPlayers = () => {
     if (!teamName || !homeStadium) {
-      alert("Vui lòng nhập tên đội và sân nhà trước khi thêm cầu thủ!");
+      toast.error("Vui lòng nhập tên đội và sân nhà trước khi thêm cầu thủ!");
       return;
     }
     navigate("/admin/teams/add/players");
