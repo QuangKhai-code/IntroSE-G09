@@ -29,6 +29,7 @@ const LeagueStandings = ({ teams, reportDate }) => {
               <th>Hòa</th>
               <th>Thua</th>
               <th>Hiệu Số</th>
+              <th>Điểm</th>
               <th>Hạng</th>
             </tr>
           </thead>
@@ -53,6 +54,7 @@ const LeagueStandings = ({ teams, reportDate }) => {
                 <td className={s.numCell}>{team.drawn}</td>
                 <td className={s.numCell}>{team.lost}</td>
                 <td className={s.numCell}>{team.goalDifference}</td>
+                <td className={s.numCell}>{team.points}</td>
                 <td className={s.rankCell}>{team.rank}</td>
               </tr>
             ))}

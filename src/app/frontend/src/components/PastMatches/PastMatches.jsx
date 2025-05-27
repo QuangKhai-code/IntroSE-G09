@@ -1,84 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from './style.module.css';
-
-// Mock data
-const pastMatches = [
-  {
-    id: 1,
-    league: 'Ngoại hạng Anh',
-    date: '2024-05-03',
-    time: '21:00',
-    status: 'Kết thúc',
-    home: {
-      name: 'Leicester',
-      logo: '/assets/Leicester-City-FC-logo.png',
-      scorers: [
-        { name: 'Jamie Vardy', minute: 17 },
-        { name: 'Jordan Ayew', minute: 44 }
-      ]
-    },
-    away: {
-      name: 'Southampton',
-      logo: '/assets/Southampton-FC-logo.png',
-      scorers: []
-    },
-    score: '2 - 0',
-    stadium: 'King Power',
-  },
-  {
-    id: 2,
-    home: { name: 'Arsenal', logo: '/assets/arsenal.png' },
-    away: { name: 'Man City', logo: '/assets/Manchester-City-FC-logo.png' },
-    score: '1 - 3',
-    date: '2024-04-28',
-    stadium: 'Emirates',
-  },
-  {
-    id: 3,
-    home: { name: 'Man United', logo: '/assets/Manchester-United-FC-logo.png' },
-    away: { name: 'Tottenham', logo: '/assets/Tottenham-Hotspur-logo.png' },
-    score: '0 - 0',
-    date: '2024-04-25',
-    stadium: 'Old Trafford',
-  },
-  {
-    id: 4,
-    home: { name: 'Aston Villa', logo: '/assets/aston-villa.png' },
-    away: { name: 'Newcastle', logo: '/assets/Newcastle-United-logo.png' },
-    score: '2 - 2',
-    date: '2024-04-20',
-    stadium: 'Villa Park',
-  },
-  {
-    id: 5,
-    home: { name: 'Leicester', logo: '/assets/Leicester-City-FC-logo.png' },
-    away: { name: 'Southampton', logo: '/assets/Southampton-FC-logo.png' },
-    score: '2 - 0',
-    date: '2024-05-03',
-    stadium: 'King Power',
-    status: 'Kết thúc',
-    scorers: [
-      { name: 'Jamie Vardy', minute: 17, team: 'Leicester' },
-      { name: 'Jordan Ayew', minute: 44, team: 'Leicester' }
-    ]
-  },
-  {
-    id: 7,
-    home: { name: 'Brighton', logo: '/assets/Brighton-Hove-Albion-logo.png' },
-    away: { name: 'Crystal Palace', logo: '/assets/Crystal-Palace-FC-logo.png' },
-    score: '2 - 4',
-    date: '2024-04-10',
-    stadium: 'Amex',
-  },
-];
+import { getTeamLogo } from '../../utils/teamMappings';
 
 const MATCHES_PER_PAGE = 5;
 
 export default function PastMatches() {
   const [page, setPage] = useState(1);
   const [expandedMatchId, setExpandedMatchId] = useState(null);
-  const totalPages = Math.ceil(pastMatches.length / MATCHES_PER_PAGE);
-  const paginatedMatches = pastMatches.slice((page - 1) * MATCHES_PER_PAGE, page * MATCHES_PER_PAGE);
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/match-results/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch matches');
+        }
+        const data = await response.json();
+        setMatches(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
+  const totalPages = Math.ceil(matches.length / MATCHES_PER_PAGE);
+  const paginatedMatches = matches.slice((page - 1) * MATCHES_PER_PAGE, page * MATCHES_PER_PAGE);
+
+  if (loading) {
+    return (
+      <div className={s.section}>
+        <h2 className={s.sectionTitle}>Lịch sử đấu</h2>
+        <div className={s.loadingContainer}>
+          <div className={s.loadingSpinner}></div>
+          <p className={s.loadingText}>Đang tải...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={s.section}>
+        <h2 className={s.sectionTitle}>Lịch sử đấu</h2>
+        <div className={s.errorContainer}>
+          <p className={s.errorText}>Lỗi: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={s.section}>
@@ -92,54 +68,64 @@ export default function PastMatches() {
               style={{ cursor: 'pointer' }}
             >
               <div className={s.pastHomeTeamBlock}>
-                <span className={s.pastTeamName}>{match.home.name}</span>
-                <img src={match.home.logo} alt={match.home.name} className={s.pastTeamLogo} />
+                <span className={s.pastTeamName}>{match.home_team}</span>
+                <img src={getTeamLogo(match.home_team)} alt={match.home_team} className={s.pastTeamLogo} />
               </div>
               <div className={s.pastScoreBlock}>
-                <span className={s.pastScore}>{match.score}</span>
+                <span className={s.pastScore}>{`${match.home_score} - ${match.away_score}`}</span>
               </div>
               <div className={s.pastAwayTeamBlock}>
-                <img src={match.away.logo} alt={match.away.name} className={s.pastTeamLogo} />
-                <span className={s.pastTeamName}>{match.away.name}</span>
+                <img src={getTeamLogo(match.away_team)} alt={match.away_team} className={s.pastTeamLogo} />
+                <span className={s.pastTeamName}>{match.away_team}</span>
               </div>
               <div className={s.pastStadiumBlock}>
                 <span className={s.pastStadiumIcon}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="4" fill="#5a206e" fillOpacity="0.12"/><rect x="3" y="8" width="18" height="14" rx="2" fill="#5a206e" fillOpacity="0.18"/><rect x="7" y="2" width="2" height="4" rx="1" fill="#5a206e"/><rect x="15" y="2" width="2" height="4" rx="1" fill="#5a206e"/><rect x="3" y="8" width="18" height="1.5" fill="#5a206e"/><rect x="7" y="12" width="2" height="2" rx="1" fill="#5a206e"/><rect x="11" y="12" width="2" height="2" rx="1" fill="#5a206e"/><rect x="15" y="12" width="2" height="2" rx="1" fill="#5a206e"/></svg>
                 </span>
                 <span className={s.pastStadium}>
-                  {new Date(match.date).toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
+                  {new Date(match.match_date).toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
                 </span>
               </div>
             </div>
             {expandedMatchId === match.id && (
               <div className={s.matchDetailRow}>
                 <div className={s.matchDetailTop}>
-                  <span className={s.matchDetailLeague}>{match.league}</span>
                   <span className={s.matchDetailDate}>
-                    · {new Date(match.date).toLocaleDateString('vi-VN', { weekday: 'short', day: 'numeric', month: 'numeric' })}
+                    {new Date(match.match_date).toLocaleDateString('vi-VN', { weekday: 'short', day: 'numeric', month: 'numeric' })}
                   </span>
-                  <span className={s.matchDetailStatus}>{match.status}</span>
+                  <span className={s.matchDetailStatus}>Kết thúc</span>
+                </div>
+                <div className={s.matchDetailStadium}>
+                  <span className={s.matchDetailStadiumIcon}>
+                    <svg width="22" height="22" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <ellipse cx="128" cy="96" rx="104" ry="40" fill="#FFD700" fillOpacity="0.15"/>
+                      <ellipse cx="128" cy="96" rx="88" ry="32" stroke="#FFD700" strokeWidth="8" fill="none"/>
+                      <path d="M24 96v48c0 22.09 46.39 40 104 40s104-17.91 104-40V96" stroke="#FFD700" strokeWidth="8" fill="none"/>
+                      <ellipse cx="128" cy="96" rx="104" ry="40" stroke="#FFD700" strokeWidth="8" fill="none"/>
+                    </svg>
+                  </span>
+                  <span className={s.matchDetailStadiumName}>{match.stadium}</span>
                 </div>
                 <div className={s.matchDetailMain}>
                   <div className={s.matchDetailTeamCol}>
-                    <img src={match.home.logo} alt={match.home.name} className={s.matchDetailLogo} />
-                    <div className={s.matchDetailTeamName}>{match.home.name}</div>
+                    <img src={getTeamLogo(match.home_team)} alt={match.home_team} className={s.matchDetailLogo} />
+                    <div className={s.matchDetailTeamName}>{match.home_team}</div>
                   </div>
                   <div className={s.matchDetailScoreCol}>
-                    <span className={s.matchDetailScoreHome}>{match.score.split('-')[0].trim()}</span>
+                    <span className={s.matchDetailScoreHome}>{match.home_score}</span>
                     <span className={s.matchDetailScoreDash}>-</span>
-                    <span className={s.matchDetailScoreAway}>{match.score.split('-')[1].trim()}</span>
+                    <span className={s.matchDetailScoreAway}>{match.away_score}</span>
                   </div>
                   <div className={s.matchDetailTeamCol}>
-                    <img src={match.away.logo} alt={match.away.name} className={s.matchDetailLogo} />
-                    <div className={s.matchDetailTeamName}>{match.away.name}</div>
+                    <img src={getTeamLogo(match.away_team)} alt={match.away_team} className={s.matchDetailLogo} />
+                    <div className={s.matchDetailTeamName}>{match.away_team}</div>
                   </div>
                 </div>
                 <div className={s.matchDetailBottom}>
                   <div className={s.matchDetailScorersLeft}>
-                    {match.home.scorers && match.home.scorers.map((s, i) => (
+                    {match.goals.filter(goal => goal.team_name === match.home_team).map((goal, i) => (
                       <div key={i} className={s.matchDetailScorer}>
-                        {s.name} <span className={s.matchDetailScorerMinute}>{s.minute}'</span>
+                        {goal.player_name} <span className={s.matchDetailScorerMinute}>{goal.minute}'</span>
                       </div>
                     ))}
                   </div>
@@ -147,9 +133,9 @@ export default function PastMatches() {
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#fff" strokeWidth="1.5" fill="#23232b"/><circle cx="12" cy="12" r="2.5" fill="#fff"/><path d="M12 2v7.5M12 21.5v-7.5M2 12h7.5M21.5 12h-7.5M5.5 5.5l5.3 5.3M18.5 18.5l-5.3-5.3M18.5 5.5l-5.3 5.3M5.5 18.5l5.3-5.3" stroke="#fff" strokeWidth="1.2"/></svg>
                   </div>
                   <div className={s.matchDetailScorersRight}>
-                    {match.away.scorers && match.away.scorers.map((s, i) => (
+                    {match.goals.filter(goal => goal.team_name === match.away_team).map((goal, i) => (
                       <div key={i} className={s.matchDetailScorer}>
-                        {s.name} <span className={s.matchDetailScorerMinute}>{s.minute}'</span>
+                        {goal.player_name} <span className={s.matchDetailScorerMinute}>{goal.minute}'</span>
                       </div>
                     ))}
                   </div>

@@ -6,6 +6,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('/assets/history.jpg');
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
 }
@@ -351,4 +352,50 @@
   font-size: 1rem;
   font-weight: 600;
   font-family: 'Baloo 2', sans-serif;
+}
+
+.skeletonLoading {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.skeletonMatch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeletonTeam {
+  width: 120px;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeletonVs {
+  width: 40px;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.6; }
+}
+
+.lastUpdated {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin: 10px 0;
+  font-style: italic;
 }

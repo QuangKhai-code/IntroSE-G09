@@ -16,7 +16,9 @@ export const teamLogoMappings = {
   'Southampton': '/assets/Southampton-FC-logo.png',
   'Nottingham Forest': '/assets/Nottingham-Forest-FC-logo.png',
   'Wolverhampton Wanderers': '/assets/Wolverhampton-Wanderers-logo.png',
-  'AFC Bournemouth': '/assets/AFC-Bournemouth.png',
+  'Bournemouth': '/assets/AFC-Bournemouth.png',
+  'West Ham United': '/assets/West-Ham-United-FC-logo.png',
+  'Ipswich Town': '/assets/Ipswich-Town-FC-logo.png',
   // Add more teams as needed
 };
 

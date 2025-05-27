@@ -27,6 +27,7 @@ const TopScorers = ({ players, reportDate }) => {
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' hoặc 'asc'
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [pendingSearchTerm, setPendingSearchTerm] = useState('');
   const [selectedTeam, setSelectedTeam] = useState('');
   const playersPerPage = 10;
 
@@ -78,18 +79,40 @@ const TopScorers = ({ players, reportDate }) => {
               className={s.searchControl}
               type="text"
               placeholder="Tra cứu cầu thủ..."
-              value={searchTerm}
-              onChange={e => { setSearchTerm(e.target.value); setPage(1); }}
+              value={pendingSearchTerm}
+              onChange={e => setPendingSearchTerm(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  setSearchTerm(pendingSearchTerm);
+                  setPage(1);
+                }
+              }}
+              style={{ paddingRight: 40 }}
             />
+            <button
+              className={s.searchIconBtn}
+              type="button"
+              aria-label="Tìm kiếm"
+              onClick={() => {
+                setSearchTerm(pendingSearchTerm);
+                setPage(1);
+              }}
+              style={{ position: 'relative', right: 44, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7" stroke="#7c4dff" strokeWidth="2" />
+                <line x1="16.018" y1="16.485" x2="21" y2="21.5" stroke="#7c4dff" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
           </div>
           <table className={s.table}>
             <thead>
               <tr>
-                <th className={s.leftAlign}>STT</th>
-                <th className={s.leftAlign}>Cầu Thủ</th>
-                <th className={s.leftAlign}>Đội</th>
-                <th className={s.leftAlign}>Loại Cầu Thủ</th>
-                <th className={s.sortableHeader} onClick={() => setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc')}>
+                <th className={s.sttHeader}>STT</th>
+                <th className={s.playerHeader}>Cầu Thủ</th>
+                <th className={s.teamHeader}>Đội</th>
+                <th className={s.typeHeader}>Loại Cầu Thủ</th>
+                <th className={s.goalsHeader} onClick={() => setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc')}>
                   Số Bàn Thắng
                   <span style={{ verticalAlign: 'middle', display: 'inline-block' }}>
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +132,7 @@ const TopScorers = ({ players, reportDate }) => {
                   <td className={s.playerCell}>{player.name}</td>
                   <td className={s.teamCell}>{player.team_name}</td>
                   <td className={s.typeCell}>{player.player_type_display}</td>
-                  <td className={s.goalsCell} style={{ textAlign: 'right' }}>{player.total_goals}</td>
+                  <td className={s.goalsCell}>{player.total_goals}</td>
                 </tr>
               ))}
               {paginatedPlayers.length === 0 && (
