@@ -104,7 +104,13 @@ export default function AddTeamForm() {
       return;
     }
     
-    dispatch(saveTeam());
+    try {
+      dispatch(saveTeam());
+      toast.success('Đội bóng đã được lưu thành công!');
+    } catch (error) {
+      console.error('Error saving team:', error);
+      toast.error('Lỗi khi lưu đội bóng. Vui lòng thử lại.');
+    }
   };
 
   const handleAddPlayers = () => {
