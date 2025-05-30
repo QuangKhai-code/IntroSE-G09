@@ -1,15 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from './style.module.css';
+
+// Hook để theo dõi kích thước màn hình
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+}
 
 const MATCHES_PER_PAGE = 5;
 
 export default function UpcomingMatches({ matches, loading, error }) {
   const [selectedRound, setSelectedRound] = useState('Tất cả');
   const [page, setPage] = useState(1);
+  const { width } = useWindowSize();
+  
+  // Tính toán số lượng trận đấu mỗi trang dựa trên kích thước màn hình
+  const getMatchesPerPage = () => {
+    if (width < 768) return 3;      // Mobile
+    if (width < 1024) return 4;     // Tablet
+    if (width < 1440) return 6;     // Small desktop
+    return 8;                       // Large desktop
+  };
+
+  const matchesPerPage = getMatchesPerPage();
   const rounds = ['Tất cả', ...Array.from(new Set(matches.map(m => m.round)))];
   const filteredMatches = selectedRound === 'Tất cả' ? matches : matches.filter(m => m.round === selectedRound);
-  const totalPages = Math.ceil(filteredMatches.length / MATCHES_PER_PAGE);
-  const paginatedMatches = filteredMatches.slice((page - 1) * MATCHES_PER_PAGE, page * MATCHES_PER_PAGE);
+  const totalPages = Math.ceil(filteredMatches.length / matchesPerPage);
+  const paginatedMatches = filteredMatches.slice((page - 1) * matchesPerPage, page * matchesPerPage);
 
   if (loading) {
     return (
@@ -42,19 +75,6 @@ export default function UpcomingMatches({ matches, loading, error }) {
   return (
     <section className={s.section}>
       <h2 className={s.sectionTitle}>Lịch sắp diễn ra</h2>
-      <div className={s.searchBar}>
-        <label htmlFor="round-select" className={s.filterLabel}>Chọn vòng:</label>
-        <select 
-          id="round-select" 
-          value={selectedRound} 
-          onChange={e => { setSelectedRound(e.target.value); setPage(1); }}
-          className={s.filterSelect}
-        >
-          {rounds.map(round => (
-            <option key={round} value={round}>{round}</option>
-          ))}
-        </select>
-      </div>
       <div className={s.upcomingMatchList}>
         {Object.entries(
           paginatedMatches.reduce((acc, match) => {

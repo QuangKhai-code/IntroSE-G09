@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1170px;
   min-height: 350px;
   margin: 0 auto 32px auto;
   background: rgba(255,255,255,0.98);
@@ -123,7 +123,7 @@
 
 .upcomingMatchList {
   width: 100%;
-  min-height: 750px;
+  min-height: 1010px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -154,13 +154,13 @@
   width: 100%;
   min-height: 60px;
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr 2fr;
+  grid-template-columns: 2.5fr 1.2fr 2.5fr 2.5fr;
   align-items: center;
-  padding: 12px 24px;
+  padding: 12px 32px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(90,32,110,0.08);
-  gap: 16px;
+  gap: 24px;
   margin-bottom: 8px;
   transition: all 0.2s ease;
 }

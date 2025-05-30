@@ -3,7 +3,7 @@
   background: #f8fafd;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(57, 25, 100, 0.08);
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -52,8 +52,8 @@
 
 .table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 16px;
   font-size: 20px;
   background: transparent;
   border-radius: 12px;
@@ -91,8 +91,38 @@
   background: #ede7f6;
 }
 
-.leftAlign {
-  text-align: left !important;
+/* Header styles */
+.sttHeader {
+  width: 6%;
+  text-align: left;
+}
+
+.playerHeader {
+  width: 23%;
+  text-align: left;
+}
+
+.teamHeader {
+  width: 25%;
+  text-align: left;
+}
+
+.typeHeader {
+  width: 15%;
+  text-align: left;
+}
+
+.goalsHeader {
+  width: 18%;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Cell styles */
+.sttCell {
+  text-align: left;
+  font-weight: 800;
+  font-size: 18px;
 }
 
 .playerCell {
@@ -100,38 +130,12 @@
   font-weight: 800;
   color: #222;
   font-size: 18px;
-  padding-left: 0 !important;
-}
-
-/* Căn trái cho header column Cầu Thủ */
-.table th.playerHeader {
-  text-align: left !important;
-  padding-left: 0 !important;
-}
-
-/* Nếu không có class riêng cho header, dùng nth-child (giả sử Cầu Thủ là cột thứ 2) */
-.table th:nth-child(2) {
-  text-align: left !important;
-  padding-left: 0 !important;
 }
 
 .teamCell {
   text-align: left;
   font-weight: 400;
   color: #222;
-  font-size: 18px;
-}
-
-.goalsCell {
-  text-align: right;
-  font-weight: 600;
-  color: #391964;
-  font-size: 22px;
-}
-
-.sttCell {
-  text-align: left;
-  font-weight: 800;
   font-size: 18px;
 }
 
@@ -142,6 +146,16 @@
   font-weight: 400;
 }
 
+.goalsCell {
+  text-align: center;
+  font-weight: 600;
+  color: #391964;
+  font-size: 20px;
+}
+
+.leftAlign {
+  text-align: left !important;
+}
 
 .paginationBtn {
   padding: 8px 22px;
@@ -227,8 +241,9 @@
 .searchControl[type="text"] {
   width: 220px;
   min-width: 160px;
-  padding-left: 40px;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23bdbdbd" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+  /* padding-left: 40px; */
+  /* background-image: none; */
+  /* background-image: url('data:image/svg+xml;utf8,<svg fill="%23bdbdbd" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>'); */
   background-repeat: no-repeat;
   background-position: 12px center;
 }

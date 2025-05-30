@@ -1,7 +1,7 @@
 .section {
-  width: 1000px;
+  width: 1170px;
   min-width: 1000px;
-  max-width: 1000px;
+  max-width: 1170px;
   min-height: 350px;
   margin: 0 auto 32px auto;
   background: rgba(255,255,255,0.98);
@@ -421,4 +421,30 @@
   align-items: center;
   justify-content: center;
   margin: 0 8px;
+}
+
+.matchDetailStadium {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 215, 0, 0.10);
+  border-radius: 8px;
+  margin: 0 16px 12px;
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.10);
+}
+
+.matchDetailStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.matchDetailStadiumName {
+  font-size: 1.08rem;
+  color: #FFD700;
+  font-weight: 700;
+  margin-left: 6px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 6px #23232b80;
+  font-family: 'Baloo 2', sans-serif;
 } 
