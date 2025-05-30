@@ -8,6 +8,7 @@ export default function Input(props) {
         className={`${s.input} ${props.className || ""}`}
         type={props.type || "text"}
         placeholder={props.placeholder}
+        list={props.list}
         value={props.value}
         min={props.min || ""}
         max={props.max || ""}

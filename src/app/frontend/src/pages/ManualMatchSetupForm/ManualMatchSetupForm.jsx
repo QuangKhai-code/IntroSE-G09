@@ -1,27 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./style.module.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SaveButton from "../../components/SaveButton/SaveButton";
 import Input from "../../components/Input/Input";
+import { fetchTeams } from "../../store/team/teamList-slice";
+import { createMatch } from "../../store/matches/matches-slice";
 
 export default function ManualMatchSetupForm() {
+  const dispatch = useDispatch();
+  const { teams, status: teamsStatus } = useSelector((state) => state.teamListSlice);
+
   const [formData, setFormData] = useState({
     round: "",
     stadium: "",
-    team1: "",
-    team2: "",
-    date: "",
-    time: "",
-});
+    home_team: "",
+    away_team: "",
+    match_date: "",
+    match_time: "",
+  });
 
-  const inputFields = [
-    { id: "round", label: "Vòng thi đấu", placeholder: "Vòng đấu" },
-    { id: "stadium", label: "Sân đấu", placeholder: "Tên Sân" },
-    { id: "team1", label: "Đội 1", placeholder: "Tên đội 1" },
-    { id: "team2", label: "Đội 2", placeholder: "Tên đội 2" },
-    { id: "date", label: "Ngày", placeholder: "Ex: 23/05/2023" },
-    { id: "time", label: "Giờ", placeholder: "Ex: 14:00" },
-  ];
+  useEffect(() => {
+    if (teamsStatus === 'idle') {
+      dispatch(fetchTeams());
+    }
+  }, [dispatch, teamsStatus]);
 
   const handleInputChange = (id, value) => {
     setFormData((prev) => ({
@@ -30,25 +33,117 @@ export default function ManualMatchSetupForm() {
     }));
   };
 
-  const submit = (e) => {
-    e.preventDefault();
-    alert("Form submitted:");
-    // TODO: API call and clear state
+  const getTeamId = (teamName) => {
+    const team = teams.find(t => t.name === teamName);
+    return team?.id;
   };
 
+  // Get unique stadiums from teams data
+  const uniqueStadiums = [...new Set(teams.map(team => team.homeStadium))];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate form data
+    if (!formData.round || !formData.stadium || !formData.home_team || 
+        !formData.away_team || !formData.match_date || !formData.match_time) {
+      alert("Vui lòng điền đầy đủ thông tin");
+      return;
+    }
+
+    if (formData.home_team === formData.away_team) {
+      alert("Hai đội không được trùng nhau");
+      return;
+    }
+
+    try {
+      const matchData = {
+        round: parseInt(formData.round),
+        home_team: getTeamId(formData.home_team),
+        away_team: getTeamId(formData.away_team),
+        match_date: formData.match_date,
+        match_time: formData.match_time,
+        stadium: formData.stadium
+      };
+
+      await dispatch(createMatch(matchData)).unwrap();
+      alert("Tạo trận đấu thành công!");
+      
+      // Reset form
+      setFormData({
+        round: "",
+        stadium: "",
+        home_team: "",
+        away_team: "",
+        match_date: "",
+        match_time: "",
+      });
+    } catch (error) {
+      console.log(error);
+      alert(error || "Có lỗi xảy ra khi tạo trận đấu");
+    }
+  };
+
+  const inputFields = [
+    { id: "round", type: "number", label: "Vòng thi đấu", placeholder: "Vòng đấu" },
+    { id: "stadium", type: "text", label: "Sân đấu", placeholder: "Tên Sân" },
+    { id: "match_date", type: "date", label: "Ngày", placeholder: "YYYY-MM-DD" },
+    { id: "match_time", type: "time", label: "Giờ", placeholder: "HH:MM" },
+  ];
+
   return (
-    <form className={`${s.form_container}`} onSubmit={submit}>
+    <form className={`${s.form_container}`} onSubmit={handleSubmit}>
       <div className={s.content}>
         {inputFields.map((field) => (
           <div className={s.input_group} key={field.id}>
             <label htmlFor={field.id}>{field.label}</label>
             <Input
               id={field.id}
-              placeholder={field.placeholder} 
-              onChange={(e) => handleInputChange(field.id, e.target.value)}
+              type={field.type}
+              placeholder={field.placeholder}
+              list={field.id === "stadium" ? "stadium-list" : undefined}
+              value={formData[field.id]}
+              onTextChange={(value) => handleInputChange(field.id, value)}
+              handleChange={(e) => handleInputChange(field.id, e.target.value)}
             />
+            {field.id === "stadium" && (
+              <datalist id="stadium-list">
+                {uniqueStadiums.map((stadium) => (
+                  <option key={stadium} value={stadium} />
+                ))}
+              </datalist>
+            )}
           </div>
         ))}
+
+        <div className={s.input_group}>
+          <label htmlFor="home_team">Đội 1</label>
+          <Input
+            id="home_team"
+            list="teams-list"
+            placeholder="Chọn đội 1"
+            value={formData.home_team}
+            onTextChange={(value) => handleInputChange("home_team", value)}
+            handleChange={(e) => handleInputChange("home_team", e.target.value)}
+          />
+          <datalist id="teams-list">
+            {teams.map((team) => (
+              <option key={team.id} value={team.name} />
+            ))}
+          </datalist>
+        </div>
+
+        <div className={s.input_group}>
+          <label htmlFor="away_team">Đội 2</label>
+          <Input
+            id="away_team"
+            list="teams-list"
+            placeholder="Chọn đội 2"
+            value={formData.away_team}
+            onTextChange={(value) => handleInputChange("away_team", value)}
+            handleChange={(e) => handleInputChange("away_team", e.target.value)}
+          />
+        </div>
       </div>
 
       <SaveButton />

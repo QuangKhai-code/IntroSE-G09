@@ -1,13 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { teamApi } from '../../api/team';
+
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 // Async thunk to fetch all teams
 export const fetchTeams = createAsyncThunk(
   'teamList/fetchTeams',
   async () => {
     try {
-      const response = await teamApi.getAllTeams();
-      return response;
+      const response = await fetch(`${API_BASE}/api/teams/all-stats`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch teams');
+      }
+      const data = await response.json();
+      // Transform the API data to match our component's expected format
+      return data.map(team => ({
+        id: team.id,
+        name: team.team_name,
+        homeStadium: team.home_stadium,
+        totalPlayers: team.total_players,
+        domesticPlayers: team.domestic_players,
+        foreignPlayers: team.foreign_players
+      }));
     } catch (error) {
       if (error.detail) {
         throw error.detail;
@@ -26,7 +39,19 @@ const initialState = {
 const teamListSlice = createSlice({
   name: 'teamList',
   initialState,
-  reducers: {},
+  reducers: {
+    updateTeamLocally: (state, action) => {
+      const { id, name, homeStadium } = action.payload;
+      const teamIndex = state.teams.findIndex(team => team.id === id);
+      if (teamIndex !== -1) {
+        state.teams[teamIndex] = {
+          ...state.teams[teamIndex],
+          name,
+          homeStadium
+        };
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTeams.pending, (state) => {
@@ -45,4 +70,5 @@ const teamListSlice = createSlice({
   }
 });
 
+export const { updateTeamLocally } = teamListSlice.actions;
 export default teamListSlice.reducer; 
