@@ -1,0 +1,328 @@
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.modal_content {
+  width: 1200px;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  overflow-y: auto;
+  scrollbar-color: rgba(143, 255, 23, 0.26) rgba(255, 255, 255, 0);
+}
+
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal_header h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 1.8rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.close_button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close_button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+.match_info {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.match_info h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.4rem;
+  color: rgb(144, 255, 23);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+}
+
+.match_info p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.score_section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.score_input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.score_input label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+}
+
+.score_input input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.2rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+.score_input input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.goals_section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.goals_section h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: rgb(144, 255, 23);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+}
+
+.goal_form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex: 2 2 1 auto;
+}
+
+.goal_form input,
+.goal_form select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.goal_form input:focus,
+.goal_form select:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.goal_form select {
+  background: rgb(117, 115, 114);
+  color: #fff;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px;
+  flex: 1;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.goal_form select:focus {
+  outline: none;
+  border-color: #90ff17;
+}
+
+.goal_form option {
+  background: #232323;
+  color: #fff;
+}
+
+.add_button {
+  background: rgb(144, 255, 23);
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add_button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.goals_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goal_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.goal_item span {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  width: 30%;
+}
+
+.remove_button {
+  background: none;
+  border: none;
+  color: rgba(255, 40, 25, 0.434);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.remove_button:hover {
+  background-color: rgba(255, 40, 25, 0.1);
+  color: rgb(255, 0, 0);
+}
+
+.modal_footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save_button,
+.cancel_button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save_button {
+  background: rgb(144, 255, 23);
+  color: black;
+  border: none;
+}
+
+.cancel_button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.save_button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cancel_button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar styling */
+.goals_list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.goals_list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.goals_list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.goals_list::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+} 
