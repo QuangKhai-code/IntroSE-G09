@@ -5,11 +5,11 @@ import s from './style.module.css';
 
 const API_BASE = import.meta.env.VITE_API_URL || "";
 
-const MatchRecordModal = ({ match, onClose, onSave, rules }) => {
+const MatchRecordModal = ({ match, onClose, onSave, rules, isEditing }) => {
   const [formData, setFormData] = useState({
-    home_score: 0,
-    away_score: 0,
-    goals: []
+    home_score: match.home_score || 0,
+    away_score: match.away_score || 0,
+    goals: match.goals || []
   });
 
   const [newGoal, setNewGoal] = useState({
@@ -167,7 +167,7 @@ const MatchRecordModal = ({ match, onClose, onSave, rules }) => {
         className={s.modal_content}
       >
         <div className={s.modal_header}>
-          <h2>Ghi nhận kết quả trận đấu</h2>
+          <h2>{isEditing ? 'Chỉnh sửa kết quả trận đấu' : 'Ghi nhận kết quả trận đấu'}</h2>
           <button onClick={onClose} className={s.close_button}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -176,7 +176,7 @@ const MatchRecordModal = ({ match, onClose, onSave, rules }) => {
         </div>
 
         <div className={s.match_info}>
-          <h3>{match.home_team_name} vs {match.away_team_name}</h3>
+          <h3>{`${match.home_team_name} - ${match.away_team_name}`}</h3>
           <p>Sân: {match.stadium}</p>
           <p>Ngày: {new Date(match.match_date).toLocaleDateString('vi-VN')}</p>
           <p>Giờ: {match.match_time}</p>
@@ -238,7 +238,7 @@ const MatchRecordModal = ({ match, onClose, onSave, rules }) => {
                 onChange={handleGoalChange}
               >
                 {rules?.goal_types?.map(type => (
-                  <option key={type.code} value={type.description}>
+                  <option key={type.code} value={type.code}>
                     {type.description}
                   </option>
                 ))}
@@ -281,7 +281,7 @@ const MatchRecordModal = ({ match, onClose, onSave, rules }) => {
 
           <div className={s.modal_footer}>
             <button type="submit" className={s.save_button}>
-              Lưu kết quả
+              {isEditing ? 'Cập nhật kết quả' : 'Thêm kết quả'}
             </button>
             <button type="button" onClick={onClose} className={s.cancel_button}>
               Hủy

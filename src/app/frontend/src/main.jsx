@@ -5,7 +5,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {Provider} from "react-redux";
 import {store, persistor} from "./store/index";
 import { PersistGate } from 'redux-persist/integration/react';
-import App from "./App";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import {Admin, ProtectedAdmin} from "./pages/Admin/Admin";
@@ -18,9 +17,8 @@ import AutoScheduleForm from "./pages/AutoScheduleForm/AutoScheduleForm";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import MatchSchedule from "./pages/MatchSchedule/MatchSchedule";
-import EditTeamForm from "./pages/EditTeamForm/EditTeamForm"; 
-import TeamInfo from "./pages/TeamInfo/TeamInfo";
-
+import EditTeamForm from "./pages/EditTeamForm/EditTeamForm";
+import EditMatchResults from "./pages/EditMatchResults/EditMatchResults";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
@@ -49,7 +47,7 @@ root.render(
               <Route path="schedule/auto" element={<AutoScheduleForm />} />
               
               <Route path="match-results/add" element={<MatchRecordForm />}/>
-            
+              <Route path="match-results/edit" element={<EditMatchResults />}/>
             </Route>
             <Route path="admin/teams/add/players" element={<PlayersTable />} />
 

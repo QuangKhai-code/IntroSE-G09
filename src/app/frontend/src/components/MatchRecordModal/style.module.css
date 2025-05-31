@@ -74,6 +74,7 @@
   color: rgb(144, 255, 23);
   font-family: "Baloo 2", sans-serif;
   font-weight: 700;
+  text-align: center;
 }
 
 .match_info p {
@@ -81,6 +82,8 @@
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  text-align: center;
 }
 
 .form {
@@ -111,6 +114,7 @@
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
   font-family: "Baloo 2", sans-serif;
+  text-align: center;
 }
 
 .score_input input {
@@ -145,13 +149,24 @@
   color: rgb(144, 255, 23);
   font-family: "Baloo 2", sans-serif;
   font-weight: 700;
+  text-align: center;
 }
 
 .goal_form {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
-  flex: 2 2 1 auto;
+}
+
+.goal_form input {
+  flex: .5;
+}
+
+.goal_form input::placeholder {
+  text-align: left;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.466);
 }
 
 .goal_form input,
@@ -236,13 +251,26 @@
   font-family: "Baloo 2", sans-serif;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  width: 30%;
+  flex: auto;
+  
+}
+
+.goal_item span:nth-child(1) {
+  flex: 1;
+}
+
+.goal_item span:nth-child(2) {
+  flex: 1;
+}
+
+.goal_item span:nth-child(3) {
+  flex: 0.5;
 }
 
 .remove_button {
   background: none;
   border: none;
-  color: rgba(255, 40, 25, 0.434);
+  color: rgba(255, 40, 25, 0.918);
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
@@ -269,7 +297,7 @@
   padding: 12px 24px;
   border-radius: 8px;
   font-family: "Baloo 2", sans-serif;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s;
