@@ -19,6 +19,7 @@ import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import MatchSchedule from "./pages/MatchSchedule/MatchSchedule";
 import EditTeamForm from "./pages/EditTeamForm/EditTeamForm";
 import EditMatchResults from "./pages/EditMatchResults/EditMatchResults";
+import EditMatchSchedule from "./pages/EditMatchSchedule/EditMatchSchedule";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
@@ -45,6 +46,7 @@ root.render(
 
               <Route path="schedule/manual" element={<ManualMatchSetupForm />} />
               <Route path="schedule/auto" element={<AutoScheduleForm />} />
+              <Route path="schedule/edit" element={<EditMatchSchedule />} />
               
               <Route path="match-results/add" element={<MatchRecordForm />}/>
               <Route path="match-results/edit" element={<EditMatchResults />}/>
