@@ -144,7 +144,7 @@
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
-  width: 20%;
+  width: 10%;
 }
 
 .table th:nth-child(3),
@@ -154,12 +154,12 @@
 
 .table th:nth-child(4),
 .table td:nth-child(4) {
-  width: 15%;
+  width: 25%;
 }
 
 .table th:nth-child(5),
 .table td:nth-child(5) {
-  width: 15%;
+  width: 10%;
 }
 
 .table th:nth-child(6),
@@ -205,8 +205,17 @@
   color: #333;
 }
 
+.delete_icon_svg {
+  display: block;
+  color: #dc3545;
+}
+
 .icon_button:hover .edit_icon_svg {
   color: #000;
+}
+
+.icon_button:hover .delete_icon_svg {
+  color: #dc3545;
 }
 
 .table tbody tr:nth-child(even) {
@@ -235,11 +244,4 @@
 
 .table_wrapper::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
-}
-
-
-
-
-
-
-
+} 
