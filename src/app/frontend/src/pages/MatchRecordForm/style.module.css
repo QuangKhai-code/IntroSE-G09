@@ -74,7 +74,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: .75rem;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .table_wrapper {
@@ -180,24 +183,24 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
-  width: 36px;
-  height: 36px;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
   min-width: 36px;
 }
 
 .icon_button svg {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 .icon_button:hover {
   background-color: rgba(255, 255, 255, 0.5);
+  transform: rotate(90deg);
 }
 
 .edit_icon_svg {
@@ -207,6 +210,7 @@
 
 .icon_button:hover .edit_icon_svg {
   color: #000;
+  transform: rotate(90deg);
 }
 
 .table tbody tr:nth-child(even) {

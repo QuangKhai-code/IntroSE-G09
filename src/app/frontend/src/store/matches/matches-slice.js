@@ -11,7 +11,7 @@ export const createMatch = createAsyncThunk(
       const response = await axios.post(`${API_BASE}/api/matches/`, matchData);
       return response.data;
     } catch (error) {
-      throw error.response  || error.message;
+      throw error;
     }
   }
 );

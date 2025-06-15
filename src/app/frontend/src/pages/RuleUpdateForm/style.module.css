@@ -129,7 +129,7 @@
 .value {
   font-family: "Baloo 2", sans-serif;
   font-weight: 800;
-  color: rgb(144, 255, 23);
+  color: #000000;
   font-size: 1.1rem;
   flex: 1;
   text-align: right;

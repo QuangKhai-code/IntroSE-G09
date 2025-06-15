@@ -28,13 +28,12 @@
 
 .modal_header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 .modal_header h2 {
-  text-align: center;
   margin: 0;
   font-size: 1.8rem;
   font-family: "Baloo 2", sans-serif;
@@ -81,6 +80,7 @@
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
   font-family: "Baloo 2", sans-serif;
+  text-align: center;
 }
 
 .form_group input {

@@ -59,10 +59,7 @@ export default function EditTeamForm() {
         throw new Error(errorData.detail || 'Failed to update team');
       }
 
-      // Update local state first
-      dispatch(updateTeamLocally(updatedTeam));
-      
-      // Then refresh the teams list
+      // Refresh the entire teams list to get updated data
       dispatch(fetchTeams());
 
       toast.success('Cập nhật thông tin đội bóng thành công!',

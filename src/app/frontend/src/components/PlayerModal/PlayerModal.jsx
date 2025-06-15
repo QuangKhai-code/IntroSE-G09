@@ -11,13 +11,35 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
     notes: ''
   });
   
+  const [nameError, setNameError] = useState('');
+  
   // State to track if position dropdown is open
   const [isPositionDropdownOpen, setIsPositionDropdownOpen] = useState(false);
   const positionDropdownRef = useRef(null);
   
-  // State to track if type dropdown is open
+  // State to track if type dropdown is open 
   const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
   const typeDropdownRef = useRef(null);
+  
+  // Validate player name
+  const validateName = (name) => {
+    // Allow letters, spaces, and Vietnamese characters
+    const nameRegex = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵýỷỹ\s]+$/;
+    
+    if (!name) {
+      return 'Tên cầu thủ không được để trống';
+    }
+    if (!nameRegex.test(name)) {
+      return 'Tên cầu thủ chỉ được chứa chữ cái và khoảng trắng';
+    }
+    if (name.length < 2) {
+      return 'Tên cầu thủ phải có ít nhất 2 ký tự';
+    }
+    if (name.length > 50) {
+      return 'Tên cầu thủ không được vượt quá 50 ký tự';
+    }
+    return '';
+  };
   
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -51,6 +73,12 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
       ...formData,
       [name]: value
     });
+    
+    // Validate name in real-time
+    if (name === 'name') {
+      const error = validateName(value);
+      setNameError(error);
+    }
   };
   
   const handlePositionChange = (position) => {
@@ -71,6 +99,14 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate name before submission
+    const nameError = validateName(formData.name);
+    if (nameError) {
+      setNameError(nameError);
+      return;
+    }
+    
     onSave(formData);
   };
   
@@ -110,7 +146,9 @@ const PlayerModal = ({ player, onSave, onClose, isEditing }) => {
               onChange={handleChange}
               required
               placeholder="Nhập tên cầu thủ"
+              className={nameError ? s.inputError : ''}
             />
+            {nameError && <span className={s.errorMessage}>{nameError}</span>}
           </div>
           
           <div className={s.formGroup}>

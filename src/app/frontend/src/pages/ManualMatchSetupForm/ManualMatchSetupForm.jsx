@@ -6,6 +6,7 @@ import SaveButton from "../../components/SaveButton/SaveButton";
 import Input from "../../components/Input/Input";
 import { fetchTeams } from "../../store/team/teamList-slice";
 import { createMatch } from "../../store/matches/matches-slice";
+import { toast } from "react-toastify";
 
 export default function ManualMatchSetupForm() {
   const dispatch = useDispatch();
@@ -79,8 +80,8 @@ export default function ManualMatchSetupForm() {
         match_time: "",
       });
     } catch (error) {
-      console.log(error);
-      alert(error || "Có lỗi xảy ra khi tạo trận đấu");
+      console.log("lỗi: ", error);
+      toast.error("Có lỗi xảy ra khi tạo trận đấu");
     }
   };
 

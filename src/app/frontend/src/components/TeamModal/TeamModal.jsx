@@ -244,7 +244,7 @@ export default function TeamModal({ team, onClose, onSave }) {
     e.preventDefault();
     setIsSaving(true);
     try {
-      // Only update if name or stadium has changed
+      // Update team info if changed
       if (formData.name !== team.name || formData.homeStadium !== team.homeStadium) {
         const teamData = {
           name: formData.name,
@@ -262,14 +262,30 @@ export default function TeamModal({ team, onClose, onSave }) {
         if (!response.ok) {
           throw new Error('Failed to update team');
         }
+      }
 
-        onSave({
-          id: team.id,
-          name: formData.name,
-          homeStadium: formData.homeStadium
-        });
+      // Always fetch the latest team data after any changes
+      const teamResponse = await fetch(`${API_BASE}/api/teams/${team.id}/`);
+      if (!teamResponse.ok) {
+        throw new Error('Failed to fetch updated team data');
       }
       
+      const updatedTeamData = await teamResponse.json();
+      const transformedTeam = {
+        id: updatedTeamData.id,
+        name: updatedTeamData.name,
+        homeStadium: updatedTeamData.home_stadium,
+        players: updatedTeamData.players.map(player => ({
+          id: player.id,
+          name: player.name,
+          dateOfBirth: player.birthdate,
+          position: player.position,
+          type: player.player_type,
+          notes: player.note
+        }))
+      };
+
+      onSave(transformedTeam);
       onClose();
     } catch (error) {
       console.error('Error updating team:', error);
