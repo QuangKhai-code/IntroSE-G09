@@ -119,6 +119,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="maxPlayer"
                   value={formData.maxPlayer}
                   onChange={handleChange}
+                  min={1}
                   required
                 />
               </div>
@@ -130,6 +131,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="minPlayer"
                   value={formData.minPlayer}
                   onChange={handleChange}
+                  min={1}
                   required
                 />
               </div>
@@ -141,6 +143,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="maxAge"
                   value={formData.maxAge}
                   onChange={handleChange}
+                  min={1}
                   required
                 />
               </div>
@@ -152,6 +155,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="minAge"
                   value={formData.minAge}
                   onChange={handleChange}
+                  min={1}
                   required
                 />
               </div>
@@ -163,6 +167,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="win_score"
                   value={formData.win_score}
                   onChange={handleChange}
+                  min={0}
                   required
                 />
               </div>
@@ -207,6 +212,7 @@ const RuleUpdateModal = ({ open, onClose, rules, onSave }) => {
                   id="max_foreign_player"
                   value={formData.max_foreign_player}
                   onChange={handleChange}
+                  min={0}
                   required
                 />
               </div>

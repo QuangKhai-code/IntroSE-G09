@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setTeamName, setHomeStadium, saveTeam, clearFormData, clearFormSubmittedFlag } from "../../store/team/team-slice";
+import { setTeamName, setHomeStadium, clearFormData, clearFormSubmittedFlag, saveTeamAsync } from "../../store/team/team-slice";
 import Toast from "../../components/Toast/Toast";
 import { toast } from "react-toastify";
 
@@ -91,7 +91,7 @@ export default function AddTeamForm() {
     return () => window.removeEventListener('teamSaved', handleTeamSaved);
   }, [dispatch, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!teamName || !homeStadium) {
       toast.error("Vui lòng nhập đầy đủ thông tin đội bóng!");
@@ -105,11 +105,23 @@ export default function AddTeamForm() {
     }
     
     try {
-      dispatch(saveTeam());
+      const teamData = {
+        name: teamName,
+        home_stadium: homeStadium,
+        players: players.map(player => ({
+          name: player.name,
+          birthdate: player.dateOfBirth,
+          player_type: player.type.toLowerCase(),
+          position: player.position,
+          note: player.notes
+        }))
+      };
+      
+      await dispatch(saveTeamAsync(teamData)).unwrap();
       toast.success('Đội bóng đã được lưu thành công!');
     } catch (error) {
       console.error('Error saving team:', error);
-      toast.error('Lỗi khi lưu đội bóng. Vui lòng thử lại.');
+      toast.error(error.message || 'Lỗi khi lưu đội bóng. Vui lòng thử lại.');
     }
   };
 

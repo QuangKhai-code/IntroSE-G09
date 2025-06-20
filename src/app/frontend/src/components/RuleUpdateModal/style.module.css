@@ -81,10 +81,11 @@
 
 .formGroup label {
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   font-family: "Baloo 2", sans-serif;
   font-weight: 600;
+  text-align: center;
 }
 
 .formGroup input {

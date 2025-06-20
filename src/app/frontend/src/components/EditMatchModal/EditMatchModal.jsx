@@ -50,17 +50,6 @@ const EditMatchModal = ({ match, onClose, onSave }) => {
 
         <form onSubmit={handleSubmit} className={s.form}>
           <div className={s.form_group}>
-            <label>Vòng đấu</label>
-            <input
-              type="number"
-              name="round"
-              value={formData.round}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
- 
-          <div className={s.form_group}>
             <label>Đội nhà</label>
             <input
               type="text"
@@ -81,9 +70,20 @@ const EditMatchModal = ({ match, onClose, onSave }) => {
               required
             />
           </div>
-
+ 
           <div className={s.form_group}>
-            <label>Sấn đấu</label>
+            <label>Vòng đấu</label>
+            <input
+              type="number"
+              name="round"
+              value={formData.round}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+ 
+          <div className={s.form_group}>
+            <label>Sân đấu</label>
             <input
               type="text"
               name="stadium"

@@ -86,6 +86,8 @@ const EditMatchSchedule = () => {
         },
         body: JSON.stringify(updatedMatch),
       });
+      console.log("response: ", response);
+
       if (!response.ok) {
         throw new Error("Failed to update match");
       }
