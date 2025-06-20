@@ -22,6 +22,42 @@
   text-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
+.tabsContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.tabButton {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  backdrop-filter: blur(5px);
+}
+
+.tabButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.activeTab {
+  background-color: #fff;
+  color: #5a206e;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.mainContent {
+  flex: 1;
+}
+
 .section {
   width: 90%;
   max-width: 1100px;

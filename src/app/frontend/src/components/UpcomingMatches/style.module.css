@@ -79,8 +79,8 @@
 }
 
 .errorText {
-  font-size: 1.1rem;
-  font-weight: 600;
+  color: #e74c3c;
+  font-weight: 500;
 }
 
 .filterContainer {
@@ -245,65 +245,81 @@
   font-family: 'Baloo 2', sans-serif;
 }
 
-.pagination {
+.paginationContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 24px;
   margin-top: 24px;
-  padding: 16px 0;
+  gap: 16px;
+}
+
+.pageInfo {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #391964;
+}
+
+.pageTotal {
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.pageInput {
+  width: 50px;
+  height: 42px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #391964;
+  background: #fff;
+  border: 1.5px solid #d1c4e9;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pageInput:focus {
+  border-color: #7c4dff;
+  box-shadow: 0 0 0 2px #ede7f6;
 }
 
 .paginationBtn {
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border: 1.5px solid #d1c4e9;
   background: #fff;
-  border: 2px solid rgba(90,32,110,0.1);
+  color: #6c3483;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 22px;
-  color: #5a206e;
   padding: 0;
-  position: relative;
-  overflow: hidden;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  color: #fff;
+  background: #7c4dff;
+  border-color: #7c4dff;
 }
 
 .paginationBtn:disabled {
-  color: #ccc;
+  color: #bdbdbd;
+  background: #f8fafd;
+  border-color: #e0e0e0;
   cursor: not-allowed;
-  border-color: rgba(90,32,110,0.05);
-  background: #f8f8f8;
-}
-
-.paginationBtn:not(:disabled):hover {
-  background: linear-gradient(135deg, #f3e6fa, #e5e0f2);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(90,32,110,0.15);
-  border-color: rgba(90,32,110,0.2);
-}
-
-.paginationBtn:not(:disabled):active {
-  transform: translateY(1px) scale(0.95);
-}
-
-.paginationText {
-  font-weight: 700;
-  font-size: 18px;
-  color: #391964;
-  min-width: 48px;
-  text-align: center;
-  padding: 8px 16px;
-  background: rgba(90,32,110,0.05);
-  border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-.paginationText:hover {
-  background: rgba(90,32,110,0.1);
 }
 
 @media (max-width: 1024px) {

@@ -96,3 +96,33 @@
 .retryButton:hover {
   background-color: #2980b9;
 }
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.tabButton {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.tabButton:hover {
+  background-color: #ffffff33;
+}
+
+.activeTab {
+  background-color: #fff;
+  color: #6c3483;
+}

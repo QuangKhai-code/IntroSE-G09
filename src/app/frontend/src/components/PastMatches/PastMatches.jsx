@@ -2,36 +2,63 @@ import React, { useState, useEffect } from 'react';
 import s from './style.module.css';
 import { getTeamLogo } from '../../utils/teamMappings';
 
-const MATCHES_PER_PAGE = 5;
-
-export default function PastMatches() {
-  const [page, setPage] = useState(1);
-  const [expandedMatchId, setExpandedMatchId] = useState(null);
-  const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Hook để theo dõi kích thước màn hình
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   useEffect(() => {
-    const fetchMatches = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/match-results/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch matches');
-        }
-        const data = await response.json();
-        setMatches(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
 
-    fetchMatches();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const totalPages = Math.ceil(matches.length / MATCHES_PER_PAGE);
-  const paginatedMatches = matches.slice((page - 1) * MATCHES_PER_PAGE, page * MATCHES_PER_PAGE);
+  return windowSize;
+}
+
+export default function PastMatches({ matches, loading, error }) {
+  const [page, setPage] = useState(1);
+  const [pageInput, setPageInput] = useState('1');
+  const [expandedMatchId, setExpandedMatchId] = useState(null);
+  const { width } = useWindowSize();
+
+  const getMatchesPerPage = () => {
+    if (width < 768) return 3;
+    if (width < 1024) return 4;
+    if (width < 1440) return 6;
+    return 8; // Default for larger screens
+  };
+
+  const matchesPerPage = getMatchesPerPage();
+  const totalPages = Math.ceil(matches.length / matchesPerPage);
+  const paginatedMatches = matches.slice((page - 1) * matchesPerPage, page * matchesPerPage);
+
+  useEffect(() => {
+    setPageInput(page.toString());
+  }, [page]);
+
+  const handlePageInputChange = (e) => {
+    setPageInput(e.target.value);
+  };
+
+  const handlePageJump = (e) => {
+    if (e.key === 'Enter') {
+      const pageNum = parseInt(pageInput, 10);
+      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
+        setPage(pageNum);
+      } else {
+        setPageInput(page.toString());
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -146,23 +173,36 @@ export default function PastMatches() {
         ))}
       </div>
       {totalPages > 1 && (
-        <div className={s.pagination}>
+        <div className={s.paginationContainer}>
           <button
             className={s.paginationBtn}
             onClick={() => setPage(page - 1)}
             disabled={page === 1}
             aria-label="Trang trước"
           >
-            <span style={{ color: page === 1 ? '#ccc' : '#5a206e', fontSize: 24 }}>&lt;</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 15L8 10L13 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
-          <span className={s.paginationText}>{page}/{totalPages}</span>
+          <div className={s.pageInfo}>
+            <input
+              type="text"
+              className={s.pageInput}
+              value={pageInput}
+              onChange={handlePageInputChange}
+              onKeyDown={handlePageJump}
+            />
+            <span className={s.pageTotal}>/ {totalPages || 1}</span>
+          </div>
           <button
             className={s.paginationBtn}
             onClick={() => setPage(page + 1)}
             disabled={page === totalPages}
             aria-label="Trang sau"
           >
-            <span style={{ color: page === totalPages ? '#ccc' : '#5a206e', fontSize: 24 }}>&gt;</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
       )}

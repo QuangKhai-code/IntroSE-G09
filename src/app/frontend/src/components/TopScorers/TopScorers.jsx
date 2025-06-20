@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from "./style.module.css";
 
 // Hàm loại bỏ dấu tiếng Việt để tìm kiếm không dấu
@@ -9,7 +9,7 @@ function removeVietnameseTones(str) {
     .replace(/đ/g, 'd').replace(/Đ/g, 'D');
 }
 
-const TopScorers = ({ players, reportDate }) => {
+const TopScorers = ({ players, reportDate, mode = 'ranking' }) => {
   // Format ngày sang DD/MM/YYYY
   let formattedDate = ".................................";
   if (reportDate) {
@@ -26,6 +26,7 @@ const TopScorers = ({ players, reportDate }) => {
   // State cho sort, phân trang, tìm kiếm, filter đội
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' hoặc 'asc'
   const [page, setPage] = useState(1);
+  const [pageInput, setPageInput] = useState('1');
   const [searchTerm, setSearchTerm] = useState('');
   const [pendingSearchTerm, setPendingSearchTerm] = useState('');
   const [selectedTeam, setSelectedTeam] = useState('');
@@ -36,10 +37,15 @@ const TopScorers = ({ players, reportDate }) => {
 
   // Lọc cầu thủ theo tên và đội
   const filteredPlayers = players.filter(player => {
+    const matchTeam = !selectedTeam || player.team_name === selectedTeam;
+
+    if (mode === 'ranking') {
+      return matchTeam;
+    }
+
     const name = removeVietnameseTones(player.name.toLowerCase());
     const search = removeVietnameseTones(searchTerm.toLowerCase());
     const matchName = name.includes(search);
-    const matchTeam = !selectedTeam || player.team_name === selectedTeam;
     return matchName && matchTeam;
   });
 
@@ -55,55 +61,85 @@ const TopScorers = ({ players, reportDate }) => {
   // Tổng số trang
   const totalPages = Math.ceil(sortedPlayers.length / playersPerPage);
 
+  useEffect(() => {
+    setPageInput(page.toString());
+  }, [page]);
+
+  const handlePageInputChange = (e) => {
+    setPageInput(e.target.value);
+  };
+
+  const handlePageJump = (e) => {
+    if (e.key === 'Enter') {
+      const pageNum = parseInt(pageInput, 10);
+      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= (totalPages || 1)) {
+        setPage(pageNum);
+      } else {
+        setPageInput(page.toString());
+      }
+    }
+  };
+
   return (
     <>
       <div className={s.reportDate} style={{marginBottom: 18, textAlign: 'center'}}>{`Ngày: ${formattedDate}`}</div>
       <div className={s.topScorers}>
         {/* Title that changes based on search/filter */}
         <h2 className={s.title} style={{textAlign: 'center', marginBottom: 20, color: '#000000'}}>
-          {searchTerm ? 'Kết quả tìm kiếm cầu thủ' : 'Bảng xếp hạng cầu thủ ghi bàn'}
+          {mode === 'search'
+            ? (searchTerm || selectedTeam ? 'Kết quả tìm kiếm cầu thủ' : 'Tìm kiếm cầu thủ')
+            : 'Bảng xếp hạng cầu thủ ghi bàn'}
         </h2>
         <div className={s.tableContainer} style={{marginBottom: 0}}>
-          <div className={s.searchBarRow}>
-            <select
-              className={s.searchControl}
-              value={selectedTeam}
-              onChange={e => { setSelectedTeam(e.target.value); setPage(1); }}
-            >
-              <option value="">Tất cả đội bóng</option>
-              {teamList.map(team => (
-                <option key={team} value={team}>{team}</option>
-              ))}
-            </select>
-            <input
-              className={s.searchControl}
-              type="text"
-              placeholder="Tra cứu cầu thủ..."
-              value={pendingSearchTerm}
-              onChange={e => setPendingSearchTerm(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  setSearchTerm(pendingSearchTerm);
-                  setPage(1);
-                }
-              }}
-              style={{ paddingRight: 40 }}
-            />
-            <button
-              className={s.searchIconBtn}
-              type="button"
-              aria-label="Tìm kiếm"
-              onClick={() => {
-                setSearchTerm(pendingSearchTerm);
-                setPage(1);
-              }}
-              style={{ position: 'relative', right: 44, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="7" stroke="#7c4dff" strokeWidth="2" />
-                <line x1="16.018" y1="16.485" x2="21" y2="21.5" stroke="#7c4dff" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
+          <div className={s.searchContainer}>
+            {(mode === 'search' || (mode === 'ranking' && teamList.length > 0)) && (
+              <div className={s.searchBarRow}>
+                <select
+                  className={s.searchControl}
+                  value={selectedTeam}
+                  onChange={e => { setSelectedTeam(e.target.value); setPage(1); }}
+                >
+                  <option value="">Tất cả đội bóng</option>
+                  {teamList.map(team => (
+                    <option key={team} value={team}>{team}</option>
+                  ))}
+                </select>
+
+                {mode === 'search' && (
+                  <>
+                    <input
+                      className={s.searchControl}
+                      type="text"
+                      placeholder="Tra cứu cầu thủ..."
+                      value={pendingSearchTerm}
+                      onChange={e => setPendingSearchTerm(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') {
+                          setSearchTerm(pendingSearchTerm);
+                          setPage(1);
+                        }
+                      }}
+                      style={{ paddingRight: 40 }}
+                    />
+                    <button
+                      className={s.searchIconBtn}
+                      type="button"
+                      aria-label="Tìm kiếm"
+                      onClick={() => {
+                        setSearchTerm(pendingSearchTerm);
+                        setPage(1);
+                      }}
+                      style={{ position: 'relative', right: 44, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    >
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="7" stroke="#7c4dff" strokeWidth="2" />
+                        <line x1="16.018" y1="16.485" x2="21" y2="21.5" stroke="#7c4dff" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
           <table className={s.table}>
             <thead>
@@ -136,21 +172,30 @@ const TopScorers = ({ players, reportDate }) => {
                 </tr>
               ))}
               {paginatedPlayers.length === 0 && (
-                <tr className={s.noResultRow}><td colSpan={5}>Không tìm thấy cầu thủ phù hợp</td></tr>
+                <tr className={s.noResultRow}><td colSpan={5}>Không có kết quả nào</td></tr>
               )}
             </tbody>
           </table>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 18 }}>
+        <div className={s.paginationContainer}>
           <button className={s.paginationBtn} onClick={() => setPage(page - 1)} disabled={page === 1} aria-label="Trang trước">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 15L8 10L13 5" stroke="#6c3483" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M13 15L8 10L13 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <span style={{ margin: '0 8px', fontWeight: 700, fontSize: 16 }}>{page}/{totalPages || 1}</span>
+          <div className={s.pageInfo}>
+            <input
+              type="text"
+              className={s.pageInput}
+              value={pageInput}
+              onChange={handlePageInputChange}
+              onKeyDown={handlePageJump}
+            />
+            <span className={s.pageTotal}>/ {totalPages || 1}</span>
+          </div>
           <button className={s.paginationBtn} onClick={() => setPage(page + 1)} disabled={page === totalPages || totalPages === 0} aria-label="Trang sau">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 5L12 10L7 15" stroke="#6c3483" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
         </div>

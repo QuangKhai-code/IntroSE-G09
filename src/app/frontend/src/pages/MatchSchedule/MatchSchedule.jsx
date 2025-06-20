@@ -7,30 +7,27 @@ import UpcomingMatches from '../../components/UpcomingMatches/UpcomingMatches';
 import { getTeamLogo } from '../../utils/teamMappings';
 
 export default function MatchSchedule() {
-  const [matches, setMatches] = useState([]);
+  const [activeTab, setActiveTab] = useState('upcoming');
+  const [pastMatches, setPastMatches] = useState([]);
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMatches = async () => {
+    const fetchAllMatches = async () => {
       try {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('http://127.0.0.1:8000/api/matches/upcoming/');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        const upcomingResponse = await fetch('http://127.0.0.1:8000/api/matches/upcoming/');
+        if (!upcomingResponse.ok) {
+          throw new Error(`HTTP error! status: ${upcomingResponse.status}`);
         }
-        
-        const data = await response.json();
-        
-        // Validate API response structure
-        if (!data.results || !Array.isArray(data.results)) {
-          throw new Error('Invalid API response format');
+        const upcomingData = await upcomingResponse.json();
+        if (!upcomingData.results || !Array.isArray(upcomingData.results)) {
+          throw new Error('Invalid API response format for upcoming matches');
         }
-
-        // Transform the API data to match our component's structure
-        const transformedMatches = data.results.map(match => ({
+        const transformedUpcoming = upcomingData.results.map(match => ({
           id: match.id,
           home: { 
             name: match.home_team_name,
@@ -41,12 +38,19 @@ export default function MatchSchedule() {
             logo: getTeamLogo(match.away_team_name)
           },
           date: match.match_date,
-          time: match.match_time.split(':').slice(0, 2).join(':'), // Convert "HH:MM:SS" to "HH:MM"
+          time: match.match_time.split(':').slice(0, 2).join(':'),
           stadium: match.stadium,
-          round: 'Sắp diễn ra' // Since the API doesn't provide round info, we'll use a default value
+          round: 'Sắp diễn ra'
         }));
+        setUpcomingMatches(transformedUpcoming);
 
-        setMatches(transformedMatches);
+        const pastResponse = await fetch('http://127.0.0.1:8000/api/match-results/');
+        if (!pastResponse.ok) {
+          throw new Error('Failed to fetch past matches');
+        }
+        const pastData = await pastResponse.json();
+        setPastMatches(pastData);
+
       } catch (err) {
         console.error('Error fetching matches:', err);
         setError(err.message || 'Failed to fetch matches. Please try again later.');
@@ -55,18 +59,38 @@ export default function MatchSchedule() {
       }
     };
 
-    fetchMatches();
+    fetchAllMatches();
   }, []);
 
   return (
     <div className={s.schedulePage}>
       <Header />
       <h1 className={s.title}>LỊCH THI ĐẤU</h1>
-      <PastMatches />
-      <UpcomingMatches matches={matches} loading={loading} error={error} />
-      <section>
-        <Footer />
-      </section>
+      
+      <div className={s.tabsContainer}>
+        <button
+          className={`${s.tabButton} ${activeTab === 'upcoming' ? s.activeTab : ''}`}
+          onClick={() => setActiveTab('upcoming')}
+        >
+          Lịch sắp diễn ra
+        </button>
+        <button
+          className={`${s.tabButton} ${activeTab === 'past' ? s.activeTab : ''}`}
+          onClick={() => setActiveTab('past')}
+        >
+          Lịch sử đấu
+        </button>
+      </div>
+
+      <main className={s.mainContent}>
+        {activeTab === 'upcoming' ? (
+          <UpcomingMatches matches={upcomingMatches} loading={loading} error={error} />
+        ) : (
+          <PastMatches matches={pastMatches} loading={loading} error={error} />
+        )}
+      </main>
+      
+      <Footer />
     </div>
   );
 }

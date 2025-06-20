@@ -28,14 +28,26 @@ const MATCHES_PER_PAGE = 5;
 export default function UpcomingMatches({ matches, loading, error }) {
   const [selectedRound, setSelectedRound] = useState('Tất cả');
   const [page, setPage] = useState(1);
+  const [pageInput, setPageInput] = useState('1');
   const { width } = useWindowSize();
   
   // Tính toán số lượng trận đấu mỗi trang dựa trên kích thước màn hình
+  // Sử dụng công thức toán học thay vì if-else
   const getMatchesPerPage = () => {
-    if (width < 768) return 3;      // Mobile
-    if (width < 1024) return 4;     // Tablet
-    if (width < 1440) return 6;     // Small desktop
-    return 8;                       // Large desktop
+    // Công thức: 3 + Math.floor((width - 320) / 200)
+    // - 320px: 3 matches (mobile)
+    // - 520px: 4 matches (tablet)
+    // - 720px: 5 matches (small desktop)
+    // - 920px: 6 matches (desktop)
+    // - 1120px: 7 matches (large desktop)
+    // - 1320px+: 8 matches (extra large)
+    const baseMatches = 3;
+    const widthStep = 200;
+    const minWidth = 320;
+    const maxMatches = 8;
+    
+    const calculatedMatches = baseMatches + Math.floor((width - minWidth) / widthStep);
+    return Math.max(baseMatches, Math.min(calculatedMatches, maxMatches));
   };
 
   const matchesPerPage = getMatchesPerPage();
@@ -43,6 +55,25 @@ export default function UpcomingMatches({ matches, loading, error }) {
   const filteredMatches = selectedRound === 'Tất cả' ? matches : matches.filter(m => m.round === selectedRound);
   const totalPages = Math.ceil(filteredMatches.length / matchesPerPage);
   const paginatedMatches = filteredMatches.slice((page - 1) * matchesPerPage, page * matchesPerPage);
+
+  useEffect(() => {
+    setPageInput(page.toString());
+  }, [page]);
+
+  const handlePageInputChange = (e) => {
+    setPageInput(e.target.value);
+  };
+
+  const handlePageJump = (e) => {
+    if (e.key === 'Enter') {
+      const pageNum = parseInt(pageInput, 10);
+      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
+        setPage(pageNum);
+      } else {
+        setPageInput(page.toString());
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -122,26 +153,35 @@ export default function UpcomingMatches({ matches, loading, error }) {
         ))}
       </div>
       {totalPages > 1 && (
-        <div className={s.pagination}>
+        <div className={s.paginationContainer}>
           <button
-            className={`${s.paginationBtn} ${page === 1 ? s.paginationBtnDisabled : ''}`}
+            className={s.paginationBtn}
             onClick={() => setPage(page > 1 ? page - 1 : 1)}
             disabled={page === 1}
             aria-label="Trang trước"
           >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 15L8 10L13 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <span className={s.paginationText}>{page}/{totalPages}</span>
+          <div className={s.pageInfo}>
+            <input
+              type="text"
+              className={s.pageInput}
+              value={pageInput}
+              onChange={handlePageInputChange}
+              onKeyDown={handlePageJump}
+            />
+            <span className={s.pageTotal}>/ {totalPages || 1}</span>
+          </div>
           <button
-            className={`${s.paginationBtn} ${page === totalPages ? s.paginationBtnDisabled : ''}`}
+            className={s.paginationBtn}
             onClick={() => setPage(page < totalPages ? page + 1 : totalPages)}
             disabled={page === totalPages}
             aria-label="Trang sau"
           >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
         </div>

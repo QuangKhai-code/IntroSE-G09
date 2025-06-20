@@ -9,6 +9,7 @@ const CACHE_KEY = 'top_scorers_cache';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export default function PlayerPage() {
+  const [activeTab, setActiveTab] = useState("ranking"); // 'ranking' or 'search'
   const [topScorers, setTopScorers] = useState([]);
   const [scorersDate, setScorersDate] = useState("");
   const [loadingScorers, setLoadingScorers] = useState(true);
@@ -98,12 +99,36 @@ export default function PlayerPage() {
       <div className={s.container}>
         <h1 className={s.title}>DANH SÁCH CẦU THỦ</h1>
         <hr className={s.line} />
+
+        <div className={s.tabs}>
+          <button
+            className={`${s.tabButton} ${
+              activeTab === "ranking" ? s.activeTab : ""
+            }`}
+            onClick={() => setActiveTab("ranking")}
+          >
+            Bảng xếp hạng cầu thủ ghi bàn
+          </button>
+          <button
+            className={`${s.tabButton} ${
+              activeTab === "search" ? s.activeTab : ""
+            }`}
+            onClick={() => setActiveTab("search")}
+          >
+            Tìm kiếm cầu thủ
+          </button>
+        </div>
+
         {loadingScorers ? (
           <LoadingComponent />
         ) : errorScorers ? (
           <ErrorComponent />
         ) : (
-          <TopScorers players={topScorers} reportDate={scorersDate} />
+          <TopScorers
+            players={topScorers}
+            reportDate={scorersDate}
+            mode={activeTab}
+          />
         )}
       </div>
       <Footer />
