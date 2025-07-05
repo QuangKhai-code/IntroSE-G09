@@ -1,0 +1,249 @@
+.container {
+  height: 70%;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-self: center;
+}
+
+.search_section {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  align-self: center;
+}
+
+.search_box {
+  flex: 1;
+}
+
+.search_box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.search_box input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.filter_box {
+  display: flex;
+  gap: 10px;
+}
+
+.filter_box input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.filter_box input:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.table_container {
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  align-self: center;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.table_wrapper {
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.272);
+  backdrop-filter: blur(20px);
+  scrollbar-color: rgba(143, 255, 23, 0.26) rgba(255, 255, 255, 0);
+  scrollbar-width: thin;
+  min-height: 500px;
+}
+
+.table {
+  width: 100%;
+  border-radius: 2rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+  background: none;
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(248, 249, 250, 0.98);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.table thead tr {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table tbody tr {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid rgba(204, 204, 204, 0.5);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  vertical-align: middle;
+  height: 50px;
+  background-clip: padding-box;
+}
+
+.table th {
+  background-color: rgba(248, 249, 250, 0.98);
+  font-weight: bold;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 20%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 20%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 20%;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 15%;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  width: 15%;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  width: auto;
+}
+
+.action_buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%; 
+  align-items: center;
+  padding: 0 15px;
+}
+
+.icon_button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  min-width: 36px;
+}
+
+.icon_button svg {
+  width: 40px;
+  height: 40px;
+}
+
+.icon_button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: rotate(90deg);
+}
+
+.edit_icon_svg {
+  display: block;
+  color: #333;
+}
+
+.icon_button:hover .edit_icon_svg {
+  color: #000;
+  transform: rotate(90deg);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollbar styling */
+.table_wrapper::-webkit-scrollbar {
+  width: 8px;
+  margin-left: 10px;
+}
+
+.table_wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.table_wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.table_wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
+
+
+
+
+

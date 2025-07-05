@@ -1,0 +1,324 @@
+.topScorers {
+  padding: 32px 24px;
+  background: #f8fafd;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(57, 25, 100, 0.08);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  border: 1px solid #222;
+  border-bottom: none;
+  padding: 4px 8px;
+  background: #fff;
+}
+
+.bmCode {
+  width: 100px;
+  border-right: 1px solid #222;
+  text-align: left;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+}
+
+.reportDate {
+  font-size: 2.7rem;
+  color: white;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  font-family: 'Baloo 2', sans-serif;
+  text-transform: uppercase;
+}
+
+.tableContainer {
+  width: 1000px;
+  margin: 0 auto;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(57, 25, 100, 0.06);
+  padding: 0;
+  min-height: 900px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 20px;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  table-layout: fixed;
+  min-height: 420px;
+}
+
+.table th {
+  background: #f3f0fa;
+  font-weight: 800;
+  color: #391964;
+  border-bottom: 3px solid #e5e5e5;
+  text-align: left;
+  letter-spacing: 0.5px;
+  padding: 20px 16px;
+  font-size: 21px;
+}
+
+.table td {
+  background: #fff;
+  color: #391964;
+  font-weight: 400;
+  border-bottom: 1.5px solid #f0f0f0;
+  padding: 18px 16px;
+  font-size: 20px;
+  transition: background 0.15s;
+}
+
+.table tr:nth-child(even) td {
+  background: #f8fafd;
+}
+
+.table tr:hover td {
+  background: #ede7f6;
+}
+
+/* Header styles */
+.sttHeader {
+  width: 6%;
+  text-align: left;
+}
+
+.playerHeader {
+  width: 23%;
+  text-align: left;
+}
+
+.teamHeader {
+  width: 25%;
+  text-align: left;
+}
+
+.typeHeader {
+  width: 15%;
+  text-align: left;
+}
+
+.goalsHeader {
+  width: 18%;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Cell styles */
+.sttCell {
+  text-align: left;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.playerCell {
+  text-align: left;
+  font-weight: 800;
+  color: #222;
+  font-size: 18px;
+}
+
+.teamCell {
+  text-align: left;
+  font-weight: 400;
+  color: #222;
+  font-size: 18px;
+}
+
+.typeCell {
+  text-align: left;
+  color: #666;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.goalsCell {
+  text-align: center;
+  font-weight: 600;
+  color: #391964;
+  font-size: 20px;
+}
+
+.leftAlign {
+  text-align: left !important;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
+}
+
+.pageInfo {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #391964;
+}
+
+.pageTotal {
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.pageInput {
+  width: 50px;
+  height: 42px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #391964;
+  background: #fff;
+  border: 1.5px solid #d1c4e9;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pageInput:focus {
+  border-color: #7c4dff;
+  box-shadow: 0 0 0 2px #ede7f6;
+}
+
+.paginationBtn {
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border: 1.5px solid #d1c4e9;
+  background: #fff;
+  color: #6c3483;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  color: #fff;
+  background: #7c4dff;
+  border-color: #7c4dff;
+}
+
+.paginationBtn:disabled {
+  color: #bdbdbd;
+  background: #f8fafd;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.sortableHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.table th, .sortableHeader {
+  white-space: nowrap;
+}
+
+.searchContainer {
+  min-height: 95px;
+}
+
+.noResultRow td {
+  text-align: center !important;
+  color: #888 !important;
+  font-style: italic;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  height: 120px;
+  white-space: nowrap;
+}
+
+.searchBarRow {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 28px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  background: #f3f0fa;
+  border-radius: 14px;
+  padding: 18px 22px 14px 22px;
+  box-shadow: 0 2px 12px rgba(57, 25, 100, 0.07);
+}
+
+.searchControl,
+.searchBarRow select {
+  border: 1.5px solid #d1c4e9;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 17px;
+  background: #fff;
+  color: #391964;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  min-width: 120px;
+  max-width: 260px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 6px rgba(57, 25, 100, 0.06);
+}
+
+.searchControl[type="text"] {
+  width: 220px;
+  min-width: 160px;
+  /* padding-left: 40px; */
+  /* background-image: none; */
+  /* background-image: url('data:image/svg+xml;utf8,<svg fill="%23bdbdbd" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99c.41.41 1.09.41 1.5 0s.41-1.09 0-1.5l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>'); */
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+
+.searchControl:focus,
+.searchBarRow select:focus {
+  border: 1.5px solid #7c4dff;
+  box-shadow: 0 0 0 2px #ede7f6;
+}
+
+.searchControl::placeholder {
+  color: #bdbdbd;
+  opacity: 1;
+}
+
+.searchBarRow select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%237c4dff" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+} 

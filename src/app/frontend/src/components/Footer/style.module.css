@@ -1,0 +1,24 @@
+footer{
+    background-color: #021f29;
+    text-align: center;
+    font-size: 14px;
+    padding: 40px 0
+}
+
+.footer_list {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+}
+
+.font_cus {
+    color:#90FF17 !important;
+    font-weight: 400 !important;
+    font-size: 20px !important;
+}
+
+.green_theme {
+    color: #90FF17 !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+}

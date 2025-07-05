@@ -1,0 +1,334 @@
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.modal_content {
+  width: 1200px;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  overflow-y: auto;
+  scrollbar-color: rgba(143, 255, 23, 0.26) rgba(255, 255, 255, 0);
+}
+
+.modal_content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formSection {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.formSection h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: rgb(144, 255, 23);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
+
+.formGroup input, .formGroup select, .formGroup textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+}
+
+.formGroup input:focus, .formGroup select:focus, .formGroup textarea:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+  box-shadow: 0 0 0 2px rgba(144, 255, 23, 0.3);
+}
+
+.formGroup input::placeholder, .formGroup select::placeholder, .formGroup textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 400;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.formGroup select {
+  background: rgb(117, 115, 114);
+  color: #fff;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.formGroup select:focus {
+  outline: none;
+  border-color: #90ff17;
+}
+
+.formGroup option {
+  background: #232323;
+  color: #fff;
+}
+
+.gridLayout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.tableHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.addPlayerButton {
+  background: rgb(144, 255, 23);
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addPlayerButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tableHeaderTitle {
+  font-size: 2rem;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+.searchInput {
+  width: 260px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: "Baloo 2", sans-serif;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: rgb(144, 255, 23);
+}
+
+.playerTableWrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.playerTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.playerTable th, .playerTable td {
+  padding: 12px 10px;
+  font-family: "Baloo 2", sans-serif;
+  vertical-align: middle;
+}
+
+.playerTable th {
+  font-weight: 600;
+  color: rgb(144, 255, 23);
+  border-bottom: 2px solid rgba(144, 255, 23, 0.3);
+  background: rgba(144, 255, 23, 0.1);
+}
+
+.playerTable td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.playerTable th:first-child, .playerTable td:first-child {
+  text-align: center;
+  border-right: none;
+}
+
+.playerTable th:not(:first-child), .playerTable td:not(:first-child) {
+  text-align: center;
+}
+
+.playerTable tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.playerActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.editPlayerButton, .deletePlayerButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.editPlayerButton:hover {
+  background: rgba(144, 255, 23, 0.2);
+}
+
+.deletePlayerButton:hover {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.updatePlayerButton, .cancelEditButton {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  border-radius: 6px;
+
+}
+
+.updatePlayerButton:hover, .cancelEditButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.saveButton, .cancelButton {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.saveButton {
+  background: rgb(144, 255, 23);
+  border: none;
+  color: black;
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.playerButtonGroup {
+  display: flex;
+  justify-self: flex-end;
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+.playerNotes {
+  grid-column: 1 / -1;
+}
+
+.playerTable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #333333;
+  color: rgb(144, 255, 23);
+  border-bottom: 2px solid rgba(144, 255, 23, 0.3);
+}
+
+@media (max-width: 1200px) {
+  .modal_content {
+    width: 95%;
+    margin: 20px;
+  }
+} 

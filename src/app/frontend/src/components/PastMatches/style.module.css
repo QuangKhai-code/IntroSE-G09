@@ -1,0 +1,527 @@
+.section {
+  width: 1170px;
+  min-width: 1000px;
+  max-width: 1170px;
+  min-height: 350px;
+  margin: 0 auto 32px auto;
+  background: rgba(255,255,255,0.98);
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(90,32,110,0.12);
+  padding: 32px 32px 24px 32px;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 12px 40px rgba(90,32,110,0.15);
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #391964;
+  margin-bottom: 24px;
+  text-align: left;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #5a206e, #8a4caf);
+  border-radius: 2px;
+}
+
+.pastMatchList {
+  width: 100%;
+  min-height: 1010px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pastMatchRow {
+  width: 100%;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 2fr;
+  align-items: center;
+  padding: 0 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(90,32,110,0.06);
+  gap: 0;
+  margin-bottom: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1px solid rgba(90,32,110,0.08);
+  flex-grow: 1;
+}
+
+.pastMatchRow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(90,32,110,0.15);
+  border-color: rgba(90,32,110,0.2);
+}
+
+.pastHomeTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-end;
+}
+
+.pastAwayTeamBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.pastTeamLogo {
+  height: 36px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.pastMatchRow:hover .pastTeamLogo {
+  transform: scale(1.1);
+}
+
+.pastTeamName {
+  color: #3d1857;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.pastMatchRow:hover .pastTeamName {
+  color: #5a206e;
+}
+
+.pastScoreBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pastScore {
+  background: linear-gradient(135deg, #3d1857, #5a206e);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 12px;
+  padding: 6px 20px;
+  font-family: 'Baloo 2', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(90,32,110,0.2);
+}
+
+.pastMatchRow:hover .pastScore {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(90,32,110,0.3);
+}
+
+.pastStadiumBlock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  min-width: 220px;
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pastStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.pastStadium {
+  color: #5a206e;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+.paginationBtn {
+  background: #fff;
+  border: 2px solid rgba(90,32,110,0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 22px;
+  color: #5a206e;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.paginationBtn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: rgba(90,32,110,0.05);
+  background: #f8f8f8;
+}
+
+.paginationBtn:not(:disabled):hover {
+  background: linear-gradient(135deg, #f3e6fa, #e5e0f2);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(90,32,110,0.15);
+  border-color: rgba(90,32,110,0.2);
+}
+
+.paginationBtn:not(:disabled):active {
+  transform: translateY(1px) scale(0.95);
+}
+
+.paginationText {
+  font-weight: 700;
+  font-size: 18px;
+  color: #391964;
+  min-width: 48px;
+  text-align: center;
+  padding: 8px 16px;
+  background: rgba(90,32,110,0.05);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.paginationText:hover {
+  background: rgba(90,32,110,0.1);
+}
+
+.matchDetailRow {
+  background: linear-gradient(135deg, #23232b, #2a2a35);
+  color: #fff;
+  border-radius: 20px;
+  margin: 12px 0 24px 0;
+  padding: 28px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.matchDetailRow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.matchDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 32px;
+  margin-bottom: 12px;
+}
+.matchDetailTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+.matchDetailLogo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+.matchDetailRow:hover .matchDetailLogo {
+  transform: scale(1.1);
+}
+.matchDetailName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+.matchDetailScoreBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+.matchDetailScore {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+.matchDetailRow:hover .matchDetailScore {
+  transform: scale(1.05);
+  text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.matchDetailStatus {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 500;
+}
+.matchDetailScorers {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.matchDetailScorer {
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.matchDetailScorerName {
+  font-weight: 600;
+}
+.matchDetailScorerMinute {
+  font-weight: 500;
+  color: #f7c325;
+}
+.matchDetailNoScorer {
+  color: #bdbdbd;
+  font-size: 1rem;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.matchDetailTop {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-bottom: 8px;
+}
+.matchDetailLeague {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 400;
+}
+.matchDetailDate {
+  font-size: 1rem;
+  color: #7e7e8f;
+  margin-left: 8px;
+  font-weight: 400;
+}
+.matchDetailStatus {
+  font-size: 1rem;
+  color: #bdbdbd;
+  font-weight: 400;
+  margin-left: auto;
+}
+.matchDetailMain {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  gap: 32px;
+}
+.matchDetailTeamCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+.matchDetailScoreCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #bdbdbd;
+  min-width: 120px;
+  gap: 16px;
+}
+.matchDetailScoreHome, .matchDetailScoreAway {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #bdbdbd;
+}
+.matchDetailScoreDash {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #bdbdbd;
+  margin: 0 8px;
+}
+.matchDetailTeamName {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-top: 4px;
+}
+.matchDetailBottom {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 8px;
+}
+.matchDetailScorersLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2px;
+  color: #bdbdbd;
+  font-size: 0.98rem;
+}
+.matchDetailScorersRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 2px;
+  color: #bdbdbd;
+  font-size: 0.98rem;
+}
+.matchDetailBallIcon {
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+}
+
+.matchDetailStadium {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 215, 0, 0.10);
+  border-radius: 8px;
+  margin: 0 16px 12px;
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.10);
+}
+
+.matchDetailStadiumIcon {
+  display: flex;
+  align-items: center;
+}
+
+.matchDetailStadiumName {
+  font-size: 1.08rem;
+  color: #FFD700;
+  font-weight: 700;
+  margin-left: 6px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 6px #23232b80;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
+}
+
+.pageInfo {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #391964;
+}
+
+.pageTotal {
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.pageInput {
+  width: 50px;
+  height: 42px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #391964;
+  background: #fff;
+  border: 1.5px solid #d1c4e9;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pageInput:focus {
+  border-color: #7c4dff;
+  box-shadow: 0 0 0 2px #ede7f6;
+}
+
+.paginationBtn {
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border: 1.5px solid #d1c4e9;
+  background: #fff;
+  color: #6c3483;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+  box-shadow: 0 1px 4px rgba(57, 25, 100, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  color: #fff;
+  background: #7c4dff;
+  border-color: #7c4dff;
+}
+
+.paginationBtn:disabled {
+  color: #bdbdbd;
+  background: #f8fafd;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+} 

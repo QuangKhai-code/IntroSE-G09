@@ -1,0 +1,27 @@
+.submit_container {
+  width: 150px;
+  border: 3px solid white;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.2s ease-in;
+}
+
+.submit_container button {
+  width: 100%;
+  padding: 12px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 16px;
+}
+
+.submit_container:hover {
+  border-color: black;
+  transform: translateY(-2px);
+}
+
+.submit_container:hover button {
+  background-color: #90FF17 ;
+  color: black;
+}
